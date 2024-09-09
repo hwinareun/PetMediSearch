@@ -10,6 +10,7 @@
 # 꼬릿말 (아래에 작성) (optioanl; Issue Tracker Number)
 
 
+# ------------------------
 # --- COMMIT TYPE ---
 #   feat        : 새로운 기능 추가
 #   fix         : 버그 수정
