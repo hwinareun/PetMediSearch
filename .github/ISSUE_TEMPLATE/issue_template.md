@@ -26,8 +26,4 @@ assignees: ''
 - [ ] <!-- TODO -->
 
 ## 참고할만한 자료(Optional)
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- 스크린샷, 링크 등 참고할 자료가 있다면 작성해주세요. -->
