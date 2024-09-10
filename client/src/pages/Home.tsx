@@ -1,13 +1,35 @@
 import styled from 'styled-components';
+import Menu from '../layout/common/Menu';
 
 function Home() {
   return (
     <HomeStyle>
-      <h1>Home</h1>
+      <p>PetMediSearch</p>
+      <img src={'../src/assets/images/Logo.png'} alt="Logo" />
+      <nav>
+        <Menu />
+      </nav>
     </HomeStyle>
   );
 }
 
-const HomeStyle = styled.div``;
+const HomeStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  p {
+    font-style: italic;
+    font-size: 30px;
+    margin: 0;
+  }
+
+  img {
+    width: 250px;
+    margin-bottom: 10px;
+  }
+`;
 
 export default Home;

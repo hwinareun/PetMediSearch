@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import Programming from '../layout/common/Programming';
 
-function Login() {
+function Posts() {
   return (
-    <LoginStyle>
+    <PostsStyle>
       <Programming />
-    </LoginStyle>
+    </PostsStyle>
   );
 }
 
-const LoginStyle = styled.div``;
+const PostsStyle = styled.div``;
 
-export default Login;
+export default Posts;

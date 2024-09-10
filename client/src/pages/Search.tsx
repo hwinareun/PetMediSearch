@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import Programming from '../layout/common/Programming';
 
 function Search() {
   return (
     <SearchStyle>
-      <h1>Search</h1>
+      <Programming />
     </SearchStyle>
   );
 }

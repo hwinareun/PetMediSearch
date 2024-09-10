@@ -4,6 +4,7 @@ import Search from './pages/Search';
 import Login from './pages/Login';
 import Layout from './layout/Layoout';
 import Error from './layout/common/Error';
+import Posts from './pages/Posts';
 
 const routeList = [
   {
@@ -17,6 +18,10 @@ const routeList = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/posts',
+    element: <Posts />,
   },
 ];
 
