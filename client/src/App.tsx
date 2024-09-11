@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import Login from './pages/Login';
 import Layout from './layout/Layoout';
-import Error from './layout/common/Error';
+import Error from './components/common/Error';
 import Posts from './pages/Posts';
 import LoginRedirect from './pages/LoginRedirect';
 

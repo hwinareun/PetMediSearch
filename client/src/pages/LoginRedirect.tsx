@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Loading from '../layout/common/Loading';
+import Loading from '../components/common/Loading';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
