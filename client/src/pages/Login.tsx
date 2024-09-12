@@ -9,7 +9,7 @@ function Login() {
   return (
     <LoginStyle>
       <a href={KAKAO_URL} className="kakaobttn">
-        <img src={`../src/assets/images/KakaoLogin.png`} />
+        <img src={`../src/assets/images/login/KakaoLogin.png`} />
       </a>
     </LoginStyle>
   );
