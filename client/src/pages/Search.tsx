@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Programming from '../layout/common/Programming';
+import Programming from '../components/common/Programming';
 
 function Search() {
   return (
