@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LoginKakao from '../components/common/login/LoginKakao';
+import LoginKakao from '../components/login/LoginKakao';
 
 function Login() {
   return (
