@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import LoginKakao from '../components/login/LoginKakao';
+import LoginNaver from '../components/login/LoginNaver';
 
 function Login() {
   return (
     <LoginStyle>
       <LoginKakao />
+      <LoginNaver />
     </LoginStyle>
   );
 }
