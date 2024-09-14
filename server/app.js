@@ -15,3 +15,11 @@ app.use("/api", swaggerUi.serve, swaggerUi.setup(specs))
 app.get('/main', (req, res) => {
     res.json({ message: 'Hello, world!' });
 });
+
+
+// router
+const categoryRouter = require('./routers/category')
+
+
+// category
+app.use('/category', categoryRouter)
