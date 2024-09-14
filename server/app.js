@@ -1,5 +1,5 @@
 const express = require("express");
-const api = require("./routers")
+const api = require("./routes")
 
 const app = express();
 const port = 8080;
@@ -18,8 +18,9 @@ app.get('/main', (req, res) => {
 
 
 // router
-const categoryRouter = require('./routers/category')
-
+const categoryRouter = require('./routes/category')
+const postRouter = require('./routes/post')
 
 // category
 app.use('/category', categoryRouter)
+app.use('/posts', postRouter)
