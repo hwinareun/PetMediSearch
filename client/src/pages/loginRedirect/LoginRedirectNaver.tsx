@@ -5,18 +5,17 @@ import { useNavigate } from 'react-router-dom';
 
 function LoginRedirectNaver() {
   const navigate = useNavigate();
-  // 인가코드 가져오기
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_REDIRECT_URL}/?code=${code}`, {
+    fetch(`${import.meta.env.VITE_N_REDIRECT_URL}/?code=${code}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
     }).then((res) => {
       console.log(res);
-      navigate('/'); // 로그인 성공 시 메인 페이지로 이동
+      navigate('/');
     });
   }, [code, navigate]);
 
