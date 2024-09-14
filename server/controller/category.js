@@ -5,7 +5,7 @@ const getListByCategory = (req, res) => {
     { title: 'post3', author: 'user3', created_at: 'date3' }
     ]
 
-    return res.send(response);
+    return res.json(response);
 
 }
 
