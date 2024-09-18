@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import Programming from '../components/common/Programming';
+import SearchBox from '../components/search/SearchBox';
+import SearchMap from '../components/search/SearchMap';
 
 function Search() {
   return (
     <SearchStyle>
-      <Programming />
+      <SearchBox />
+      <SearchMap />
     </SearchStyle>
   );
 }
