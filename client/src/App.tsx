@@ -7,6 +7,7 @@ import Error from './components/common/Error';
 import Posts from './pages/Posts';
 import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
 import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
+import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 
 const routeList = [
   {
@@ -32,6 +33,10 @@ const routeList = [
   {
     path: '/oauth/naver',
     element: <LoginRedirectNaver />,
+  },
+  {
+    path: '/oauth/google',
+    element: <LoginRedirectGoogle />,
   },
 ];
 
