@@ -75,7 +75,7 @@ export const lightTheme: Props = {
       height: '15px',
     },
     medium: {
-      fontSize: '16px',
+      fontSize: '12px',
       padding: '8px 10px',
       width: '300px',
       height: '20px',

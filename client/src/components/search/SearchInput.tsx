@@ -13,7 +13,7 @@ function SearchInput({ onChange, onKeyDown }: Props) {
       type="text"
       size="medium"
       value=""
-      placeholder="검색어를 입력해주세요"
+      placeholder="동뭉병원/약국명을 입력해주세요"
       onChange={onChange}
       onKeyDown={onKeyDown}
     ></SearchInputStyle>
