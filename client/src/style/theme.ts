@@ -3,6 +3,8 @@ export type ThemeName = 'light' | 'dark';
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonScheme = 'normal' | 'positive' | 'negative';
 
+export type InputSize = 'small' | 'medium' | 'large';
+
 interface Props {
   name: ThemeName;
   button: {
@@ -21,22 +23,30 @@ interface Props {
   borderRadius: {
     default: string;
   };
+  input: {
+    [key in InputSize]: {
+      fontSize: string;
+      padding: string;
+      width: string;
+      height: string;
+    };
+  };
 }
 
 export const lightTheme: Props = {
   name: 'light',
   button: {
     small: {
-      fontSize: '0.75rem',
-      padding: '0.25rem 0.5rem',
+      fontSize: '8px',
+      padding: '4px 8px',
     },
     medium: {
-      fontSize: '1rem',
-      padding: '0.5rem 1rem',
+      fontSize: '16px',
+      padding: '10px 16px',
     },
     large: {
-      fontSize: '1.5rem',
-      padding: '1rem 2rem',
+      fontSize: '20px',
+      padding: '16px 24px',
     },
   },
   buttonScheme: {
@@ -56,6 +66,26 @@ export const lightTheme: Props = {
   },
   borderRadius: {
     default: '16px',
+  },
+  input: {
+    small: {
+      fontSize: '8px',
+      padding: '4px 8px',
+      width: '200px',
+      height: '15px',
+    },
+    medium: {
+      fontSize: '16px',
+      padding: '8px 10px',
+      width: '300px',
+      height: '20px',
+    },
+    large: {
+      fontSize: '20px',
+      padding: '10px 12px',
+      width: '500px',
+      height: '50px',
+    },
   },
 };
 

@@ -4,14 +4,13 @@ import { ButtonScheme, ButtonSize } from '../../style/theme';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  onClick: () => void;
   size: ButtonSize;
   scheme: ButtonScheme;
 }
 
-function Button({ children, onClick, size, scheme }: Props) {
+function Button({ children, size, scheme }: Props) {
   return (
-    <ButtonStyle size={size} scheme={scheme} onClick={onClick}>
+    <ButtonStyle size={size} scheme={scheme}>
       {children}
     </ButtonStyle>
   );

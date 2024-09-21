@@ -1,33 +1,34 @@
 import styled from 'styled-components';
+import { InputSize } from '../../style/theme';
+import React from 'react';
 
-interface Props {
-  name: string;
-  value: string | number;
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  id: string;
+  type: string;
+  value: string;
   placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  size: InputSize;
 }
 
-function Input({ name, value, placeholder, onChange, onKeyDown }: Props) {
+function Input({ id, type, value, placeholder, size }: Props) {
   return (
-    <InputStyle>
-      <input
-        id="keyword"
-        type="text"
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-    </InputStyle>
+    <InputStyle
+      id={id}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      size={size}
+    />
   );
 }
 
-const InputStyle = styled.div`
-  input {
-    width: 300px;
-  }
+const InputStyle = styled.input<Props>`
+  padding: ${({ theme, size }) => theme.input[size].padding};
+  font-size: ${({ theme, size }) => theme.input[size].fontSize};
+  border-radius: ${({ theme }) => theme.borderRadius.default};
+  width: ${({ theme, size }) => theme.input[size].width};
+  height: ${({ theme, size }) => theme.input[size].height};
 `;
 
 export default Input;

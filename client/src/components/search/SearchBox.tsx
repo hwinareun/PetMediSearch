@@ -1,21 +1,16 @@
 import styled from 'styled-components';
-import Input from '../common/Input';
 import SearchButton from './SearchButton';
+import SearchInput from './SearchInput';
 
 function SearchBox() {
   const handleChange = () => {};
   const handleKeyEnter = () => {};
+  const handleClick = () => {};
 
   return (
     <SearchBoxStyle>
-      <Input
-        name="searchPlaceName"
-        value={''}
-        placeholder="검색어를 입력해주세요"
-        onChange={handleChange}
-        onKeyDown={handleKeyEnter}
-      />
-      <SearchButton />
+      <SearchInput onChange={handleChange} onKeyDown={handleKeyEnter} />
+      <SearchButton onClick={handleClick} />
     </SearchBoxStyle>
   );
 }
