@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import Button from '../common/Button';
 import Input from '../common/Input';
+import SearchButton from './SearchButton';
 
 function SearchBox() {
   const handleChange = () => {};
   const handleKeyEnter = () => {};
-  const handleClick = () => {};
 
   return (
     <SearchBoxStyle>
@@ -16,7 +15,7 @@ function SearchBox() {
         onChange={handleChange}
         onKeyDown={handleKeyEnter}
       />
-      <Button onClick={handleClick}>검색</Button>
+      <SearchButton />
     </SearchBoxStyle>
   );
 }
