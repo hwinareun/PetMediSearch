@@ -1,28 +1,30 @@
 import styled from 'styled-components';
-
-const searchPlace = {
-  allPlace: '전체',
-  onlyHospital: '병원',
-  onlyPharmacy: '약국',
-};
+import Button from '../common/Button';
+import Input from '../common/Input';
 
 function SearchBox() {
-  const onChange = () => {};
-  const onKeyEnter = () => {};
+  const handleChange = () => {};
+  const handleKeyEnter = () => {};
+  const handleClick = () => {};
 
   return (
     <SearchBoxStyle>
-      <h1>SearchBox</h1>
-      <input
-        type="text"
-        placeholder={`${searchPlace}(으)로 검색합니다.`}
-        onChange={onChange}
-        onKeyDown={onKeyEnter}
+      <Input
+        name="searchPlaceName"
+        value={''}
+        placeholder="검색어를 입력해주세요"
+        onChange={handleChange}
+        onKeyDown={handleKeyEnter}
       />
+      <Button onClick={handleClick}>검색</Button>
     </SearchBoxStyle>
   );
 }
 
-const SearchBoxStyle = styled.div``;
+const SearchBoxStyle = styled.div`
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+`;
 
 export default SearchBox;
