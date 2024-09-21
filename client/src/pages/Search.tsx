@@ -11,6 +11,10 @@ function Search() {
   );
 }
 
-const SearchStyle = styled.div``;
+const SearchStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default Search;
