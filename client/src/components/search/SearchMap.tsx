@@ -22,25 +22,10 @@ function SearchMap({ results }: Props) {
   const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
   const pharmacyOrigin = { x: 0, y: 0 };
 
-  // 병원 마커가 표시될 임시 좌표 배열
-  const hospitalPositions = [
-    { lat: 37.571368746820454, lng: 126.95816222481089 },
-    { lat: 37.57627704662319, lng: 126.98886064023323 },
-    { lat: 37.561787726748726, lng: 126.97917433750797 },
-  ];
-
-  // 약국 마커가 표시될 임시 좌표 배열
-  const pharmacyPositions = [
-    { lat: 37.58125105449183, lng: 126.9989131608954 },
-    { lat: 37.558545674285554, lng: 126.99157955346834 },
-    { lat: 37.565677924078386, lng: 126.96948429058867 },
-  ];
-
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
   const [selectedCategory, setSelectedCategory] = useState('allPlace');
-  const [result, setResult] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -68,76 +53,42 @@ function SearchMap({ results }: Props) {
     }
   }, [error, selectedCategory]);
 
+  // 카테고리에 따라 필터링된 장소 데이터를 반환
+  const filteredResults = results.filter((place) => {
+    if (selectedCategory === 'allPlace') return true;
+    if (selectedCategory === 'onlyHospital') return place.type === 'hospital';
+    if (selectedCategory === 'onlyPharmacy') return place.type === 'pharmacy';
+  });
+
   return (
     <SearchMapStyle>
       {loading ? (
         <Loading />
       ) : (
         <div id="mapwrap">
-          <p className="result">{result}</p>
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
             level={6} // 지도 확대 레벨
-            onClick={(_, mouseEvent) => {
-              const latlng = mouseEvent.latLng;
-              setResult(
-                `클릭한 위치의 위도는 ${latlng.getLat()} 이고, 경도는 ${latlng.getLng()} 입니다`
-              );
-            }}
           >
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
-            {selectedCategory === 'allPlace' &&
-              hospitalPositions
-                .concat(pharmacyPositions) // 병원과 약국 배열 합친 새 배열 반환
-                .map((position, index) => (
-                  <MapMarker
-                    key={`all-${position.lat}-${position.lng}-${index}`}
-                    position={position}
-                    image={{
-                      src: markerImgSrc,
-                      size: imgSize,
-                      options: {
-                        spriteSize: spriteSize,
-                        spriteOrigin:
-                          index < hospitalPositions.length
-                            ? hospitalOrigin
-                            : pharmacyOrigin,
-                      },
-                    }}
-                  />
-                ))}
-            {selectedCategory === 'onlyHospital' &&
-              hospitalPositions.map((position) => (
-                <MapMarker
-                  key={`hospital-${position.lat},${position.lng}`}
-                  position={position}
-                  image={{
-                    src: markerImgSrc,
-                    size: imgSize,
-                    options: {
-                      spriteSize: spriteSize,
-                      spriteOrigin: hospitalOrigin,
-                    },
-                  }}
-                />
-              ))}
-            {selectedCategory === 'onlyPharmacy' &&
-              pharmacyPositions.map((position) => (
-                <MapMarker
-                  key={`pharmacy-${position.lat},${position.lng}`}
-                  position={position}
-                  image={{
-                    src: markerImgSrc,
-                    size: imgSize,
-                    options: {
-                      spriteSize: spriteSize,
-                      spriteOrigin: pharmacyOrigin,
-                    },
-                  }}
-                />
-              ))}
+            {/* 검색 결과 마커 표시 */}
+            {filteredResults.map((place, index) => (
+              <MapMarker
+                key={`place-${place.latitude}-${place.longitude}-${index}`}
+                position={{ lat: place.latitude, lng: place.longitude }}
+                image={{
+                  src: markerImgSrc,
+                  size: imgSize,
+                  options: {
+                    spriteSize: spriteSize,
+                    spriteOrigin:
+                      place.type === '병원' ? hospitalOrigin : pharmacyOrigin,
+                  },
+                }}
+              />
+            ))}
           </Map>
           {/* 지도 위에 표시될 마커 카테고리 */}
           <div className="category">
@@ -162,18 +113,6 @@ function SearchMap({ results }: Props) {
               </li>
             </ul>
           </div>
-          <p>검색 결과:</p>
-          {results.length > 0 ? (
-            <ul>
-              {results.map((place) => (
-                <li key={place.id}>
-                  {place.name} - {place.location}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>검색 결과가 없습니다.</p>
-          )}
         </div>
       )}
     </SearchMapStyle>

@@ -1,8 +1,7 @@
 import { httpClient } from './http';
 
 interface PlaceParams {
-  placeLocation: string; // 주소지
-  placeName: string; // 장소 상호명
+  bplcnm: string; // 장소 상호명
 }
 
 export const fetchPlaces = async (params: PlaceParams) => {
@@ -21,9 +20,9 @@ export const fetchPlaces = async (params: PlaceParams) => {
     return response.data;
   } catch (error) {
     console.error(
-      `Failed to fetch drugs with query: ${query.toString()}`,
+      `Failed to fetch places with query: ${query.toString()}`,
       error
     );
-    throw new Error('Failed to fetch drugs');
+    throw new Error('Failed to fetch places');
   }
 };

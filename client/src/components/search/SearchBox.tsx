@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setSearchInputPlace } from '../../store/slices/placeSlice';
+import { fetchPlaces } from '../../apis/place.api';
 
 interface Props {
   setResults: (results: PlaceData[]) => void;
@@ -17,24 +18,18 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
     (state: RootState) => state.petPlace
   );
 
-  useEffect(() => {
-    console.log('입력값:', searchInputPlace);
-  }, [searchInputPlace]);
+  useEffect(() => {}, [searchInputPlace]);
 
-  const handleButtonClick = () => {
-    const results: PlaceData[] = [
-      {
-        id: 1,
-        name: searchInputPlace,
-        location: '서울',
-        type: 'Hospital',
-        contact: '00-111-2222',
-        latitude: 0,
-        longitude: 0,
-      },
-    ];
-    setResults(results);
-    console.log('click', searchInputPlace);
+  const handleButtonClick = async () => {
+    try {
+      const results = await fetchPlaces({
+        bplcnm: searchInputPlace,
+      });
+      setResults(results);
+      console.log('click', searchInputPlace);
+    } catch (error) {
+      console.error('Failed to fetch places:', error);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
