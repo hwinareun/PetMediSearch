@@ -19,22 +19,23 @@ function SearchMap() {
 
   // 병원 마커가 표시될 임시 좌표 배열
   const hospitalPositions = [
-    { lat: 37.49640098874988, lng: 127.02609983175294 },
-    { lat: 37.49932849491523, lng: 127.02935780247945 },
-    { lat: 37.49996818951873, lng: 127.02943721562295 },
+    { lat: 37.571368746820454, lng: 126.95816222481089 },
+    { lat: 37.57627704662319, lng: 126.98886064023323 },
+    { lat: 37.561787726748726, lng: 126.97917433750797 },
   ];
 
   // 약국 마커가 표시될 임시 좌표 배열
   const pharmacyPositions = [
-    { lat: 37.49966168796031, lng: 127.03007039430118 },
-    { lat: 37.49896834100913, lng: 127.02833986892401 },
-    { lat: 37.49893267508434, lng: 127.02673400572665 },
+    { lat: 37.58125105449183, lng: 126.9989131608954 },
+    { lat: 37.558545674285554, lng: 126.99157955346834 },
+    { lat: 37.565677924078386, lng: 126.96948429058867 },
   ];
 
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
   const [selectedCategory, setSelectedCategory] = useState('allPlace');
+  const [result, setResult] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -68,10 +69,17 @@ function SearchMap() {
         <Loading />
       ) : (
         <div id="mapwrap">
+          <p id="result">{result}</p>
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '600px', height: '600px' }} // 지도 크기 설정
             level={6} // 지도 확대 레벨
+            onClick={(_, mouseEvent) => {
+              const latlng = mouseEvent.latLng;
+              setResult(
+                `클릭한 위치의 위도는 ${latlng.getLat()} 이고, 경도는 ${latlng.getLng()} 입니다`
+              );
+            }}
           >
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
