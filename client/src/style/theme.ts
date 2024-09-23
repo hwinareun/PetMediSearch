@@ -41,8 +41,8 @@ export const lightTheme: Props = {
       padding: '10px 16px',
     },
     medium: {
-      fontSize: '16px',
-      padding: '16px 20px',
+      fontSize: '14px',
+      padding: '14px 20px',
     },
     large: {
       fontSize: '20px',
@@ -73,13 +73,13 @@ export const lightTheme: Props = {
     small: {
       fontSize: '8px',
       padding: '4px 8px',
-      width: '250px',
+      width: '200px',
       height: '20px',
     },
     medium: {
       fontSize: '12px',
       padding: '8px 10px',
-      width: '300px',
+      width: '250px',
       height: '30px',
     },
     large: {

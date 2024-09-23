@@ -33,13 +33,13 @@ const SearchBox = () => {
       <Input
         name="placeName"
         type="text"
-        size="small"
+        size="medium"
         placeholder="병원명 혹은 약국명을 입력해주세요"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyEnter}
       />
-      <Button size="small" scheme="normal" onClick={handleButtonClick}>
+      <Button size="medium" scheme="normal" onClick={handleButtonClick}>
         검색
       </Button>
     </SearchBoxStyle>
@@ -49,7 +49,6 @@ const SearchBox = () => {
 const SearchBoxStyle = styled.div`
   display: flex;
   gap: 10px;
-  padding: 5px;
 `;
 
 export default SearchBox;
