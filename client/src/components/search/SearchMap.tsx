@@ -56,8 +56,8 @@ function SearchMap({ results }: Props) {
   // 카테고리에 따라 필터링된 장소 데이터를 반환
   const filteredResults = results.filter((place) => {
     if (selectedCategory === 'allPlace') return true;
-    if (selectedCategory === 'onlyHospital') return place.type === 'hospital';
-    if (selectedCategory === 'onlyPharmacy') return place.type === 'pharmacy';
+    if (selectedCategory === 'onlyHospital') return place.type === '병원';
+    if (selectedCategory === 'onlyPharmacy') return place.type === '약국';
   });
 
   return (
@@ -66,6 +66,17 @@ function SearchMap({ results }: Props) {
         <Loading />
       ) : (
         <div id="mapwrap">
+          {results.length > 0 ? (
+            <ul>
+              {results.map((place) => (
+                <li key={place.id}>
+                  {place.bplcnm} - {place.sitewhladdr}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>검색 결과가 없습니다.</p>
+          )}
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
@@ -76,8 +87,8 @@ function SearchMap({ results }: Props) {
             {/* 검색 결과 마커 표시 */}
             {filteredResults.map((place, index) => (
               <MapMarker
-                key={`place-${place.latitude}-${place.longitude}-${index}`}
-                position={{ lat: place.latitude, lng: place.longitude }}
+                key={`place-${place.x}-${place.y}-${index}`}
+                position={{ lat: place.x, lng: place.y }}
                 image={{
                   src: markerImgSrc,
                   size: imgSize,

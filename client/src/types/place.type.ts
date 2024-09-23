@@ -1,11 +1,12 @@
 export interface PlaceData {
   id: number;
-  name: string; // 장소명
+  bplcnm: string; // 장소명
   type: string; // 장소종류(병원 | 약국)
-  location: string; // 주소지
-  contact: string; // 전화번호
-  latitude: number; // 위도
-  longitude: number; // 경도
+  sitewhladdr: string; // 주소지
+  rdnwhladdr: string; // 주소지(도로명)
+  sitetel: string; // 전화번호
+  x: number; // 위도
+  y: number; // 경도
 }
 
 export interface PlaceState {
