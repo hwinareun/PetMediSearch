@@ -10,7 +10,6 @@ import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
 import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
 import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 import { PetMediThemeProvider } from './style/themeContext';
-import styled from 'styled-components';
 
 const routeList = [
   {
