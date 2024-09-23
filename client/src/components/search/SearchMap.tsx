@@ -69,7 +69,7 @@ function SearchMap() {
         <Loading />
       ) : (
         <div id="mapwrap">
-          <p id="result">{result}</p>
+          <p className="result">{result}</p>
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
@@ -170,6 +170,10 @@ const SearchMapStyle = styled.div`
 
   #mapwrap {
     position: relative;
+  }
+
+  .result {
+    font-size: 8px;
   }
 
   .category {
