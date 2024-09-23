@@ -10,24 +10,26 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 function Button({ children, size, scheme }: Props) {
   return (
-    <ButtonStyle size={size} scheme={scheme}>
+    <ButtonStyle size={size} $scheme={scheme}>
       {children}
     </ButtonStyle>
   );
 }
 
-const ButtonStyle = styled.button<Omit<Props, 'children'>>`
+const ButtonStyle = styled.button<
+  Omit<{ size: ButtonSize; $scheme: ButtonScheme }, 'children'>
+>`
   cursor: pointer;
   font-size: ${({ theme, size }) => theme.button[size].fontSize};
   padding: ${({ theme, size }) => theme.button[size].padding};
-  color: ${({ theme, scheme }) => theme.buttonScheme[scheme].color};
-  background-color: ${({ theme, scheme }) =>
-    theme.buttonScheme[scheme].backgroundColor};
+  color: ${({ theme, $scheme }) => theme.buttonScheme[$scheme].color};
+  background-color: ${({ theme, $scheme }) =>
+    theme.buttonScheme[$scheme].backgroundColor};
   border: 0;
   border-radius: ${({ theme }) => theme.borderRadius.default};
   &:hover {
-    background-color: ${({ theme, scheme }) =>
-      theme.buttonScheme[scheme].hoverColor};
+    background-color: ${({ theme, $scheme }) =>
+      theme.buttonScheme[$scheme].hoverColor};
   }
 `;
 

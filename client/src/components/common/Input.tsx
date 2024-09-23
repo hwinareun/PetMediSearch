@@ -4,23 +4,13 @@ import React from 'react';
 
 interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  id: string;
   type: string;
-  value: string;
   placeholder: string;
   size: InputSize;
 }
 
-function Input({ id, type, value, placeholder, size }: Props) {
-  return (
-    <InputStyle
-      id={id}
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      size={size}
-    />
-  );
+function Input({ type, placeholder, size }: Props) {
+  return <InputStyle type={type} placeholder={placeholder} size={size} />;
 }
 
 const InputStyle = styled.input<Props>`
