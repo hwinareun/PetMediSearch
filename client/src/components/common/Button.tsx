@@ -6,11 +6,12 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   size: ButtonSize;
   scheme: ButtonScheme;
+  onClick: () => void;
 }
 
-function Button({ children, size, scheme }: Props) {
+function Button({ children, size, scheme, onClick }: Props) {
   return (
-    <ButtonStyle size={size} $scheme={scheme}>
+    <ButtonStyle size={size} $scheme={scheme} onClick={onClick}>
       {children}
     </ButtonStyle>
   );

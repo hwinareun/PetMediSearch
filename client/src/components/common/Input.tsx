@@ -9,9 +9,10 @@ interface Props
   size: InputSize;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-function Input({ type, placeholder, size, value, onChange }: Props) {
+function Input({ type, placeholder, size, value, onChange, onKeyDown }: Props) {
   return (
     <InputStyle
       type={type}
@@ -19,6 +20,7 @@ function Input({ type, placeholder, size, value, onChange }: Props) {
       size={size}
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
     />
   );
 }

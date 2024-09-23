@@ -15,7 +15,9 @@ const SearchBox = () => {
     console.log('입력값:', inputValue);
   }, [inputValue]);
 
-  const handleButtonClick = () => {};
+  const handleButtonClick = () => {
+    console.log('click', inputValue);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
