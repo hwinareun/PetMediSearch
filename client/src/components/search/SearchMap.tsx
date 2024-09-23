@@ -70,13 +70,14 @@ function SearchMap({ results }: Props) {
             <ul>
               {results.map((place) => (
                 <li key={place.id}>
-                  {place.bplcnm} - {place.sitewhladdr}
+                  {place.bplcnm} - {place.x}, {place.y}
                 </li>
               ))}
             </ul>
           ) : (
             <p>검색 결과가 없습니다.</p>
           )}
+          {/* {results.length === 0 && <p>검색 결과가 없습니다.</p>} */}
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
@@ -100,6 +101,12 @@ function SearchMap({ results }: Props) {
                 }}
               />
             ))}
+            <MapMarker
+              position={{
+                lat: 0,
+                lng: 0,
+              }}
+            />
           </Map>
           {/* 지도 위에 표시될 마커 카테고리 */}
           <div className="category">

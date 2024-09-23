@@ -22,11 +22,20 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
 
   const handleButtonClick = async () => {
     try {
+      // 서버에서 데이터를 받아옴
       const results = await fetchPlaces({
         bplcnm: searchInputPlace,
       });
-      setResults(results);
-      console.log('click', searchInputPlace);
+
+      // 입력값을 포함하는 데이터만 필터링
+      const filteredResults = results.filter(
+        (place: PlaceData) =>
+          place.bplcnm.includes(searchInputPlace) ||
+          place.rdnwhladdr.includes(searchInputPlace)
+      );
+
+      // 필터링된 결과를 상위 컴포넌트에 전달
+      setResults(filteredResults);
     } catch (error) {
       console.error('Failed to fetch places:', error);
     }
