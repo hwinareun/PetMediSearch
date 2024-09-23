@@ -4,6 +4,10 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
+const cors = require("cors");
+app.use(cors({ origin: "http://localhost:5000", credentials: true }));
+
+app.use(express.json());
 app.use(express.json());
 app.use(express.static('public'));
 
