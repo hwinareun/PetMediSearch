@@ -181,8 +181,8 @@ const SearchMapStyle = styled.div`
     top: 10px;
     left: 10px;
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 8px;
+    padding: 0 10px;
+    border-radius: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 10; /* 지도 위에 표시되도록 z-index 설정 */
     ul {
@@ -190,27 +190,34 @@ const SearchMapStyle = styled.div`
       padding: 0;
       display: flex;
       justify-content: space-around;
+      font-size: 10px;
       li {
         display: flex;
         flex-direction: column;
         text-align: center;
         cursor: pointer;
-        padding: 10px;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        gap: 5px;
+        border-radius: 8px;
+        border: solid #eeeeee;
       }
     }
     .is_selected {
       font-weight: bold;
-      border: 2px solid #333;
+      background-color: #e2e2e2;
+      border: solid #333;
     }
   }
 
   .marker_comm {
     // 마커 공통 스타일
     display: inline-block;
-    width: 40px; /* 아이콘 너비 */
-    height: 60px; /* 아이콘 높이 */
+    width: 20px; /* 아이콘 너비 */
+    height: 30px; /* 아이콘 높이 */
     background-image: url(${markerImgSrc}); /* 스프라이트 이미지 경로 */
-    background-size: 40px 179.5px; /* 스프라이트 이미지 전체 크기 */
+    background-size: 20px 89.75px; /* 스프라이트 이미지 전체 크기 */
   }
 
   .marker_pharmacy {
@@ -218,11 +225,11 @@ const SearchMapStyle = styled.div`
   }
 
   .marker_hospital {
-    background-position: 0px -120px; /* 병원 아이콘의 위치 */
+    background-position: 0px -60px; /* 병원 아이콘의 위치 */
   }
 
   .marker_all {
-    background-position: 0px -60px; /* 전체 아이콘의 위치 */
+    background-position: 0px -30px; /* 전체 아이콘의 위치 */
   }
 `;
 
