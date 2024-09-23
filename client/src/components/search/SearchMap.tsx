@@ -11,10 +11,10 @@ import { useEffect, useState } from 'react';
 import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
 
 function SearchMap() {
-  const imgSize = { width: 80, height: 120 }; // 마커 이미지 크기
-  const spriteSize = { width: 80, height: 359 }; // 전체 스프라이트 이미지 크기
+  const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
+  const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
 
-  const hospitalOrigin = { x: 0, y: 240 }; // 스프라이트 이미지 내에서 이미지 위치
+  const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
   const pharmacyOrigin = { x: 0, y: 0 };
 
   // 병원 마커가 표시될 임시 좌표 배열
@@ -195,10 +195,10 @@ const SearchMapStyle = styled.div`
   .marker_comm {
     // 마커 공통 스타일
     display: inline-block;
-    width: 80px; /* 아이콘 너비 */
-    height: 120px; /* 아이콘 높이 */
+    width: 40px; /* 아이콘 너비 */
+    height: 60px; /* 아이콘 높이 */
     background-image: url(${markerImgSrc}); /* 스프라이트 이미지 경로 */
-    background-size: 80px 359px; /* 스프라이트 이미지 전체 크기 */
+    background-size: 40px 179.5px; /* 스프라이트 이미지 전체 크기 */
   }
 
   .marker_pharmacy {
@@ -206,11 +206,11 @@ const SearchMapStyle = styled.div`
   }
 
   .marker_hospital {
-    background-position: 0px -240px; /* 병원 아이콘의 위치 */
+    background-position: 0px -120px; /* 병원 아이콘의 위치 */
   }
 
   .marker_all {
-    background-position: 0px -120px; /* 전체 아이콘의 위치 */
+    background-position: 0px -60px; /* 전체 아이콘의 위치 */
   }
 `;
 
