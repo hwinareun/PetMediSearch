@@ -12,14 +12,13 @@ const SearchBox = () => {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    console.log('SearchBox 컴포넌트가 렌더링되었습니다.');
-  }, []);
+    console.log('입력값:', inputValue);
+  }, [inputValue]);
 
   const handleButtonClick = () => {};
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    console.log('입력값:', value);
     setInputValue(value);
   };
 
