@@ -9,8 +9,13 @@ import styled from 'styled-components';
 import Loading from '../common/Loading';
 import { useEffect, useState } from 'react';
 import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
+import { PlaceData } from '../../types/place.type';
 
-function SearchMap() {
+interface Props {
+  results: PlaceData[]; // 상위에서 전달받은 검색 결과
+}
+
+function SearchMap({ results }: Props) {
   const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
   const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
 
@@ -157,6 +162,18 @@ function SearchMap() {
               </li>
             </ul>
           </div>
+          <p>검색 결과:</p>
+          {results.length > 0 ? (
+            <ul>
+              {results.map((place) => (
+                <li key={place.id}>
+                  {place.name} - {place.location}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>검색 결과가 없습니다.</p>
+          )}
         </div>
       )}
     </SearchMapStyle>
