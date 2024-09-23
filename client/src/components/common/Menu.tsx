@@ -42,7 +42,12 @@ const MenuStyle = styled.div`
 
     p {
       cursor: pointer;
-      font-size: 40px;
+      font-size: 30px;
+      border-left: solid;
+      border-right: solid;
+      padding: 10px;
+      display: flex;
+      align-items: center;
     }
   }
 `;

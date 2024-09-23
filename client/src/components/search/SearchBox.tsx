@@ -34,13 +34,13 @@ const SearchBox = () => {
       <Input
         name="placeName"
         type="text"
-        size="medium"
+        size="small"
         placeholder="병원명 혹은 약국명을 입력해주세요"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyEnter}
       />
-      <Button size="medium" scheme="normal" onClick={handleButtonClick}>
+      <Button size="small" scheme="normal" onClick={handleButtonClick}>
         검색
       </Button>
     </SearchBoxStyle>

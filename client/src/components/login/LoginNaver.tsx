@@ -17,7 +17,8 @@ function LoginNaver() {
 
 const LoginNaverStyle = styled.div`
   img {
-    width: 250px;
+    width: 350px;
+    height: 70px;
   }
 `;
 

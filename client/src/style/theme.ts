@@ -38,11 +38,11 @@ export const lightTheme: Props = {
   button: {
     small: {
       fontSize: '8px',
-      padding: '4px 8px',
+      padding: '10px 16px',
     },
     medium: {
       fontSize: '16px',
-      padding: '10px 16px',
+      padding: '16px 20px',
     },
     large: {
       fontSize: '20px',
@@ -71,14 +71,14 @@ export const lightTheme: Props = {
     small: {
       fontSize: '8px',
       padding: '4px 8px',
-      width: '200px',
-      height: '15px',
+      width: '250px',
+      height: '20px',
     },
     medium: {
       fontSize: '12px',
       padding: '8px 10px',
       width: '300px',
-      height: '20px',
+      height: '30px',
     },
     large: {
       fontSize: '20px',

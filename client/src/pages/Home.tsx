@@ -18,7 +18,11 @@ const HomeStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  background-color: white;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
 
   p {
     font-style: italic;

@@ -15,6 +15,11 @@ function LoginKakao() {
   );
 }
 
-const LoginKakaoStyle = styled.div``;
+const LoginKakaoStyle = styled.div`
+  img {
+    width: 350px;
+    height: 70px;
+  }
+`;
 
 export default LoginKakao;
