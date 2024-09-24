@@ -5,7 +5,9 @@ import Login from './pages/Login';
 import Layout from './layout/Layoout';
 import Error from './components/common/Error';
 import Posts from './pages/Posts';
-import LoginRedirect from './pages/LoginRedirect';
+import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
+import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
+import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 
 const routeList = [
   {
@@ -26,7 +28,15 @@ const routeList = [
   },
   {
     path: '/oauth/kakao',
-    element: <LoginRedirect />,
+    element: <LoginRedirectKakao />,
+  },
+  {
+    path: '/oauth/naver',
+    element: <LoginRedirectNaver />,
+  },
+  {
+    path: '/oauth/google',
+    element: <LoginRedirectGoogle />,
   },
 ];
 

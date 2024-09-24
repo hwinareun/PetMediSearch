@@ -48,6 +48,7 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: 성공적으로 게시글 목록을 반환함
+
  *         content:
  *           application/json:
  *             schema:
@@ -75,6 +76,7 @@ const router = express.Router();
  *         description: 서버 오류 발생
  */
 router.get('/', getPostsByCategory);
+
 
 
 /**

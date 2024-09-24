@@ -51,10 +51,12 @@ const getPostById = (req, res) => {
     });
 };
 
+
 // 새로운 게시글 추가
 const addPostById = (req, res) => {
     console.log(req.body);
     const { category_id, user_id, title, content } = req.body;
+
 
     const query = 'INSERT INTO posts (category_id, user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())';
 
@@ -81,6 +83,7 @@ const updatePostById = (req, res) => {
             return res.status(500).send({ error: '서버 에러 발생' });
         }
 
+
         if (results.affectedRows === 0) {
             return res.status(404).send({ message: '해당 게시글을 찾을 수 없습니다.' });
         }
@@ -104,6 +107,7 @@ const deletePostById = (req, res) => {
         if (results.affectedRows === 0) {
             return res.status(404).send({ message: '해당 게시글을 찾을 수 없습니다.' });
         }
+
 
         return res.send({ message: '게시글이 삭제되었습니다.' });
     });

@@ -1,31 +1,10 @@
-const router = require("express").Router()
+const express = require('express');
+const router = express.Router();
 
+const categoryRouter = require('./category');
+const postRouter = require('./post');
 
-/**
- * @swagger
- * paths:
- *  /api/test:
- *    get:
- *      summary: "데이터 전체 조회"
- *      description: "서버에 데이터를 보내지 않고 Get방식으로 요청"
- *      tags: [Test]
- *      responses:
- *        "200":
- *          description: 테스트 데이터
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                    data:
- *                      type: object
- *                      example:
- *                          [
- *                            { "test": "ok" },
- *                          ]
- */
-router.get('/', (req, res) => {
-    res.json({ message: 'API is working!' });
-});
+router.use('/category', categoryRouter);
+router.use('/posts', postRouter);
 
-module.exports = router
+module.exports = router;
