@@ -11,25 +11,24 @@ import { useEffect, useState } from 'react';
 import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
 import { PlaceData } from '../../types/place.type';
 import proj4 from 'proj4';
-
-interface Props {
-  results: PlaceData[]; // 상위에서 전달받은 검색 결과
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { setTransformedResults } from '../../store/slices/placeSlice';
 
 proj4.defs(
   'EPSG:5181',
   '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs'
 );
 
-const wgs84 = 'EPSG:4326'; // WGS84 좌표계 정의
-
-function SearchMap({ results }: Props) {
+function SearchMap() {
+  const dispatch = useDispatch();
+  const { searchPlaceResults, transformedResults } = useSelector(
+    (state: RootState) => state.place
+  );
+  const [selectedCategory, setSelectedCategory] = useState('allPlace');
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
-
-  const [selectedCategory, setSelectedCategory] = useState('allPlace');
-  const [transformedResults, setTransformedResults] = useState<PlaceData[]>([]);
 
   const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
   const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
@@ -37,65 +36,66 @@ function SearchMap({ results }: Props) {
   const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
   const pharmacyOrigin = { x: 0, y: 0 };
 
-  useEffect(() => {
-    if (error) {
-      console.error('ReactKakaoMapSDK 로드 중 오류 발생:', error);
-    }
+  const isValidLatLng = (lat: number, lng: number) => {
+    return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  };
 
-    if (results.length > 0) {
-      const transformed = results
-        .map((place) => {
-          if (place.x !== null && place.y !== null) {
-            if (isFinite(place.x) && isFinite(place.y)) {
-              const [lng, lat] = proj4('EPSG:5181', wgs84, [place.x, place.y]);
+  useEffect(() => {
+    if (!searchPlaceResults) return;
+
+    const transformed = searchPlaceResults
+      .map((place) => {
+        const x = Number(place.x);
+        const y = Number(place.y);
+
+        if (!isNaN(x) && !isNaN(y) && isFinite(x) && isFinite(y)) {
+          try {
+            let [lng, lat] = proj4('EPSG:5181', 'EPSG:4326', [x, y]);
+
+            // 변환된 좌표 값을 소수점 10자리로 반올림
+            lat = parseFloat(lat.toFixed(10));
+            lng = parseFloat(lng.toFixed(10));
+
+            if (isValidLatLng(lat, lng)) {
               return {
                 ...place,
                 x: lat, // 변환된 위도
                 y: lng, // 변환된 경도
               };
             } else {
-              console.warn('Invalid coordinates for place:', place);
-              return { ...place, x: null, y: null };
+              console.warn(
+                `Invalid converted coordinates for place ID ${place.id}:`,
+                lat,
+                lng
+              );
+              return null;
             }
-          } else {
-            console.warn(`Invalid coordinates for place ID: ${place.id}`);
+          } catch (projError) {
+            console.error(
+              `Projection error for place ID ${place.id}:`,
+              projError
+            );
             return null;
           }
-        })
-        .filter((place) => place !== null); // null 값 필터링
+        } else {
+          console.warn(`Invalid coordinates for place ID: ${place.id}`, place);
+          return null;
+        }
+      })
+      .filter((place) => place !== null); // null 값 필터링
 
-      setTransformedResults(transformed as PlaceData[]);
-    }
-  }, [error, results]);
-
-  useEffect(() => {
-    const allPlace = document.getElementById('allPlace');
-    const onlyHospital = document.getElementById('onlyHospital');
-    const onlyPharmacy = document.getElementById('onlyPharmacy');
-
-    if (allPlace && onlyHospital && onlyPharmacy) {
-      if (selectedCategory === 'allPlace') {
-        allPlace.className = 'is_selected';
-        onlyHospital.className = '';
-        onlyPharmacy.className = '';
-      } else if (selectedCategory === 'onlyHospital') {
-        allPlace.className = '';
-        onlyHospital.className = 'is_selected';
-        onlyPharmacy.className = '';
-      } else if (selectedCategory === 'onlyPharmacy') {
-        allPlace.className = '';
-        onlyHospital.className = '';
-        onlyPharmacy.className = 'is_selected';
-      }
-    }
-  }, [error, selectedCategory]);
+    dispatch(setTransformedResults(transformed as PlaceData[]));
+  }, [dispatch, error, searchPlaceResults]);
 
   // 카테고리에 따라 필터링된 장소 데이터를 반환
-  const filteredResults = transformedResults.filter((place) => {
-    if (selectedCategory === 'allPlace') return true;
-    if (selectedCategory === 'onlyHospital') return place.type === '병원';
-    if (selectedCategory === 'onlyPharmacy') return place.type === '약국';
-  });
+  const filteredResults = transformedResults
+    .filter((place) => {
+      if (selectedCategory === 'allPlace') return true;
+      if (selectedCategory === 'onlyHospital') return place.type === '병원';
+      if (selectedCategory === 'onlyPharmacy') return place.type === '약국';
+      return false;
+    })
+    .filter((place) => isValidLatLng(place.x as number, place.y as number));
 
   return (
     <SearchMapStyle>

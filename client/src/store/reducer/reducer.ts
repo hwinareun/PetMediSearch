@@ -1,7 +1,7 @@
 import { placeReducer } from '../slices/placeSlice';
 
 const reducer = {
-  petPlace: placeReducer,
+  place: placeReducer,
 };
 
 export default reducer;

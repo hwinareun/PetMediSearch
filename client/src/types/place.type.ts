@@ -13,4 +13,5 @@ export interface PlaceState {
   data: PlaceData[]; //  장소 전체 데이터
   searchPlaceResults: PlaceData[]; // 장소 검색 결과
   searchInputPlace: string; // 검색하려는 장소명
+  transformedResults: PlaceData[]; // 좌표 변환 결과
 }

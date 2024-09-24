@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import SearchBox from '../components/search/SearchBox';
 import SearchMap from '../components/search/SearchMap';
-import { useState } from 'react';
-import { PlaceData } from '../types/place.type';
 
 function Search() {
-  const [searchPlaceResults, setSearchPlaceResults] = useState<PlaceData[]>([]);
   return (
     <SearchStyle>
-      <SearchBox setResults={setSearchPlaceResults} />
-      <SearchMap results={searchPlaceResults} />
+      <SearchBox />
+      <SearchMap />
     </SearchStyle>
   );
 }

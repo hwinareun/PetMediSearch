@@ -5,18 +5,12 @@ import { PlaceData } from '../../types/place.type';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setSearchInputPlace } from '../../store/slices/placeSlice';
+import { setResults, setSearchInputPlace } from '../../store/slices/placeSlice';
 import { fetchPlaces } from '../../apis/place.api';
 
-interface Props {
-  setResults: (results: PlaceData[]) => void;
-}
-
-const SearchBox: React.FC<Props> = ({ setResults }) => {
+function SearchBox() {
   const dispatch = useDispatch();
-  const { searchInputPlace } = useSelector(
-    (state: RootState) => state.petPlace
-  );
+  const { searchInputPlace } = useSelector((state: RootState) => state.place);
 
   useEffect(() => {}, [searchInputPlace]);
 
@@ -28,15 +22,24 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
       });
 
       // 입력값을 포함하는 데이터만 필터링
-      const filteredResults = results.filter(
-        (place: PlaceData) =>
-          place.bplcnm.includes(searchInputPlace) ||
-          place.sitewhladdr.includes(searchInputPlace) ||
-          place.rdnwhladdr.includes(searchInputPlace)
-      );
+      const filteredResults = results.filter((place: PlaceData) => {
+        const x = Number(place.x);
+        const y = Number(place.y);
 
-      // 필터링된 결과를 상위 컴포넌트에 전달
-      setResults(filteredResults);
+        return (
+          !isNaN(x) &&
+          !isNaN(y) &&
+          isFinite(x) &&
+          isFinite(y) &&
+          (place.bplcnm.includes(searchInputPlace) ||
+            place.sitewhladdr.includes(searchInputPlace) ||
+            place.rdnwhladdr.includes(searchInputPlace))
+        );
+      });
+
+      // 필터링된 결과를 리덕스 스토어에 저장
+      dispatch(setResults(filteredResults));
+      console.log(filteredResults);
     } catch (error) {
       console.error('Failed to fetch places:', error);
     }
@@ -69,7 +72,7 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
       </Button>
     </SearchBoxStyle>
   );
-};
+}
 
 const SearchBoxStyle = styled.div`
   display: flex;
