@@ -4,39 +4,46 @@ const router = express.Router()
 
 /**
  * @swagger
- * /category:
+ * /posts:
  *   get:
- *     summary: 카테고리별 게시글 목록 조회
- *     tags:
- *       - Category
+ *     summary: 카테고리별 게시글 조회
  *     parameters:
- *       - in: path
- *         name: category_id
+ *       - in: query
+ *         name: category
  *         required: true
+ *         description: 게시글을 조회할 카테고리의 ID
  *         schema:
  *           type: integer
- *         description: 조회할 게시글 ID
- *     description: 카테고리 내의 게시글 목록을 조회합니다. 각 게시글에는 제목, 작성자, 작성일이 포함됩니다.
  *     responses:
  *       200:
- *         description: 게시글 목록 조회 성공
+ *         description: 성공적으로 게시글 목록을 반환함
+
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   title:
- *                     type: string
- *                     example: "post1"
- *                   author:
- *                     type: string
- *                     example: "user1"
- *                   created_at:
- *                     type: string
- *                     example: "date1"
+ *               type: object
+ *               properties:
+ *                 posts:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       post_id:
+ *                         type: integer
+ *                       title:
+ *                         type: string
+ *                       content:
+ *                         type: string
+ *                       created_at:
+ *                         type: string
+ *                         format: date-time
+ *                       username:
+ *                         type: string
+ *       400:
+ *         description: 잘못된 요청 (카테고리 ID가 필요함)
+ *       500:
+ *         description: 서버 오류 발생
  */
-router.get('/:category_id', getListByCategory)
+router.get('/', getListByCategory);
 
 module.exports = router;
