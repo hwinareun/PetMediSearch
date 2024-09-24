@@ -1,3 +1,4 @@
+import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Search from './pages/Search';
@@ -8,6 +9,7 @@ import Posts from './pages/Posts';
 import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
 import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
 import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
+import { PetMediThemeProvider } from './style/themeContext';
 
 const routeList = [
   {
@@ -52,6 +54,11 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <PetMediThemeProvider>
+      <RouterProvider router={router} />
+    </PetMediThemeProvider>
+  );
 }
+
 export default App;

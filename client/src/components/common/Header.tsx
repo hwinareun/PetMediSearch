@@ -14,17 +14,15 @@ function Header() {
 
 const HeaderStyle = styled.div`
   display: flex;
-  padding-top: 10px;
-  width: 100%;
+  padding: 10px;
   height: 50px;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 5px;
   border-bottom: solid;
+  margin-bottom: 5px;
 
   img {
     width: 60px;
-    padding: 10px;
   }
 `;
 

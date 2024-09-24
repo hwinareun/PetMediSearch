@@ -15,6 +15,11 @@ function LoginGoogle() {
   );
 }
 
-const LoginGoogleStyle = styled.div``;
+const LoginGoogleStyle = styled.div`
+  img {
+    width: 350px;
+    height: 70px;
+  }
+`;
 
 export default LoginGoogle;
