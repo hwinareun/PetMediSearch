@@ -87,6 +87,28 @@ function SearchMap() {
     dispatch(setTransformedResults(transformed as PlaceData[]));
   }, [dispatch, error, searchPlaceResults]);
 
+  useEffect(() => {
+    const allPlace = document.getElementById('allPlace');
+    const onlyHospital = document.getElementById('onlyHospital');
+    const onlyPharmacy = document.getElementById('onlyPharmacy');
+
+    if (allPlace && onlyHospital && onlyPharmacy) {
+      if (selectedCategory === 'allPlace') {
+        allPlace.className = 'is_selected';
+        onlyHospital.className = '';
+        onlyPharmacy.className = '';
+      } else if (selectedCategory === 'onlyHospital') {
+        allPlace.className = '';
+        onlyHospital.className = 'is_selected';
+        onlyPharmacy.className = '';
+      } else if (selectedCategory === 'onlyPharmacy') {
+        allPlace.className = '';
+        onlyHospital.className = '';
+        onlyPharmacy.className = 'is_selected';
+      }
+    }
+  }, [error, selectedCategory]);
+
   // 카테고리에 따라 필터링된 장소 데이터를 반환
   const filteredResults = transformedResults
     .filter((place) => {
