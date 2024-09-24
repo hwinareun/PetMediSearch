@@ -10,6 +10,20 @@ const options = {
             description:
                 "반려동물 병원 및 약국 조회 서비스",
         },
+        tags: [
+            {
+                name: "Categories", // 태그 이름
+                description: "카테고리 조회, 카테고리별 게시글 조회 api", // 태그 설명
+            },
+            {
+                name: "Posts",
+                description: "게시글 조회, 등록, 수정, 삭제 api",
+            },
+            {
+                name: "Comments", // 태그 이름
+                description: "댓글 조회, 등록, 수정, 삭제 api", // 태그 설명
+            },
+        ],
         servers: [
             {
                 url: "http://localhost:8080",

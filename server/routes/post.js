@@ -37,6 +37,7 @@ const router = express.Router();
  * @swagger
  * /posts/{post_id}:
  *   get:
+ *     tags: [Posts]
  *     summary: 특정 글 상세 조회
  *     parameters:
  *       - name: post_id
@@ -63,6 +64,7 @@ router.get('/:post_id', getPostById);
  * @swagger
  * /posts:
  *   post:
+ *     tags: [Posts]
  *     summary: 글 작성
  *     requestBody:
  *       required: true
@@ -106,6 +108,7 @@ router.post('/', addPostById);
  * @swagger
  * /posts/{post_id}:
  *   put:
+ *     tags: [Posts]
  *     summary: 글 수정
  *     parameters:
  *       - name: post_id
@@ -141,6 +144,7 @@ router.put('/:post_id', updatePostById);
  * @swagger
  * /posts/{post_id}:
  *   delete:
+ *     tags: [Posts]
  *     summary: 글 삭제
  *     parameters:
  *       - name: post_id
