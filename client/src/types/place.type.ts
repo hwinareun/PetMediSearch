@@ -5,8 +5,8 @@ export interface PlaceData {
   sitewhladdr: string; // 주소지
   rdnwhladdr: string; // 주소지(도로명)
   sitetel: string; // 전화번호
-  x: number; // 위도
-  y: number; // 경도
+  x: number | null; // WTM 좌표(위도)
+  y: number | null; // WTM 좌표(경도)
 }
 
 export interface PlaceState {

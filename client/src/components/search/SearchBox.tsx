@@ -31,6 +31,7 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
       const filteredResults = results.filter(
         (place: PlaceData) =>
           place.bplcnm.includes(searchInputPlace) ||
+          place.sitewhladdr.includes(searchInputPlace) ||
           place.rdnwhladdr.includes(searchInputPlace)
       );
 
@@ -58,7 +59,7 @@ const SearchBox: React.FC<Props> = ({ setResults }) => {
         name="placeName"
         type="text"
         size="medium"
-        placeholder="병원명 혹은 약국명을 입력해주세요"
+        placeholder="장소명 혹은 주소지를 입력해주세요"
         value={searchInputPlace}
         onChange={handleInputChange}
         onKeyDown={handleKeyEnter}

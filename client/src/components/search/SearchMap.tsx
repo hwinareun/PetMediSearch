@@ -10,28 +10,65 @@ import Loading from '../common/Loading';
 import { useEffect, useState } from 'react';
 import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
 import { PlaceData } from '../../types/place.type';
+import proj4 from 'proj4';
 
 interface Props {
   results: PlaceData[]; // 상위에서 전달받은 검색 결과
 }
 
+proj4.defs(
+  'EPSG:5181',
+  '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs'
+);
+
+const wgs84 = 'EPSG:4326'; // WGS84 좌표계 정의
+
 function SearchMap({ results }: Props) {
+  const [loading, error] = useKakaoLoader({
+    appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState('allPlace');
+  const [transformedResults, setTransformedResults] = useState<PlaceData[]>([]);
+
   const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
   const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
 
   const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
   const pharmacyOrigin = { x: 0, y: 0 };
 
-  const [loading, error] = useKakaoLoader({
-    appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
-  });
-  const [selectedCategory, setSelectedCategory] = useState('allPlace');
-
   useEffect(() => {
     if (error) {
       console.error('ReactKakaoMapSDK 로드 중 오류 발생:', error);
     }
 
+    if (results.length > 0) {
+      const transformed = results
+        .map((place) => {
+          if (place.x !== null && place.y !== null) {
+            if (isFinite(place.x) && isFinite(place.y)) {
+              const [lng, lat] = proj4('EPSG:5181', wgs84, [place.x, place.y]);
+              return {
+                ...place,
+                x: lat, // 변환된 위도
+                y: lng, // 변환된 경도
+              };
+            } else {
+              console.warn('Invalid coordinates for place:', place);
+              return { ...place, x: null, y: null };
+            }
+          } else {
+            console.warn(`Invalid coordinates for place ID: ${place.id}`);
+            return null;
+          }
+        })
+        .filter((place) => place !== null); // null 값 필터링
+
+      setTransformedResults(transformed as PlaceData[]);
+    }
+  }, [error, results]);
+
+  useEffect(() => {
     const allPlace = document.getElementById('allPlace');
     const onlyHospital = document.getElementById('onlyHospital');
     const onlyPharmacy = document.getElementById('onlyPharmacy');
@@ -54,7 +91,7 @@ function SearchMap({ results }: Props) {
   }, [error, selectedCategory]);
 
   // 카테고리에 따라 필터링된 장소 데이터를 반환
-  const filteredResults = results.filter((place) => {
+  const filteredResults = transformedResults.filter((place) => {
     if (selectedCategory === 'allPlace') return true;
     if (selectedCategory === 'onlyHospital') return place.type === '병원';
     if (selectedCategory === 'onlyPharmacy') return place.type === '약국';
@@ -66,17 +103,6 @@ function SearchMap({ results }: Props) {
         <Loading />
       ) : (
         <div id="mapwrap">
-          {results.length > 0 ? (
-            <ul>
-              {results.map((place) => (
-                <li key={place.id}>
-                  {place.bplcnm} - {place.x}, {place.y}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>검색 결과가 없습니다.</p>
-          )}
           {/* {results.length === 0 && <p>검색 결과가 없습니다.</p>} */}
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
@@ -89,7 +115,7 @@ function SearchMap({ results }: Props) {
             {filteredResults.map((place, index) => (
               <MapMarker
                 key={`place-${place.x}-${place.y}-${index}`}
-                position={{ lat: place.x, lng: place.y }}
+                position={{ lat: place.x as number, lng: place.y as number }}
                 image={{
                   src: markerImgSrc,
                   size: imgSize,
@@ -101,12 +127,6 @@ function SearchMap({ results }: Props) {
                 }}
               />
             ))}
-            <MapMarker
-              position={{
-                lat: 0,
-                lng: 0,
-              }}
-            />
           </Map>
           {/* 지도 위에 표시될 마커 카테고리 */}
           <div className="category">
