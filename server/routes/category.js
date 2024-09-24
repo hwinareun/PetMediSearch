@@ -4,8 +4,9 @@ const router = express.Router()
 
 /**
  * @swagger
- * /posts:
+ * /category:
  *   get:
+ *     tags: [Categories]
  *     summary: 카테고리별 게시글 조회
  *     parameters:
  *       - in: query

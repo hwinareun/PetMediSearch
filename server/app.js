@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require('./mysql');
-const path = require('path');  
+const path = require('path');
 const app = express();
 const port = 8080;
 
@@ -50,9 +50,9 @@ app.get('/api/facilities', (req, res) => {
 // 모든 사용자 조회
 app.get('/users', (req, res) => {
     mysql.query('SELECT * FROM users', (err, results) => {
-        if(err) {
-            console.error('Database query error:', err);  
-            res.status(500).json({error: 'Internal server error' });
+        if (err) {
+            console.error('Database query error:', err);
+            res.status(500).json({ error: 'Internal server error' });
             return;
         }
         res.json(results);
@@ -62,12 +62,12 @@ app.get('/users', (req, res) => {
 // 사용자 추가
 app.post('/users', (req, res) => {
     const { username, email } = req.body;
-    if (!username || !email) {  
+    if (!username || !email) {
         return res.status(400).json({ error: 'Username and email are required' });
     }
     mysql.query('INSERT INTO users (username, email) VALUES (?, ?)', [username, email], (err, result) => {
-        if(err) {
-            console.error('Database insert error:', err);  
+        if (err) {
+            console.error('Database insert error:', err);
             res.status(500).json({ error: 'Internal server error' });
             return;
         }
@@ -78,18 +78,30 @@ app.post('/users', (req, res) => {
 // 사용자 삭제
 app.delete('/users/:id', (req, res) => {
     mysql.query('DELETE FROM users WHERE id = ?', [req.params.id], (err, result) => {
-        if(err) {
-            console.error('Database delete error:', err);  
+        if (err) {
+            console.error('Database delete error:', err);
             res.status(500).json({ error: 'Internal server error' });
             return;
         }
-        if(result.affectedRows === 0) {
+        if (result.affectedRows === 0) {
             res.status(404).json({ message: 'User not found' });
             return;
         }
         res.json({ message: 'User deleted successfully' });
     });
 });
+
+
+
+// router
+const categoryRouter = require('./routes/category')
+const postRouter = require('./routes/post')
+
+// category
+app.use('/category', categoryRouter)
+app.use('/posts', postRouter)
+
+
 
 // 404 에러 처리
 app.use((req, res, next) => {
@@ -101,14 +113,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Something went wrong' });
 });
-
-// router
-const categoryRouter = require('./routes/category')
-const postRouter = require('./routes/post')
-
-// category
-app.use('/category', categoryRouter)
-app.use('/posts', postRouter)
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
