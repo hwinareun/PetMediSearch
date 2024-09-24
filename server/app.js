@@ -102,6 +102,10 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Something went wrong' });
 });
 
+// router
+const categoryRouter = require('./routes/category')
+const postRouter = require('./routes/post')
+
 // category
 app.use('/category', categoryRouter)
 app.use('/posts', postRouter)

@@ -1,12 +1,31 @@
+const conn = require('../mysql');
+
 const getListByCategory = (req, res) => {
+    const categoryId = req.query.category;
 
-    let response = [{ title: 'post1', author: 'user1', created_at: 'date1' },
-    { title: 'post2', author: 'user2', created_at: 'date2' },
-    { title: 'post3', author: 'user3', created_at: 'date3' }
-    ]
+    if (!categoryId) {
+        return res.status(400).send({ message: '카테고리 ID가 필요합니다.' });
+    }
 
-    return res.json(response);
+    const categoryIdInt = parseInt(categoryId, 10);
+    if (isNaN(categoryIdInt)) {
+        return res.status(400).send({ message: '유효한 카테고리 ID가 필요합니다.' });
+    }
 
+    const query = `
+        SELECT p.post_id, p.title, p.content, p.created_at, u.username
+        FROM posts p
+        JOIN users u ON p.user_id = u.user_id
+        WHERE p.category_id = ?
+        ORDER BY p.created_at DESC
+    `;
+
+    conn.query(query, [categoryIdInt], (error, results) => {
+        if (error) {
+            return res.status(500).send({ message: '서버 오류 발생', error });
+        }
+        return res.send({ posts: results });
+    });
 }
 
 module.exports = {

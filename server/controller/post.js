@@ -1,35 +1,5 @@
 const conn = require('../mysql');
 
-const getPostsByCategory = (req, res) => {
-    const categoryId = req.query.category;
-
-    if (!categoryId) {
-        return res.status(400).send({ message: '카테고리 ID가 필요합니다.' });
-    }
-
-    const categoryIdInt = parseInt(categoryId, 10);
-    if (isNaN(categoryIdInt)) {
-        return res.status(400).send({ message: '유효한 카테고리 ID가 필요합니다.' });
-    }
-
-    const query = `
-        SELECT p.post_id, p.title, p.content, p.created_at, u.username
-        FROM posts p
-        JOIN users u ON p.user_id = u.user_id
-        WHERE p.category_id = ?
-        ORDER BY p.created_at DESC
-    `;
-
-    conn.query(query, [categoryIdInt], (error, results) => {
-        if (error) {
-            return res.status(500).send({ message: '서버 오류 발생', error });
-        }
-        return res.send({ posts: results });
-    });
-};
-
-
-
 // 게시글 ID로 게시글 조회
 const getPostById = (req, res) => {
     const post_id = req.params.post_id;
@@ -114,7 +84,6 @@ const deletePostById = (req, res) => {
 };
 
 module.exports = {
-    getPostsByCategory,
     getPostById,
     addPostById,
     updatePostById,
