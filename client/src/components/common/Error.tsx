@@ -11,10 +11,10 @@ function Error() {
   return (
     <ErrorStyle>
       <img src={'../src/assets/images/Error.png'} />
-      <p className="error">
+      <div className="error">
         <h3>Error!</h3>
         <h6>{error.message}</h6>
-      </p>
+      </div>
       <a href="/">메인으로 이동</a>
     </ErrorStyle>
   );
@@ -28,7 +28,7 @@ const ErrorStyle = styled.div`
   img {
     width: 200px;
   }
-  p {
+  div {
     border-top: solid black;
     border-bottom: solid black;
     padding: 10px;
