@@ -5,6 +5,10 @@ const app = express();
 const port = 8080;
 
 app.use(express.json());
+
+// swagger 연동
+const { swaggerUi, specs } = require("./swagger/swagger")
+app.use("/api", swaggerUi.serve, swaggerUi.setup(specs))
 app.use(express.static('public'));
 
 app.get('/search', (req, res) => {
@@ -97,6 +101,10 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Something went wrong' });
 });
+
+// category
+app.use('/category', categoryRouter)
+app.use('/posts', postRouter)
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
