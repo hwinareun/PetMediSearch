@@ -36,6 +36,7 @@ const LoginGoogleStyle = styled.div`
     margin-top: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     color: #989898;
+    font-family: initial;
 
     .icon {
       width: 50px;

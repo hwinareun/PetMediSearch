@@ -31,6 +31,12 @@ const InputStyle = styled.input<Props>`
   border-radius: ${({ theme }) => theme.borderRadius.default};
   width: ${({ theme, size }) => theme.input[size].width};
   height: ${({ theme, size }) => theme.input[size].height};
+  font-family: 'Garam';
+  border: 2px solid #575757;
+  outline: none;
+  &:focus {
+    border-color: #5ba95b !important;
+  }
 `;
 
 export default Input;

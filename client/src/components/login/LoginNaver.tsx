@@ -35,6 +35,7 @@ const LoginNaverStyle = styled.div`
     font-size: 18px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     margin: 10px 0;
+    font-family: initial;
 
     .icon {
       width: 50px;
