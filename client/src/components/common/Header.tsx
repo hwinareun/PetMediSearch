@@ -19,7 +19,7 @@ const HeaderStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: solid;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 
   img {
     width: 60px;
