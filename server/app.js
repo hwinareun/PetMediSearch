@@ -98,13 +98,14 @@ app.delete('/users/:id', (req, res) => {
 
 
 // router
-const categoryRouter = require('./routes/category')
-const postRouter = require('./routes/post')
+const categoryRouter = require('./routes/category');
+const postRouter = require('./routes/post');
+const reviewRouter = require('./routes/review');
 
 // category
-app.use('/category', categoryRouter)
-app.use('/posts', postRouter)
-
+app.use('/category', categoryRouter);
+app.use('/posts', postRouter);
+app.use('/reviews', reviewRouter);
 
 
 // 404 에러 처리
