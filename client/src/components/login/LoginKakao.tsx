@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import kakaobttn from '../../assets/images/login/LoginKakao.png';
 
 const K_CLIENT_ID = import.meta.env.VITE_K_REST_API_KEY;
 const K_REDIRECT_URI = import.meta.env.VITE_K_REDIRECT_URL;
@@ -8,17 +9,21 @@ const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_CLIENT_
 function LoginKakao() {
   return (
     <LoginKakaoStyle>
-      <a href={KAKAO_URL} className="kakaobttn">
-        <img src={`../src/assets/images/login/LoginKakao.png`} />
+      <a href={KAKAO_URL}>
+        <div className="kakaobttn">
+          <img src={kakaobttn} className="icon" />
+        </div>
       </a>
     </LoginKakaoStyle>
   );
 }
 
 const LoginKakaoStyle = styled.div`
-  img {
+  .icon {
+    border-radius: 8px;
     width: 350px;
-    height: 70px;
+    height: 58px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
   }
 `;
 
