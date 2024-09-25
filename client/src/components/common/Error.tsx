@@ -24,6 +24,12 @@ const ErrorStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
 
   img {
     width: 200px;
@@ -40,6 +46,7 @@ const ErrorStyle = styled.div`
     font-size: 10px;
     color: grey;
     text-decoration: none;
+    padding: 10px;
   }
 
   a:hover {
