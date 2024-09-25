@@ -7,6 +7,7 @@ export interface PlaceData {
   sitetel: string; // 전화번호
   x: number | null; // WTM 좌표(위도)
   y: number | null; // WTM 좌표(경도)
+  dtlstatenm: string; // 영업 상태(정상 | 폐업)
 }
 
 export interface PlaceState {

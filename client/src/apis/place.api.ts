@@ -13,7 +13,7 @@ export const fetchPlaces = async (params: PlaceParams) => {
     }
   });
 
-  const url = `/api/facilities?${query.toString()}`;
+  const url = `/facilities?${query.toString()}`;
 
   try {
     const response = await httpClient.get(url);

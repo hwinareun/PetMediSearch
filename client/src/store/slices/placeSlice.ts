@@ -14,7 +14,6 @@ const placeSlice = createSlice({
   reducers: {
     setSearchInputPlace(state, action: PayloadAction<string>) {
       state.searchInputPlace = action.payload;
-      state.searchPlaceResults = [];
     },
     setResults(state, action: PayloadAction<PlaceData[]>) {
       state.searchPlaceResults = action.payload;

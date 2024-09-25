@@ -8,7 +8,6 @@ const cors = require("cors");
 app.use(cors({ origin: "http://localhost:5000", credentials: true }));
 
 app.use(express.json());
-app.use(express.json());
 
 // swagger 연동
 const { swaggerUi, specs } = require("./swagger/swagger")
@@ -20,7 +19,7 @@ app.get('/search', (req, res) => {
 });
 
 // 지도에 위치 표시
-app.get('/api/facilities', (req, res) => {
+app.get('/facilities', (req, res) => {
     const { type, keyword } = req.query;
     let query = 'SELECT * FROM medical_facilities WHERE 1=1';
     const values = [];

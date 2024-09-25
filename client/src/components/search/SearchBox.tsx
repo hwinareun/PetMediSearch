@@ -21,6 +21,15 @@ function SearchBox() {
         bplcnm: searchInputPlace,
       });
 
+      // 결과가 배열인지 확인
+      if (!Array.isArray(results)) {
+        console.error(
+          '배열을 기대했으나 다른 데이터 형식이 반환되었습니다:',
+          results
+        );
+        return;
+      }
+
       // 입력값을 포함하는 데이터만 필터링
       const filteredResults = results.filter((place: PlaceData) => {
         const x = Number(place.x);
