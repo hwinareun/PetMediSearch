@@ -1,6 +1,10 @@
 import { FaX } from 'react-icons/fa6';
 import styled from 'styled-components';
 import { PlaceData } from '../../../types/place.type';
+import {
+  MdDoNotDisturbOnTotalSilence,
+  MdExpandCircleDown,
+} from 'react-icons/md';
 
 interface Props {
   onClick: (markerId: number) => void;
@@ -8,11 +12,37 @@ interface Props {
 }
 
 function SearchMapOverlay({ onClick, place }: Props) {
+  const handleCopyTelClick = (tel: string) => {
+    navigator.clipboard
+      .writeText(tel)
+      .then(() => {
+        alert(`${place.bplcnm}의 전화번호가 복사되었습니다: ${tel}`);
+      })
+      .catch((err) => {
+        console.error('전화번호 복사:', err);
+      });
+  };
+
   return (
     <SearchMapOverlayStyle>
       <div className="overlayWrap">
         <div className="info">
-          <div className="title">{place.bplcnm}</div>
+          <div className="title">
+            <div>{place.bplcnm}</div>
+            <div className="state">
+              {place.dtlstatenm === '정상' ? (
+                <div className="opened">
+                  <MdExpandCircleDown className="stateIcon" />
+                  {place.dtlstatenm}
+                </div>
+              ) : (
+                <div className="closed">
+                  <MdDoNotDisturbOnTotalSilence className="stateIcon" />
+                  {place.dtlstatenm}
+                </div>
+              )}
+            </div>
+          </div>
           <FaX className="closebttn" onClick={() => onClick(place.id)} />
         </div>
         <div className="address">
@@ -20,22 +50,31 @@ function SearchMapOverlay({ onClick, place }: Props) {
             {place.rdnwhladdr ? (
               place.rdnwhladdr
             ) : (
-              <div className="notPrepared">준비되지 않은 정보입니다</div>
+              <div className="notPrepared">
+                <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                <p>준비되지 않은 정보입니다</p>
+              </div>
             )}
           </div>
           <div className="sitewhladdr">
             {place.sitewhladdr ? (
               place.sitewhladdr
             ) : (
-              <div className="notPrepared">준비되지 않은 정보입니다</div>
+              <div className="notPrepared">
+                <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                <p>준비되지 않은 정보입니다</p>
+              </div>
             )}
           </div>
         </div>
-        <div className="tel">
+        <div className="tel" onClick={() => handleCopyTelClick(place.sitetel)}>
           {place.sitetel ? (
             place.sitetel
           ) : (
-            <div className="notPrepared">준비되지 않은 정보입니다</div>
+            <div className="notPrepared">
+              <MdDoNotDisturbOnTotalSilence className="notIcon" />
+              <p>준비되지 않은 정보입니다</p>
+            </div>
           )}
         </div>
       </div>
@@ -67,9 +106,29 @@ const SearchMapOverlayStyle = styled.div`
       align-items: center;
       gap: 10px;
       .title {
+        display: flex;
         font-size: 14px;
         font-weight: bold;
-        padding-top: 5px;
+        border-bottom: solid #d9d9d9;
+        align-items: end;
+        gap: 5px;
+        .state {
+          font-size: 8px;
+          .opened {
+            display: flex;
+            align-items: center;
+            color: #5ba95b;
+          }
+          .closed {
+            display: flex;
+            align-items: center;
+            color: #e44c4c;
+          }
+          .stateIcon {
+            font-size: 12px;
+            padding-bottom: 1px;
+          }
+        }
       }
       .closebttn {
         cursor: pointer;
@@ -97,11 +156,17 @@ const SearchMapOverlayStyle = styled.div`
       padding: 5px;
       padding-left: 10px;
       font-size: 10px;
+      cursor: pointer;
     }
 
     .notPrepared {
+      display: flex;
+      align-items: center;
       font-size: 6px;
       color: #a0a0a0;
+      .notIcon {
+        font-size: 9px;
+      }
     }
   }
   .overlayWrap:after {
