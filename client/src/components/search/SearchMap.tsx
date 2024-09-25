@@ -1,4 +1,5 @@
 import {
+  CustomOverlayMap,
   Map,
   MapMarker,
   MapTypeControl,
@@ -14,6 +15,8 @@ import proj4 from 'proj4';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setTransformedResults } from '../../store/slices/placeSlice';
+import React from 'react';
+import SearchMapOverlay from './map/SearchMapOverlay';
 
 proj4.defs(
   'EPSG:5181',
@@ -26,6 +29,7 @@ function SearchMap() {
     (state: RootState) => state.place
   );
   const [selectedCategory, setSelectedCategory] = useState('allPlace');
+  const [openedMarkers, setOpenedMarkers] = useState<number[]>([]);
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
@@ -40,8 +44,16 @@ function SearchMap() {
     return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
   };
 
+  const handleMarkerClick = (markerId: number) => {
+    if (openedMarkers.includes(markerId)) {
+      setOpenedMarkers(openedMarkers.filter((id) => id !== markerId));
+    } else {
+      setOpenedMarkers([...openedMarkers, markerId]);
+    }
+  };
+
   useEffect(() => {
-    if (!searchPlaceResults) return;
+    setOpenedMarkers([]);
 
     const transformed = searchPlaceResults
       .map((place) => {
@@ -125,29 +137,44 @@ function SearchMap() {
         <Loading />
       ) : (
         <div id="mapwrap">
-          {/* {results.length === 0 && <p>검색 결과가 없습니다.</p>} */}
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
-            level={6} // 지도 확대 레벨
+            level={7} // 지도 확대 레벨
           >
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
             {/* 검색 결과 마커 표시 */}
-            {filteredResults.map((place, index) => (
-              <MapMarker
-                key={`place-${place.x}-${place.y}-${index}`}
-                position={{ lat: place.x as number, lng: place.y as number }}
-                image={{
-                  src: markerImgSrc,
-                  size: imgSize,
-                  options: {
-                    spriteSize: spriteSize,
-                    spriteOrigin:
-                      place.type === '병원' ? hospitalOrigin : pharmacyOrigin,
-                  },
-                }}
-              />
+            {filteredResults.map((place) => (
+              <React.Fragment key={`place-${place.id}`}>
+                <MapMarker
+                  position={{ lat: place.x as number, lng: place.y as number }}
+                  image={{
+                    src: markerImgSrc,
+                    size: imgSize,
+                    options: {
+                      spriteSize: spriteSize,
+                      spriteOrigin:
+                        place.type === '병원' ? hospitalOrigin : pharmacyOrigin,
+                    },
+                  }}
+                  onClick={() => handleMarkerClick(place.id)}
+                />
+                {/* 마커 클릭 시 나타나는 오버레이 */}
+                {openedMarkers.includes(place.id) && (
+                  <CustomOverlayMap
+                    position={{
+                      lat: place.x as number,
+                      lng: place.y as number,
+                    }}
+                  >
+                    <SearchMapOverlay
+                      onClick={handleMarkerClick}
+                      place={place}
+                    />
+                  </CustomOverlayMap>
+                )}
+              </React.Fragment>
             ))}
           </Map>
           {/* 지도 위에 표시될 마커 카테고리 */}
