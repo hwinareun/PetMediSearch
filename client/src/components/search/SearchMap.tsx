@@ -209,7 +209,7 @@ function SearchMap() {
 const SearchMapStyle = styled.div`
   position: relative;
   padding-top: 20px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 
   #mapwrap {
     position: relative;

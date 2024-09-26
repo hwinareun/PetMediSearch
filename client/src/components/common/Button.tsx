@@ -29,9 +29,11 @@ const ButtonStyle = styled.button<
   border: 0;
   border-radius: ${({ theme }) => theme.borderRadius.default};
   &:hover {
+    color: ${({ theme, $scheme }) => theme.buttonScheme[$scheme].hoverTxtColor};
     background-color: ${({ theme, $scheme }) =>
-      theme.buttonScheme[$scheme].hoverColor};
+      theme.buttonScheme[$scheme].hoverBgColor};
   }
+  font-family: 'Garam';
 `;
 
 export default Button;

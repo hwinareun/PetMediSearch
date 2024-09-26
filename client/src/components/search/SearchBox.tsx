@@ -76,7 +76,7 @@ function SearchBox() {
         onChange={handleInputChange}
         onKeyDown={handleKeyEnter}
       />
-      <Button size="medium" scheme="normal" onClick={handleButtonClick}>
+      <Button size="medium" scheme="positive" onClick={handleButtonClick}>
         검색
       </Button>
     </SearchBoxStyle>

@@ -17,7 +17,8 @@ interface Props {
     [key in ButtonScheme]: {
       color: string;
       backgroundColor: string;
-      hoverColor?: string;
+      hoverTxtColor?: string;
+      hoverBgColor?: string;
     };
   };
   borderRadius: {
@@ -41,29 +42,32 @@ export const lightTheme: Props = {
       padding: '10px 16px',
     },
     medium: {
-      fontSize: '14px',
-      padding: '14px 20px',
+      fontSize: '16px',
+      padding: '10px 20px',
     },
     large: {
-      fontSize: '20px',
-      padding: '16px 24px',
+      fontSize: '22px',
+      padding: '8px 20px',
     },
   },
   buttonScheme: {
     normal: {
       color: 'black',
       backgroundColor: '#E3E3E3',
-      hoverColor: '#575757',
+      hoverTxtColor: 'white',
+      hoverBgColor: '#575757',
     },
     positive: {
       color: 'black',
       backgroundColor: '#E3E3E3',
-      hoverColor: '#A5C8A7',
+      hoverTxtColor: 'white',
+      hoverBgColor: '#5ba95b',
     },
     negative: {
       color: 'black',
       backgroundColor: '#E3E3E3',
-      hoverColor: '#DEB9B9',
+      hoverTxtColor: 'white',
+      hoverBgColor: '#e44c4c',
     },
   },
   borderRadius: {
@@ -80,7 +84,7 @@ export const lightTheme: Props = {
       fontSize: '12px',
       padding: '8px 10px',
       width: '250px',
-      height: '30px',
+      height: '20px',
     },
     large: {
       fontSize: '20px',
