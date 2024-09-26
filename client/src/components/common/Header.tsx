@@ -5,7 +5,7 @@ function Header() {
   return (
     <HeaderStyle>
       <a href="/">
-        <img src={'../src/assets/images/Icon.png'} />
+        <img src={'../src/assets/images/Logo.png'} />
       </a>
       <Menu />
     </HeaderStyle>
