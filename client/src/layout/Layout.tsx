@@ -18,7 +18,7 @@ function Layout({ children }: LayoutProps) {
 
 const LayoutStyle = styled.div`
   background-color: white;
-  max-width: 425px;
+  max-width: 415px;
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;

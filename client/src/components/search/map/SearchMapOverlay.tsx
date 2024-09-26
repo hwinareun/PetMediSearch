@@ -46,16 +46,6 @@ function SearchMapOverlay({ onClick, place }: Props) {
           <FaX className="closebttn" onClick={() => onClick(place.id)} />
         </div>
         <div className="address">
-          <div className="rdnwhladdr">
-            {place.rdnwhladdr ? (
-              place.rdnwhladdr
-            ) : (
-              <div className="notPrepared">
-                <MdDoNotDisturbOnTotalSilence className="notIcon" />
-                <p>준비되지 않은 정보입니다</p>
-              </div>
-            )}
-          </div>
           <div className="sitewhladdr">
             {place.sitewhladdr ? (
               place.sitewhladdr
@@ -66,10 +56,25 @@ function SearchMapOverlay({ onClick, place }: Props) {
               </div>
             )}
           </div>
+          <div className="rdnwhladdr">
+            {place.rdnwhladdr ? (
+              place.rdnwhladdr
+            ) : (
+              <div className="notPrepared">
+                <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                <p>준비되지 않은 정보입니다</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="tel" onClick={() => handleCopyTelClick(place.sitetel)}>
+        <div className="tel">
           {place.sitetel ? (
-            place.sitetel
+            <div
+              className="siteTel"
+              onClick={() => handleCopyTelClick(place.sitetel)}
+            >
+              {place.sitetel}
+            </div>
           ) : (
             <div className="notPrepared">
               <MdDoNotDisturbOnTotalSilence className="notIcon" />
@@ -85,7 +90,7 @@ function SearchMapOverlay({ onClick, place }: Props) {
 const SearchMapOverlayStyle = styled.div`
   position: absolute;
   bottom: 80px;
-  left: -100px;
+  left: -140px;
   cursor: default;
 
   .overlayWrap {
@@ -94,7 +99,7 @@ const SearchMapOverlayStyle = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     position: relative;
     border-radius: 16px;
-    width: 200px;
+    width: 280px;
     white-space: normal;
 
     .info {
@@ -107,25 +112,23 @@ const SearchMapOverlayStyle = styled.div`
       gap: 10px;
       .title {
         display: flex;
-        font-size: 14px;
+        font-size: 20px;
         font-weight: bold;
         border-bottom: solid #d9d9d9;
         align-items: end;
         gap: 5px;
         .state {
-          font-size: 8px;
+          font-size: 12px;
           .opened {
             display: flex;
-            align-items: center;
             color: #5ba95b;
           }
           .closed {
             display: flex;
-            align-items: center;
             color: #e44c4c;
           }
           .stateIcon {
-            font-size: 12px;
+            font-size: 14px;
             padding-bottom: 1px;
           }
         }
@@ -142,9 +145,9 @@ const SearchMapOverlayStyle = styled.div`
 
     .address {
       padding: 0 10px 5px;
-      font-size: 7px;
-      .sitewhladdr {
-        font-size: 6px;
+      font-size: 12px;
+      .rdnwhladdr {
+        font-size: 10px;
         color: #464646;
       }
     }
@@ -156,7 +159,9 @@ const SearchMapOverlayStyle = styled.div`
       padding: 5px;
       padding-left: 10px;
       font-size: 10px;
-      cursor: pointer;
+      .siteTel {
+        cursor: pointer;
+      }
     }
 
     .notPrepared {
