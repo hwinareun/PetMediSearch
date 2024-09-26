@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Login from './pages/Login';
-import Layout from './layout/Layoout';
+import Layout from './layout/Layout';
 import Error from './components/common/Error';
 import Posts from './pages/Posts';
 import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
