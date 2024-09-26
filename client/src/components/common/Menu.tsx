@@ -49,6 +49,10 @@ const MenuStyle = styled.div`
       display: flex;
       align-items: center;
     }
+
+    p:hover {
+      color: #575757;
+    }
   }
 `;
 

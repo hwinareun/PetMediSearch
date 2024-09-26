@@ -17,6 +17,7 @@ import { RootState } from '../../store';
 import { setTransformedResults } from '../../store/slices/placeSlice';
 import React from 'react';
 import SearchMapOverlay from './map/SearchMapOverlay';
+import SearchMapCategory from './map/SearchMapCategory';
 
 proj4.defs(
   'EPSG:5181',
@@ -109,14 +110,17 @@ function SearchMap() {
         allPlace.className = 'is_selected';
         onlyHospital.className = '';
         onlyPharmacy.className = '';
+        setOpenedMarkers([]);
       } else if (selectedCategory === 'onlyHospital') {
         allPlace.className = '';
         onlyHospital.className = 'is_selected';
         onlyPharmacy.className = '';
+        setOpenedMarkers([]);
       } else if (selectedCategory === 'onlyPharmacy') {
         allPlace.className = '';
         onlyHospital.className = '';
         onlyPharmacy.className = 'is_selected';
+        setOpenedMarkers([]);
       }
     }
   }, [error, selectedCategory]);
@@ -177,29 +181,7 @@ function SearchMap() {
               </React.Fragment>
             ))}
           </Map>
-          {/* 지도 위에 표시될 마커 카테고리 */}
-          <div className="category">
-            <ul>
-              <li id="allPlace" onClick={() => setSelectedCategory('allPlace')}>
-                <span className="marker_comm marker_all"></span>
-                전체
-              </li>
-              <li
-                id="onlyHospital"
-                onClick={() => setSelectedCategory('onlyHospital')}
-              >
-                <span className="marker_comm marker_hospital"></span>
-                병원
-              </li>
-              <li
-                id="onlyPharmacy"
-                onClick={() => setSelectedCategory('onlyPharmacy')}
-              >
-                <span className="marker_comm marker_pharmacy"></span>
-                약국
-              </li>
-            </ul>
-          </div>
+          <SearchMapCategory onClick={setSelectedCategory} />
         </div>
       )}
     </SearchMapStyle>
@@ -217,62 +199,6 @@ const SearchMapStyle = styled.div`
 
   .result {
     font-size: 8px;
-  }
-
-  .category {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 0 10px;
-    border-radius: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 10; /* 지도 위에 표시되도록 z-index 설정 */
-    ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: space-around;
-      font-size: 10px;
-      li {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        cursor: pointer;
-        padding-top: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        gap: 5px;
-        border-radius: 8px;
-        border: solid #eeeeee;
-      }
-    }
-    .is_selected {
-      font-weight: bold;
-      background-color: #e2e2e2;
-      border: solid #333;
-    }
-  }
-
-  .marker_comm {
-    // 마커 공통 스타일
-    display: inline-block;
-    width: 20px; /* 아이콘 너비 */
-    height: 30px; /* 아이콘 높이 */
-    background-image: url(${markerImgSrc}); /* 스프라이트 이미지 경로 */
-    background-size: 20px 89.75px; /* 스프라이트 이미지 전체 크기 */
-  }
-
-  .marker_pharmacy {
-    background-position: 0px 0px; /* 약국 아이콘의 위치 */
-  }
-
-  .marker_hospital {
-    background-position: 0px -60px; /* 병원 아이콘의 위치 */
-  }
-
-  .marker_all {
-    background-position: 0px -30px; /* 전체 아이콘의 위치 */
   }
 `;
 
