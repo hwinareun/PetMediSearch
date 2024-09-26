@@ -1,7 +1,8 @@
 import { httpClient } from './http';
 
 interface PlaceParams {
-  bplcnm: string; // 장소 상호명
+  type?: string;
+  keyword?: string;
 }
 
 export const fetchPlaces = async (params: PlaceParams) => {
