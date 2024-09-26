@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { PlaceData } from '../../types/place.type';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -16,9 +15,8 @@ function SearchBox() {
 
   const handleButtonClick = async () => {
     try {
-      // 서버에서 데이터를 받아옴
       const results = await fetchPlaces({
-        bplcnm: searchInputPlace,
+        keyword: searchInputPlace,
       });
 
       // 결과가 배열인지 확인
@@ -30,25 +28,8 @@ function SearchBox() {
         return;
       }
 
-      // 입력값을 포함하는 데이터만 필터링
-      const filteredResults = results.filter((place: PlaceData) => {
-        const x = Number(place.x);
-        const y = Number(place.y);
-
-        return (
-          !isNaN(x) &&
-          !isNaN(y) &&
-          isFinite(x) &&
-          isFinite(y) &&
-          (place.bplcnm.includes(searchInputPlace) ||
-            place.sitewhladdr.includes(searchInputPlace) ||
-            place.rdnwhladdr.includes(searchInputPlace))
-        );
-      });
-
-      // 필터링된 결과를 리덕스 스토어에 저장
-      dispatch(setResults(filteredResults));
-      console.log(filteredResults);
+      dispatch(setResults(results));
+      console.log(results);
     } catch (error) {
       console.error('Failed to fetch places:', error);
     }
