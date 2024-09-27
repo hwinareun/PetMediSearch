@@ -53,12 +53,13 @@ app.get("/facilities", async (req, res) => {
 });
 
 // router
-const categoryRouter = require('./routes/category')
-const postRouter = require('./routes/post')
+const categoryRouter = require('./routes/category');
+const postRouter = require('./routes/post');
+const reviewRouter = require('./routes/review');
 
-// category
-app.use('/category', categoryRouter)
-app.use('/posts', postRouter)
+app.use('/category', categoryRouter);
+app.use('/posts', postRouter);
+app.use('/reviews', reviewRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
