@@ -20,8 +20,8 @@ app.get("/search", (req, res) => {
   res.sendFile(nodePath.join(__dirname, "public", "search.html"));
 });
 
-// 지도에 위치 표시
-app.get("/facilities", async (req, res) => {
+// 지도에 위치 표시 
+app.get("/facilities", (req, res) => {
   const { type, keyword } = req.query;
   let query = "SELECT * FROM medical_facilities WHERE 1=1";
   const values = [];
@@ -41,15 +41,16 @@ app.get("/facilities", async (req, res) => {
   console.log("Executing query:", query);
   console.log("Query values:", values);
 
-  try {
-    const [results] = await mysql.query(query, values);
+  mysql.query(query, values, (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      console.error('Error details:', JSON.stringify(err, null, 2));
+      return res.status(500).json({ error: 'Internal server error', details: err.message });
+    }
+
     console.log(`Query returned ${results.length} results`);
     res.json(results);
-  } catch (err) {
-    console.error('Database query error:', err);
-    console.error('Error details:', JSON.stringify(err, null, 2));
-    res.status(500).json({ error: 'Internal server error', details: err.message });
-  }
+  });
 });
 
 // router
