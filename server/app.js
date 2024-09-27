@@ -52,7 +52,13 @@ app.get("/facilities", async (req, res) => {
   }
 });
 
-// 나머지 코드는 그대로 유지
+// router
+const categoryRouter = require('./routes/category')
+const postRouter = require('./routes/post')
+
+// category
+app.use('/category', categoryRouter)
+app.use('/posts', postRouter)
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
