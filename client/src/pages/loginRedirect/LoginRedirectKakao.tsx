@@ -22,12 +22,29 @@ function LoginRedirectKakao() {
   return (
     <LoginRedirectKakaoStyle>
       <Loading />
-      <p>로그인 중입니다.</p>
-      <p>잠시만 기다려주세요.</p>
+      <p>
+        카카오 아이디로 간편 로그인 중입니다.
+        <br />
+        잠시만 기다려주세요.
+      </p>
     </LoginRedirectKakaoStyle>
   );
 }
 
-const LoginRedirectKakaoStyle = styled.div``;
+const LoginRedirectKakaoStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+
+  img {
+    width: 200px;
+  }
+  p {
+    font-size: 20px;
+    text-align: center;
+  }
+`;
 
 export default LoginRedirectKakao;
