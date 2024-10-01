@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Loading from '../../components/common/Loading';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Lottie from 'lottie-react';
+import loadingLottie from '../../assets/lottie/loadingLottie.json';
 
 function LoginRedirectKakao() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function LoginRedirectKakao() {
 
   return (
     <LoginRedirectKakaoStyle>
-      <Loading />
+      <Lottie animationData={loadingLottie} className="lottie" />
       <p>
         카카오 아이디로 간편 로그인 중입니다.
         <br />
@@ -38,8 +39,8 @@ const LoginRedirectKakaoStyle = styled.div`
   margin-left: auto;
   margin-right: auto;
 
-  img {
-    width: 200px;
+  .lottie {
+    width: 300px;
   }
   p {
     font-size: 20px;
