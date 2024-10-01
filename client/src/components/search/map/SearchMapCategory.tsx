@@ -2,20 +2,33 @@ import styled from 'styled-components';
 import MarkerSprites from '../../../assets/images/MarkerSprites.png';
 interface Props {
   onClick: (value: React.SetStateAction<string>) => void;
+  selectedCategory: string;
 }
-function SearchMapCategory({ onClick }: Props) {
+function SearchMapCategory({ onClick, selectedCategory }: Props) {
   return (
     <SearchMapCategoryStyle>
       <ul>
-        <li id="allPlace" onClick={() => onClick('allPlace')}>
+        <li
+          id="allPlace"
+          className={selectedCategory === 'allPlace' ? 'is_selected' : ''}
+          onClick={() => onClick('allPlace')}
+        >
           <span className="marker_comm marker_all"></span>
           <p>전체</p>
         </li>
-        <li id="onlyHospital" onClick={() => onClick('onlyHospital')}>
+        <li
+          id="onlyHospital"
+          className={selectedCategory === 'onlyHospital' ? 'is_selected' : ''}
+          onClick={() => onClick('onlyHospital')}
+        >
           <span className="marker_comm marker_hospital"></span>
           <p>병원</p>
         </li>
-        <li id="onlyPharmacy" onClick={() => onClick('onlyPharmacy')}>
+        <li
+          id="onlyPharmacy"
+          className={selectedCategory === 'onlyPharmacy' ? 'is_selected' : ''}
+          onClick={() => onClick('onlyPharmacy')}
+        >
           <span className="marker_comm marker_pharmacy"></span>
           <p>약국</p>
         </li>

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setResults, setSearchInputPlace } from '../../store/slices/placeSlice';
@@ -10,8 +9,6 @@ import { fetchPlaces } from '../../apis/place.api';
 function SearchBox() {
   const dispatch = useDispatch();
   const { searchInputPlace } = useSelector((state: RootState) => state.place);
-
-  useEffect(() => {}, [searchInputPlace]);
 
   const handleButtonClick = async () => {
     try {

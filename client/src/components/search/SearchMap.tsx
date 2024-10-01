@@ -14,10 +14,14 @@ import { PlaceData } from '../../types/place.type';
 import proj4 from 'proj4';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setTransformedResults } from '../../store/slices/placeSlice';
+import {
+  setResults,
+  setTransformedResults,
+} from '../../store/slices/placeSlice';
 import React from 'react';
 import SearchMapOverlay from './map/SearchMapOverlay';
 import SearchMapCategory from './map/SearchMapCategory';
+import { fetchPlaces } from '../../apis/place.api';
 
 proj4.defs(
   'EPSG:5181',
@@ -52,6 +56,20 @@ function SearchMap() {
       setOpenedMarkers([...openedMarkers, markerId]);
     }
   };
+
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        const data = await fetchPlaces({});
+        dispatch(setResults(data)); // 전체 데이터를 저장
+      } catch (error) {
+        console.error('Error fetching initial places:', error);
+      }
+    };
+
+    // 초기 로드 시 데이터 가져오기
+    loadInitialData();
+  }, [dispatch]);
 
   useEffect(() => {
     setOpenedMarkers([]);
@@ -99,31 +117,6 @@ function SearchMap() {
 
     dispatch(setTransformedResults(transformed as PlaceData[]));
   }, [dispatch, error, searchPlaceResults]);
-
-  useEffect(() => {
-    const allPlace = document.getElementById('allPlace');
-    const onlyHospital = document.getElementById('onlyHospital');
-    const onlyPharmacy = document.getElementById('onlyPharmacy');
-
-    if (allPlace && onlyHospital && onlyPharmacy) {
-      if (selectedCategory === 'allPlace') {
-        allPlace.className = 'is_selected';
-        onlyHospital.className = '';
-        onlyPharmacy.className = '';
-        setOpenedMarkers([]);
-      } else if (selectedCategory === 'onlyHospital') {
-        allPlace.className = '';
-        onlyHospital.className = 'is_selected';
-        onlyPharmacy.className = '';
-        setOpenedMarkers([]);
-      } else if (selectedCategory === 'onlyPharmacy') {
-        allPlace.className = '';
-        onlyHospital.className = '';
-        onlyPharmacy.className = 'is_selected';
-        setOpenedMarkers([]);
-      }
-    }
-  }, [error, selectedCategory]);
 
   // 카테고리에 따라 필터링된 장소 데이터를 반환
   const filteredResults = transformedResults
@@ -181,7 +174,10 @@ function SearchMap() {
               </React.Fragment>
             ))}
           </Map>
-          <SearchMapCategory onClick={setSelectedCategory} />
+          <SearchMapCategory
+            onClick={setSelectedCategory}
+            selectedCategory={selectedCategory}
+          />
         </div>
       )}
     </SearchMapStyle>
