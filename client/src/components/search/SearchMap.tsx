@@ -139,7 +139,7 @@ function SearchMap() {
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
-            level={7} // 지도 확대 레벨
+            level={12} // 지도 확대 레벨
           >
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
@@ -148,7 +148,6 @@ function SearchMap() {
               averageCenter={true}
               minLevel={7} // 클러스터가 해제되는 최소 레벨 설정
             >
-              {/* 검색 결과 마커 표시 */}
               {filteredResults.map((place) => (
                 <React.Fragment key={`place-${place.id}`}>
                   <MapMarker
