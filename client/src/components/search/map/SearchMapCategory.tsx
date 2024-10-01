@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import markerImgSrc from '../../../assets/images/marker/MarkerSprites.png';
+import MarkerSprites from '../../../assets/images/MarkerSprites.png';
 interface Props {
   onClick: (value: React.SetStateAction<string>) => void;
 }
@@ -69,19 +69,19 @@ const SearchMapCategoryStyle = styled.div`
   .marker_comm {
     // 마커 공통 스타일
     display: inline-block;
-    width: 20px; /* 아이콘 너비 */
+    width: 25px;
     height: 30px; /* 아이콘 높이 */
-    background-image: url(${markerImgSrc}); /* 스프라이트 이미지 경로 */
-    background-size: 20px 89.75px; /* 스프라이트 이미지 전체 크기 */
+    background-image: url(${MarkerSprites}); /* 스프라이트 이미지 경로 */
+    background-size: 75px 30px; /* 스프라이트 이미지 전체 크기 */
   }
   .marker_pharmacy {
-    background-position: 0px 0px; /* 약국 아이콘의 위치 */
+    background-position: -25px 0px; /* 약국 아이콘의 위치 */
   }
   .marker_hospital {
-    background-position: 0px -60px; /* 병원 아이콘의 위치 */
+    background-position: 0px 0px; /* 병원 아이콘의 위치 */
   }
   .marker_all {
-    background-position: 0px -30px; /* 전체 아이콘의 위치 */
+    background-position: -50px 0px; /* 전체 아이콘의 위치 */
   }
 `;
 export default SearchMapCategory;

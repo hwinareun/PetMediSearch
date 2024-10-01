@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import Loading from '../common/Loading';
 import { useEffect, useState } from 'react';
-import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
+import MarkerSprites from '../../assets/images/MarkerSprites.png';
 import { PlaceData } from '../../types/place.type';
 import proj4 from 'proj4';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,11 +35,11 @@ function SearchMap() {
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
 
-  const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
-  const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
+  const imgSize = { width: 37.5, height: 43.75 }; // 마커 이미지 크기
+  const spriteSize = { width: 112.5, height: 43.75 }; // 전체 스프라이트 이미지 크기
 
-  const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
-  const pharmacyOrigin = { x: 0, y: 0 };
+  const hospitalOrigin = { x: 0, y: 0 }; // 스프라이트 이미지 내에서 이미지 위치
+  const pharmacyOrigin = { x: 37.5, y: 0 };
 
   const isValidLatLng = (lat: number, lng: number) => {
     return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
@@ -154,7 +154,7 @@ function SearchMap() {
                 <MapMarker
                   position={{ lat: place.x as number, lng: place.y as number }}
                   image={{
-                    src: markerImgSrc,
+                    src: MarkerSprites,
                     size: imgSize,
                     options: {
                       spriteSize: spriteSize,
