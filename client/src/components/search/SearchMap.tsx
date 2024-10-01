@@ -139,7 +139,7 @@ function SearchMap() {
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
-            level={12} // 지도 확대 레벨
+            level={5} // 지도 확대 레벨
           >
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
