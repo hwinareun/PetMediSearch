@@ -3,6 +3,7 @@ import {
   Map,
   MapMarker,
   MapTypeControl,
+  MarkerClusterer,
   useKakaoLoader,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
@@ -37,6 +38,7 @@ function SearchMap() {
   const [openedMarkers, setOpenedMarkers] = useState<number[]>([]);
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
+    libraries: ['clusterer'],
   });
 
   const imgSize = { width: 37.5, height: 43.75 }; // 마커 이미지 크기
@@ -142,37 +144,48 @@ function SearchMap() {
             <MapTypeControl position={'TOPRIGHT'} />
             <ZoomControl position={'RIGHT'} />
             {/* 검색 결과 마커 표시 */}
-            {filteredResults.map((place) => (
-              <React.Fragment key={`place-${place.id}`}>
-                <MapMarker
-                  position={{ lat: place.x as number, lng: place.y as number }}
-                  image={{
-                    src: MarkerSprites,
-                    size: imgSize,
-                    options: {
-                      spriteSize: spriteSize,
-                      spriteOrigin:
-                        place.type === '병원' ? hospitalOrigin : pharmacyOrigin,
-                    },
-                  }}
-                  onClick={() => handleMarkerClick(place.id)}
-                />
-                {/* 마커 클릭 시 나타나는 오버레이 */}
-                {openedMarkers.includes(place.id) && (
-                  <CustomOverlayMap
+            <MarkerClusterer
+              averageCenter={true}
+              minLevel={7} // 클러스터가 해제되는 최소 레벨 설정
+            >
+              {/* 검색 결과 마커 표시 */}
+              {filteredResults.map((place) => (
+                <React.Fragment key={`place-${place.id}`}>
+                  <MapMarker
                     position={{
                       lat: place.x as number,
                       lng: place.y as number,
                     }}
-                  >
-                    <SearchMapOverlay
-                      onClick={handleMarkerClick}
-                      place={place}
-                    />
-                  </CustomOverlayMap>
-                )}
-              </React.Fragment>
-            ))}
+                    image={{
+                      src: MarkerSprites,
+                      size: imgSize,
+                      options: {
+                        spriteSize: spriteSize,
+                        spriteOrigin:
+                          place.type === '병원'
+                            ? hospitalOrigin
+                            : pharmacyOrigin,
+                      },
+                    }}
+                    onClick={() => handleMarkerClick(place.id)}
+                  />
+                  {/* 마커 클릭 시 나타나는 오버레이 */}
+                  {openedMarkers.includes(place.id) && (
+                    <CustomOverlayMap
+                      position={{
+                        lat: place.x as number,
+                        lng: place.y as number,
+                      }}
+                    >
+                      <SearchMapOverlay
+                        onClick={handleMarkerClick}
+                        place={place}
+                      />
+                    </CustomOverlayMap>
+                  )}
+                </React.Fragment>
+              ))}
+            </MarkerClusterer>
           </Map>
           <SearchMapCategory
             onClick={setSelectedCategory}
