@@ -9,15 +9,19 @@ import {
 import styled from 'styled-components';
 import Loading from '../common/Loading';
 import { useEffect, useState } from 'react';
-import markerImgSrc from '../../assets/images/marker/MarkerSprites.png';
+import MarkerSprites from '../../assets/images/MarkerSprites.png';
 import { PlaceData } from '../../types/place.type';
 import proj4 from 'proj4';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setTransformedResults } from '../../store/slices/placeSlice';
+import {
+  setResults,
+  setTransformedResults,
+} from '../../store/slices/placeSlice';
 import React from 'react';
 import SearchMapOverlay from './map/SearchMapOverlay';
 import SearchMapCategory from './map/SearchMapCategory';
+import { fetchPlaces } from '../../apis/place.api';
 
 proj4.defs(
   'EPSG:5181',
@@ -35,11 +39,11 @@ function SearchMap() {
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
 
-  const imgSize = { width: 40, height: 60 }; // 마커 이미지 크기
-  const spriteSize = { width: 40, height: 179.5 }; // 전체 스프라이트 이미지 크기
+  const imgSize = { width: 37.5, height: 43.75 }; // 마커 이미지 크기
+  const spriteSize = { width: 112.5, height: 43.75 }; // 전체 스프라이트 이미지 크기
 
-  const hospitalOrigin = { x: 0, y: 120 }; // 스프라이트 이미지 내에서 이미지 위치
-  const pharmacyOrigin = { x: 0, y: 0 };
+  const hospitalOrigin = { x: 0, y: 0 }; // 스프라이트 이미지 내에서 이미지 위치
+  const pharmacyOrigin = { x: 37.5, y: 0 };
 
   const isValidLatLng = (lat: number, lng: number) => {
     return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
@@ -52,6 +56,20 @@ function SearchMap() {
       setOpenedMarkers([...openedMarkers, markerId]);
     }
   };
+
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        const data = await fetchPlaces({});
+        dispatch(setResults(data)); // 전체 데이터를 저장
+      } catch (error) {
+        console.error('Error fetching initial places:', error);
+      }
+    };
+
+    // 초기 로드 시 데이터 가져오기
+    loadInitialData();
+  }, [dispatch]);
 
   useEffect(() => {
     setOpenedMarkers([]);
@@ -100,31 +118,6 @@ function SearchMap() {
     dispatch(setTransformedResults(transformed as PlaceData[]));
   }, [dispatch, error, searchPlaceResults]);
 
-  useEffect(() => {
-    const allPlace = document.getElementById('allPlace');
-    const onlyHospital = document.getElementById('onlyHospital');
-    const onlyPharmacy = document.getElementById('onlyPharmacy');
-
-    if (allPlace && onlyHospital && onlyPharmacy) {
-      if (selectedCategory === 'allPlace') {
-        allPlace.className = 'is_selected';
-        onlyHospital.className = '';
-        onlyPharmacy.className = '';
-        setOpenedMarkers([]);
-      } else if (selectedCategory === 'onlyHospital') {
-        allPlace.className = '';
-        onlyHospital.className = 'is_selected';
-        onlyPharmacy.className = '';
-        setOpenedMarkers([]);
-      } else if (selectedCategory === 'onlyPharmacy') {
-        allPlace.className = '';
-        onlyHospital.className = '';
-        onlyPharmacy.className = 'is_selected';
-        setOpenedMarkers([]);
-      }
-    }
-  }, [error, selectedCategory]);
-
   // 카테고리에 따라 필터링된 장소 데이터를 반환
   const filteredResults = transformedResults
     .filter((place) => {
@@ -154,7 +147,7 @@ function SearchMap() {
                 <MapMarker
                   position={{ lat: place.x as number, lng: place.y as number }}
                   image={{
-                    src: markerImgSrc,
+                    src: MarkerSprites,
                     size: imgSize,
                     options: {
                       spriteSize: spriteSize,
@@ -181,7 +174,10 @@ function SearchMap() {
               </React.Fragment>
             ))}
           </Map>
-          <SearchMapCategory onClick={setSelectedCategory} />
+          <SearchMapCategory
+            onClick={setSelectedCategory}
+            selectedCategory={selectedCategory}
+          />
         </div>
       )}
     </SearchMapStyle>

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Loading from '../../components/common/Loading';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Lottie from 'lottie-react';
+import loadingLottie from '../../assets/lottie/loadingLottie.json';
 
 function LoginRedirectGoogle() {
   const navigate = useNavigate();
@@ -21,13 +22,30 @@ function LoginRedirectGoogle() {
 
   return (
     <LoginRedirectGoogleStyle>
-      <Loading />
-      <p>구글 아이디로 간편 로그인 중입니다.</p>
-      <p>잠시만 기다려주세요.</p>
+      <Lottie animationData={loadingLottie} className="lottie" />
+      <p>
+        구글 아이디로 간편 로그인 중입니다.
+        <br />
+        잠시만 기다려주세요.
+      </p>
     </LoginRedirectGoogleStyle>
   );
 }
 
-const LoginRedirectGoogleStyle = styled.div``;
+const LoginRedirectGoogleStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+
+  .lottie {
+    width: 300px;
+  }
+  p {
+    font-size: 20px;
+    text-align: center;
+  }
+`;
 
 export default LoginRedirectGoogle;
