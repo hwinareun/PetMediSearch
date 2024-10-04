@@ -21,6 +21,7 @@ import SearchMapOverlay from './map/SearchMapOverlay';
 import SearchMapCategory from './map/SearchMapCategory';
 import { fetchPlaces } from '../../apis/place.api';
 import SearchMapControlBar from './map/SearchMapControlBar';
+import SearchMapToggle from './map/SearchMapToggle';
 
 proj4.defs(
   'EPSG:5181',
@@ -40,6 +41,11 @@ function SearchMap() {
 
   const [mapLevel, setMapLevel] = useState(7); // 지도 확대 레벨
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
+  const [onlyOpened, setOnlyIsOpened] = useState(false);
+
+  const handleOnlyOpenedToggle = (toggleOnlyOpened: boolean) => {
+    setOnlyIsOpened(toggleOnlyOpened);
+  };
 
   const handleMapCreate = (map: kakao.maps.Map) => {
     setMap(map); // map 객체 저장
@@ -145,6 +151,10 @@ function SearchMap() {
   // 카테고리에 따라 필터링된 장소 데이터를 반환
   const filteredResults = transformedResults
     .filter((place) => {
+      if (onlyOpened && place.dtlstatenm !== '정상') {
+        return false;
+      }
+
       if (selectedCategory === 'allPlace') return true;
       if (selectedCategory === 'onlyHospital') return place.type === '병원';
       if (selectedCategory === 'onlyPharmacy') return place.type === '약국';
@@ -167,6 +177,10 @@ function SearchMap() {
             <SearchMapControlBar
               onClickZoom={handleMapLevelClick}
               onClickType={handleMapTypeClick}
+            />
+            <SearchMapToggle
+              onClick={handleOnlyOpenedToggle}
+              onlyOpened={onlyOpened}
             />
             {/* 검색 결과 마커 표시 */}
             {filteredResults.map((place) => (
