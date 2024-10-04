@@ -2,9 +2,7 @@ import {
   CustomOverlayMap,
   Map,
   MapMarker,
-  MapTypeControl,
   useKakaoLoader,
-  ZoomControl,
 } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import Loading from '../common/Loading';
@@ -22,6 +20,7 @@ import React from 'react';
 import SearchMapOverlay from './map/SearchMapOverlay';
 import SearchMapCategory from './map/SearchMapCategory';
 import { fetchPlaces } from '../../apis/place.api';
+import SearchMapControlBar from './map/SearchMapControlBar';
 
 proj4.defs(
   'EPSG:5181',
@@ -38,6 +37,31 @@ function SearchMap() {
   const [loading, error] = useKakaoLoader({
     appkey: import.meta.env.VITE_K_JAVASCRIPT_KEY,
   });
+
+  const [mapLevel, setMapLevel] = useState(7); // 지도 확대 레벨
+  const [map, setMap] = useState<kakao.maps.Map | null>(null);
+
+  const handleMapCreate = (map: kakao.maps.Map) => {
+    setMap(map); // map 객체 저장
+  };
+
+  const handleMapLevelClick = (action: string) => {
+    if (action === 'zoomIn') {
+      setMapLevel((prev) => Math.max(prev - 1, 1));
+    } else {
+      setMapLevel((prev) => Math.min(prev + 1, 14));
+    }
+  };
+
+  const handleMapTypeClick = (mapType: 'roadmap' | 'skyview') => {
+    if (map) {
+      if (mapType === 'roadmap') {
+        map.removeOverlayMapTypeId(kakao.maps.MapTypeId.HYBRID); // 스카이뷰 제거
+      } else if (mapType === 'skyview') {
+        map.addOverlayMapTypeId(kakao.maps.MapTypeId.HYBRID); // 스카이뷰 추가
+      }
+    }
+  };
 
   const imgSize = { width: 37.5, height: 43.75 }; // 마커 이미지 크기
   const spriteSize = { width: 112.5, height: 43.75 }; // 전체 스프라이트 이미지 크기
@@ -137,10 +161,13 @@ function SearchMap() {
           <Map
             center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
             style={{ width: '350px', height: '500px' }} // 지도 크기 설정
-            level={5} // 지도 확대 레벨
+            level={mapLevel}
+            onCreate={handleMapCreate}
           >
-            <MapTypeControl position={'TOPRIGHT'} />
-            <ZoomControl position={'RIGHT'} />
+            <SearchMapControlBar
+              onClickZoom={handleMapLevelClick}
+              onClickType={handleMapTypeClick}
+            />
             {/* 검색 결과 마커 표시 */}
             {filteredResults.map((place) => (
               <React.Fragment key={`place-${place.id}`}>
