@@ -109,6 +109,11 @@ function SearchMap() {
         const x = Number(place.x);
         const y = Number(place.y);
 
+        if (place.x === null || place.y === null) {
+          console.log(`${place.bplcnm}의 x 또는 y 값이 null 입니다.`, place);
+          return null;
+        }
+
         if (!isNaN(x) && !isNaN(y) && isFinite(x) && isFinite(y)) {
           try {
             let [lng, lat] = proj4('EPSG:5181', 'EPSG:4326', [x, y]);
