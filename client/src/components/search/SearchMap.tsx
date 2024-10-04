@@ -172,58 +172,68 @@ function SearchMap() {
       {loading ? (
         <Loading />
       ) : (
-        <div id="mapwrap">
-          <Map
-            center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
-            style={{ width: '350px', height: '500px' }} // 지도 크기 설정
-            level={mapLevel}
-            onCreate={handleMapCreate}
-          >
-            <SearchMapControlBar
-              onClickZoom={handleMapLevelClick}
-              onClickType={handleMapTypeClick}
-            />
-            <SearchMapToggle
-              onClick={handleOnlyOpenedToggle}
-              onlyOpened={onlyOpened}
-            />
-            {/* 검색 결과 마커 표시 */}
-            {filteredResults.map((place) => (
-              <React.Fragment key={`place-${place.id}`}>
-                <MapMarker
-                  position={{ lat: place.x as number, lng: place.y as number }}
-                  image={{
-                    src: MarkerSprites,
-                    size: imgSize,
-                    options: {
-                      spriteSize: spriteSize,
-                      spriteOrigin:
-                        place.type === '병원' ? hospitalOrigin : pharmacyOrigin,
-                    },
-                  }}
-                  onClick={() => handleMarkerClick(place.id)}
-                />
-                {/* 마커 클릭 시 나타나는 오버레이 */}
-                {openedMarkers.includes(place.id) && (
-                  <CustomOverlayMap
+        <div>
+          <div className="resultsLength">
+            검색된 시설의 개수: {filteredResults.length ? filteredResults.length : '-'}
+          </div>
+          <div className="mapwrap">
+            <Map
+              center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
+              style={{ width: '350px', height: '500px' }} // 지도 크기 설정
+              level={mapLevel}
+              onCreate={handleMapCreate}
+            >
+              <SearchMapControlBar
+                onClickZoom={handleMapLevelClick}
+                onClickType={handleMapTypeClick}
+              />
+              <SearchMapToggle
+                onClick={handleOnlyOpenedToggle}
+                onlyOpened={onlyOpened}
+              />
+              {/* 검색 결과 마커 표시 */}
+              {filteredResults.map((place) => (
+                <React.Fragment key={`place-${place.id}`}>
+                  <MapMarker
                     position={{
                       lat: place.x as number,
                       lng: place.y as number,
                     }}
-                  >
-                    <SearchMapOverlay
-                      onClick={handleMarkerClick}
-                      place={place}
-                    />
-                  </CustomOverlayMap>
-                )}
-              </React.Fragment>
-            ))}
-          </Map>
-          <SearchMapCategory
-            onClick={setSelectedCategory}
-            selectedCategory={selectedCategory}
-          />
+                    image={{
+                      src: MarkerSprites,
+                      size: imgSize,
+                      options: {
+                        spriteSize: spriteSize,
+                        spriteOrigin:
+                          place.type === '병원'
+                            ? hospitalOrigin
+                            : pharmacyOrigin,
+                      },
+                    }}
+                    onClick={() => handleMarkerClick(place.id)}
+                  />
+                  {/* 마커 클릭 시 나타나는 오버레이 */}
+                  {openedMarkers.includes(place.id) && (
+                    <CustomOverlayMap
+                      position={{
+                        lat: place.x as number,
+                        lng: place.y as number,
+                      }}
+                    >
+                      <SearchMapOverlay
+                        onClick={handleMarkerClick}
+                        place={place}
+                      />
+                    </CustomOverlayMap>
+                  )}
+                </React.Fragment>
+              ))}
+            </Map>
+            <SearchMapCategory
+              onClick={setSelectedCategory}
+              selectedCategory={selectedCategory}
+            />
+          </div>
         </div>
       )}
     </SearchMapStyle>
@@ -232,15 +242,17 @@ function SearchMap() {
 
 const SearchMapStyle = styled.div`
   position: relative;
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
-  #mapwrap {
+  .mapwrap {
     position: relative;
   }
 
-  .result {
-    font-size: 8px;
+  .resultsLength {
+    font-size: 10px;
+    padding-bottom: 5px;
+    text-align: end;
   }
 `;
 
