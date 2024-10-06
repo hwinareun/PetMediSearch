@@ -9,15 +9,26 @@ function LoginRedirectKakao() {
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_K_REDIRECT_URL}/?code=${code}`, {
+    fetch(`http://localhost:8080/auth/kakao?code=${code}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
-    }).then((res) => {
-      console.log(res);
-      navigate('/');
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          console.log('Kakao login successful:', data);
+          navigate('/');
+        } else {
+          throw new Error('Login failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Kakao login failed:', error);
+        navigate('/login');
+      });
   }, [code, navigate]);
 
   return (

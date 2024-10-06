@@ -4,12 +4,12 @@ import kakaobttn from '../../assets/images/login/LoginKakao.png';
 const K_CLIENT_ID = import.meta.env.VITE_K_REST_API_KEY;
 const K_REDIRECT_URI = import.meta.env.VITE_K_REDIRECT_URL;
 
-const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_CLIENT_ID}&redirect_uri=${K_REDIRECT_URI}&response_type=code`;
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_CLIENT_ID}&redirect_uri=${K_REDIRECT_URI}&response_type=code`;
 
 function LoginKakao() {
   return (
     <LoginKakaoStyle>
-      <a href={KAKAO_URL}>
+      <a href={KAKAO_AUTH_URL}>
         <div className="kakaobttn">
           <img src={kakaobttn} className="icon" />
         </div>

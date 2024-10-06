@@ -4,12 +4,12 @@ import googlebttn from '../../assets/images/login/LoginGoogle.png';
 const G_CLIENT_ID = import.meta.env.VITE_G_REST_API_KEY;
 const G_REDIRECT_URI = import.meta.env.VITE_G_REDIRECT_URL;
 
-const Google_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${G_CLIENT_ID}&redirect_uri=${G_REDIRECT_URI}&response_type=code&scope=openid email profile`;
+const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${G_CLIENT_ID}&redirect_uri=${G_REDIRECT_URI}&response_type=code&scope=email profile`;
 
 function LoginGoogle() {
   return (
     <LoginGoogleStyle>
-      <a href={Google_URL}>
+      <a href={GOOGLE_AUTH_URL}>
         <div className="googlebttn">
           <img src={googlebttn} className="icon" />
           <p className="messge">구글 로그인</p>
