@@ -1,14 +1,16 @@
+require('dotenv').config();
 const express = require("express");
 const mysql = require("./mysql");
 const nodePath = require("path");
+const cors = require("cors");
+
 const app = express();
 const port = 8080;
 
 console.log('Current directory:', __dirname);
 
-const cors = require("cors");
+// 미들웨어 설정
 app.use(cors({ origin: "http://localhost:5000", credentials: true }));
-
 app.use(express.json());
 
 // swagger 연동
@@ -53,15 +55,18 @@ app.get("/facilities", (req, res) => {
   });
 });
 
-// router
+// 라우터 설정
 const categoryRouter = require('./routes/category');
 const postRouter = require('./routes/post');
 const reviewRouter = require('./routes/review');
+const authRouter = require('./routes/auth');
 
 app.use('/category', categoryRouter);
 app.use('/posts', postRouter);
 app.use('/reviews', reviewRouter);
+app.use('/auth', authRouter);
 
+// 서버 시작
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

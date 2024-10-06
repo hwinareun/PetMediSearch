@@ -9,3 +9,12 @@ export const httpClient = axios.create({
   },
   withCredentials: true,
 });
+
+// 요청 추가
+httpClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+});

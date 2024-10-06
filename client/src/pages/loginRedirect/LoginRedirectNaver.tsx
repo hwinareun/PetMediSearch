@@ -7,18 +7,30 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 function LoginRedirectNaver() {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
+  const state = new URL(window.location.href).searchParams.get('state');
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_N_REDIRECT_URL}/?code=${code}`, {
+    fetch(`http://localhost:8080/auth/naver?code=${code}&state=${state}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
-    }).then((res) => {
-      console.log(res);
-      //navigate('/');
-    });
-  }, [code, navigate]);
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          console.log('Naver login successful:', data);
+          navigate('/');
+        } else {
+          throw new Error('Login failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Naver login failed:', error);
+        navigate('/login');
+      });
+  }, [code, state, navigate]);
 
   return (
     <LoginRedirectNaverStyle>

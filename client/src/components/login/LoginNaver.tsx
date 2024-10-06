@@ -4,12 +4,12 @@ import naverbttn from '../../assets/images/login/LoginNaver.png';
 const N_CLIENT_ID = import.meta.env.VITE_N_REST_API_KEY;
 const N_REDIRECT_URI = import.meta.env.VITE_N_REDIRECT_URL;
 
-const NAVER_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${N_CLIENT_ID}&redirect_uri=${N_REDIRECT_URI}&response_type=code`;
+const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${N_CLIENT_ID}&redirect_uri=${N_REDIRECT_URI}&state=${Math.random().toString(36).substr(2, 11)}`;
 
 function LoginNaver() {
   return (
     <LoginNaverStyle>
-      <a href={NAVER_URL}>
+      <a href={NAVER_AUTH_URL}>
         <div className="naverbttn">
           <img src={naverbttn} className="icon" />
           <p className="messge">네이버 로그인</p>
