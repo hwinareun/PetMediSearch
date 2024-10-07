@@ -40,27 +40,29 @@ const SearchMapCategoryStyle = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 0 10px;
+  background-color: white;
+  padding: 0 8px;
+  border: 1px solid #919191;
   border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 10; /* 지도 위에 표시되도록 z-index 설정 */
+
   ul {
     list-style: none;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     font-size: 15px;
     gap: 5px;
+    margin: 8px 0px;
     li {
       display: flex;
-      flex-direction: column;
-      text-align: center;
+      align-items: center;
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 5px 8px;
       gap: 5px;
-      border-radius: 8px;
-      box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      border: 1px solid #919191;
       p {
         margin: 0;
       }
@@ -74,10 +76,6 @@ const SearchMapCategoryStyle = styled.div`
     font-weight: bold;
     background-color: #575757;
     color: white;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    p {
-      border-bottom: 1px solid #e3e3e3;
-    }
   }
   .marker_comm {
     // 마커 공통 스타일
