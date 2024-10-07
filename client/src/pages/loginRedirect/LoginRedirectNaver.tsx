@@ -22,7 +22,12 @@ function LoginRedirectNaver() {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          dispatch(setLogin({ token: data.token }));
+          dispatch(
+            setLogin({
+              token: data.token,
+              user: data.user,
+            })
+          );
           console.log('Naver login successful:', data);
           navigate('/');
         } else {
