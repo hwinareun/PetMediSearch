@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Lottie from 'lottie-react';
 import loadingLottie from '../../assets/lottie/loadingLottie.json';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../store/slices/authSlice';
 
 function LoginRedirectKakao() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
@@ -18,7 +21,7 @@ function LoginRedirectKakao() {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          dispatch(setLogin({ token: data.token }));
           console.log('Kakao login successful:', data);
           navigate('/');
         } else {
@@ -29,7 +32,7 @@ function LoginRedirectKakao() {
         console.error('Kakao login failed:', error);
         navigate('/login');
       });
-  }, [code, navigate]);
+  }, [code, dispatch, navigate]);
 
   return (
     <LoginRedirectKakaoStyle>
