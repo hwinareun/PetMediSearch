@@ -11,6 +11,7 @@ import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
 import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 import { PetMediThemeProvider } from './style/themeContext';
 import MyProfile from './pages/MyProfile';
+import LoginProtect from './components/common/LoginProtect';
 
 const routeList = [
   {
@@ -43,7 +44,11 @@ const routeList = [
   },
   {
     path: '/myprofile',
-    element: <MyProfile />,
+    element: (
+      <LoginProtect>
+        <MyProfile />
+      </LoginProtect>
+    ),
   },
 ];
 
