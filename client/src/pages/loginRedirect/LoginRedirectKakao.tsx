@@ -21,7 +21,12 @@ function LoginRedirectKakao() {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          dispatch(setLogin({ token: data.token }));
+          dispatch(
+            setLogin({
+              token: data.token,
+              user: data.user,
+            })
+          );
           console.log('Kakao login successful:', data);
           navigate('/');
         } else {
