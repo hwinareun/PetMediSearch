@@ -22,6 +22,7 @@ import SearchMapCategory from './map/SearchMapCategory';
 import { fetchPlaces } from '../../apis/place.api';
 import SearchMapControlBar from './map/SearchMapControlBar';
 import SearchMapToggle from './map/SearchMapToggle';
+import { FaLocationCrosshairs } from 'react-icons/fa6';
 
 proj4.defs(
   'EPSG:5181',
@@ -42,6 +43,33 @@ function SearchMap() {
   const [mapLevel, setMapLevel] = useState(7); // 지도 확대 레벨
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [onlyOpened, setOnlyIsOpened] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null); // 현재 위치 상태
+
+  // 사용자의 현재 위치 가져오기 함수
+  const handleCurrentPositionClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          setCurrentPosition({ lat, lng }); // 현재 위치 상태 업데이트
+        },
+        (error) => {
+          console.error('Error getting current position:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
+  // 페이지 로드 시 초기 위치 가져오기
+  useEffect(() => {
+    handleCurrentPositionClick();
+  }, []);
 
   const handleOnlyOpenedToggle = (toggleOnlyOpened: boolean) => {
     setOnlyIsOpened(toggleOnlyOpened);
@@ -174,11 +202,16 @@ function SearchMap() {
       ) : (
         <div>
           <div className="resultsLength">
-            검색된 시설의 개수: {filteredResults.length ? filteredResults.length : '-'}
+            검색된 시설의 개수:{' '}
+            {filteredResults.length ? filteredResults.length : '-'}
           </div>
           <div className="mapwrap">
             <Map
-              center={{ lat: 37.56729298121172, lng: 126.98014624989 }} // 초기 위치
+              center={
+                currentPosition
+                  ? { lat: currentPosition.lat, lng: currentPosition.lng }
+                  : { lat: 37.56729298121172, lng: 126.98014624989 }
+              } // 초기 위치
               style={{ width: '350px', height: '500px' }} // 지도 크기 설정
               level={mapLevel}
               onCreate={handleMapCreate}
@@ -191,6 +224,15 @@ function SearchMap() {
                 onClick={handleOnlyOpenedToggle}
                 onlyOpened={onlyOpened}
               />
+              {/* 현재 위치 마커 */}
+              {currentPosition && (
+                <MapMarker
+                  position={{
+                    lat: currentPosition.lat,
+                    lng: currentPosition.lng,
+                  }}
+                />
+              )}
               {/* 검색 결과 마커 표시 */}
               {filteredResults.map((place) => (
                 <React.Fragment key={`place-${place.id}`}>
@@ -233,6 +275,10 @@ function SearchMap() {
               onClick={setSelectedCategory}
               selectedCategory={selectedCategory}
             />
+            <FaLocationCrosshairs
+              className="currentPosBttn"
+              onClick={handleCurrentPositionClick}
+            />
           </div>
         </div>
       )}
@@ -253,6 +299,24 @@ const SearchMapStyle = styled.div`
     font-size: 10px;
     padding-bottom: 5px;
     text-align: end;
+  }
+
+  .currentPosBttn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 10;
+
+    background-color: white;
+    padding: 4px;
+    border: 1px solid #919191;
+    border-radius: 8px;
+    font-size: 20px;
+    &:hover {
+      background-color: #45a049;
+      color: white;
+      border-color: #45a049;
+    }
   }
 `;
 
