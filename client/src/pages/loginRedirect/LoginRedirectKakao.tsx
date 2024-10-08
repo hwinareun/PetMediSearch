@@ -28,7 +28,7 @@ function LoginRedirectKakao() {
             })
           );
           console.log('Kakao login successful:', data);
-          navigate('/');
+          navigate('/myprofile');
         } else {
           throw new Error('Login failed');
         }

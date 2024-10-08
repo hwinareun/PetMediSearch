@@ -28,7 +28,7 @@ function LoginRedirectGoogle() {
             })
           );
           console.log('Google login successful:', data);
-          navigate('/');
+          navigate('/myprofile');
         } else {
           throw new Error('Login failed');
         }

@@ -29,7 +29,7 @@ function LoginRedirectNaver() {
             })
           );
           console.log('Naver login successful:', data);
-          navigate('/');
+          navigate('/myprofile');
         } else {
           throw new Error('Login failed');
         }
