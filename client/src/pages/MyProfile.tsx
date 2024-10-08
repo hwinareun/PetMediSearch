@@ -9,7 +9,8 @@ function MyProfile() {
     <MyProfileStyle>
       <div className="userInfo">
         <p className="userProfile"></p>
-        <p className="userName">{`${userProfile.username}`}</p>
+        <p className="userType">{userProfile.socialType}</p>
+        <p className="userName">{userProfile.username}</p>
       </div>
       <div className="userSection">
         <div className="post">

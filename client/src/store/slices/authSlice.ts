@@ -6,6 +6,7 @@ const initialState: AuthState = {
   isLogin: getToken() ? true : false,
   userProfile: {
     username: '',
+    socialType: '',
   },
 };
 

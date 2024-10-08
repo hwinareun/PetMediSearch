@@ -9,4 +9,5 @@ export interface AuthToken {
 
 export interface UserState {
   username: string;
+  socialType: string;
 }
