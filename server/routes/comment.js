@@ -1,29 +1,29 @@
 const express = require('express');
-const { getPostById, addPostById, updatePostById, deletePostById } = require('../controller/post');
+const { getCommentsByPostId, addComment, updateCommentById, deleteCommentById } = require('../controller/comment');
 const router = express.Router();
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     Post:
+ *     Comment:
  *       type: object
  *       properties:
- *         post_id:
+ *         comment_id:
  *           type: integer
  *           example: 1
- *         category_id:
+ *         post_id:
  *           type: integer
  *           example: 1
  *         user_id:
  *           type: integer
  *           example: 1
- *         title:
- *           type: string
- *           example: '테스트 제목'
  *         content:
  *           type: string
- *           example: '테스트 내용'
+ *           example: '댓글 내용'
+ *         parent_comment_id:
+ *           type: integer
+ *           example: 0
  *         created_at:
  *           type: string
  *           format: date-time
@@ -35,10 +35,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /posts/{post_id}:
+ * /comments/{post_id}:
  *   get:
- *     tags: [Posts]
- *     summary: 특정 글 상세 조회
+ *     tags: [Comments]
+ *     summary: 특정 게시글의 댓글 조회
  *     parameters:
  *       - name: post_id
  *         in: path
@@ -48,24 +48,24 @@ const router = express.Router();
  *           type: integer
  *     responses:
  *       200:
- *         description: 게시글 정보
+ *         description: 게시글의 댓글 목록
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
- *       404:
- *         description: 해당 게시글을 찾을 수 없습니다.
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Comment'
  *       500:
  *         description: 서버 에러 발생
  */
-router.get('/:post_id', getPostById);
+router.get('/:post_id', getCommentsByPostId);
 
 /**
  * @swagger
- * /posts:
+ * /comments:
  *   post:
- *     tags: [Posts]
- *     summary: 글 작성
+ *     tags: [Comments]
+ *     summary: 새로운 댓글 작성
  *     requestBody:
  *       required: true
  *       content:
@@ -73,21 +73,21 @@ router.get('/:post_id', getPostById);
  *           schema:
  *             type: object
  *             properties:
- *               category_id:
+ *               post_id:
  *                 type: integer
  *                 example: 1
  *               user_id:
  *                 type: integer
  *                 example: 1
- *               title:
- *                 type: string
- *                 example: '새로운 게시글 제목'
  *               content:
  *                 type: string
- *                 example: '새로운 게시글 내용'
+ *                 example: '댓글 내용'
+ *               parent_comment_id:
+ *                 type: integer
+ *                 example: 0
  *     responses:
  *       200:
- *         description: 새로운 게시글이 등록되었습니다.
+ *         description: 새로운 댓글이 등록되었습니다.
  *         content:
  *           application/json:
  *             schema:
@@ -95,26 +95,26 @@ router.get('/:post_id', getPostById);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: '새로운 게시글이 등록되었습니다.'
- *                 postId:
+ *                   example: '새로운 댓글이 등록되었습니다.'
+ *                 commentId:
  *                   type: integer
  *                   example: 1
  *       500:
  *         description: 서버 에러 발생
  */
-router.post('/', addPostById);
+router.post('/', addComment);
 
 /**
  * @swagger
- * /posts/{post_id}:
+ * /comments/{comment_id}:
  *   put:
- *     tags: [Posts]
- *     summary: 글 수정
+ *     tags: [Comments]
+ *     summary: 댓글 수정
  *     parameters:
- *       - name: post_id
+ *       - name: comment_id
  *         in: path
  *         required: true
- *         description: 게시글 ID
+ *         description: 댓글 ID
  *         schema:
  *           type: integer
  *     requestBody:
@@ -124,43 +124,40 @@ router.post('/', addPostById);
  *           schema:
  *             type: object
  *             properties:
- *               title:
- *                 type: string
- *                 example: '수정된 게시글 제목'
  *               content:
  *                 type: string
- *                 example: '수정된 게시글 내용'
+ *                 example: '수정된 댓글 내용'
  *     responses:
  *       200:
- *         description: 게시글이 수정되었습니다.
+ *         description: 댓글이 수정되었습니다.
  *       404:
- *         description: 해당 게시글을 찾을 수 없습니다.
+ *         description: 해당 댓글을 찾을 수 없습니다.
  *       500:
  *         description: 서버 에러 발생
  */
-router.put('/:post_id', updatePostById);
+router.put('/:comment_id', updateCommentById);
 
 /**
  * @swagger
- * /posts/{post_id}:
+ * /comments/{comment_id}:
  *   delete:
- *     tags: [Posts]
- *     summary: 글 삭제
+ *     tags: [Comments]
+ *     summary: 댓글 삭제
  *     parameters:
- *       - name: post_id
+ *       - name: comment_id
  *         in: path
  *         required: true
- *         description: 게시글 ID
+ *         description: 댓글 ID
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: 게시글이 삭제되었습니다.
+ *         description: 댓글이 삭제되었습니다.
  *       404:
- *         description: 해당 게시글을 찾을 수 없습니다.
+ *         description: 해당 댓글을 찾을 수 없습니다.
  *       500:
  *         description: 서버 에러 발생
  */
-router.delete('/:post_id', deletePostById);
+router.delete('/:comment_id', deleteCommentById);
 
 module.exports = router;
