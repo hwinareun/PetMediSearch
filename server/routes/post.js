@@ -1,5 +1,5 @@
 const express = require('express');
-const { getPostsByCategory, getPostById, addPostById, updatePostById, deletePostById } = require('../controller/post');
+const { getPostById, addPostById, updatePostById, deletePostById } = require('../controller/post');
 const router = express.Router();
 
 /**
