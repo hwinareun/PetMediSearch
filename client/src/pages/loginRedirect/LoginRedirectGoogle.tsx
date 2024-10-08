@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Lottie from 'lottie-react';
 import loadingLottie from '../../assets/lottie/loadingLottie.json';
+import { setLogin } from '../../store/slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 function LoginRedirectGoogle() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
@@ -18,9 +21,14 @@ function LoginRedirectGoogle() {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          dispatch(
+            setLogin({
+              token: data.token,
+              user: data.user,
+            })
+          );
           console.log('Google login successful:', data);
-          navigate('/');
+          navigate('/myprofile');
         } else {
           throw new Error('Login failed');
         }
@@ -29,7 +37,7 @@ function LoginRedirectGoogle() {
         console.error('Google login failed:', error);
         navigate('/login');
       });
-  }, [code, navigate]);
+  }, [code, dispatch, navigate]);
 
   return (
     <LoginRedirectGoogleStyle>

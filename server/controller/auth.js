@@ -32,7 +32,7 @@ exports.kakaoLogin = async (req, res) => {
     const user = await processUser(socialId.toString(), 'kakao', username);
     const token = generateToken(user);
 
-    res.json({ token, user: { id: user.user_id, username: user.username } });
+    res.json({ token, user: { id: user.user_id, username: user.username, socialType: user.social_type } });
   } catch (error) {
     console.error('Kakao login error:', error);
     res.status(500).json({ error: '카카오 로그인 처리 중 오류가 발생했습니다.' });
@@ -65,7 +65,7 @@ exports.googleLogin = async (req, res) => {
     const user = await processUser(socialId, 'google', username);
     const token = generateToken(user);
 
-    res.json({ token, user: { id: user.user_id, username: user.username } });
+    res.json({ token, user: { id: user.user_id, username: user.username, socialType: user.social_type } });
   } catch (error) {
     console.error('Google login error:', error);
     res.status(500).json({ error: '구글 로그인 처리 중 오류가 발생했습니다.' });
@@ -100,7 +100,7 @@ exports.naverLogin = async (req, res) => {
     const user = await processUser(socialId, 'naver', username);
     const token = generateToken(user);
 
-    res.json({ token, user: { id: user.user_id, username: user.username } });
+    res.json({ token, user: { id: user.user_id, username: user.username, socialType: user.social_type } });
   } catch (error) {
     console.error('Naver login error:', error);
     res.status(500).json({ error: '네이버 로그인 처리 중 오류가 발생했습니다.' });

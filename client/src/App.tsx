@@ -10,6 +10,8 @@ import LoginRedirectKakao from './pages/loginRedirect/LoginRedirectKakao';
 import LoginRedirectNaver from './pages/loginRedirect/LoginRedirectNaver';
 import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 import { PetMediThemeProvider } from './style/themeContext';
+import MyProfile from './pages/MyProfile';
+import LoginProtect from './components/common/LoginProtect';
 
 const routeList = [
   {
@@ -39,6 +41,14 @@ const routeList = [
   {
     path: '/oauth/google',
     element: <LoginRedirectGoogle />,
+  },
+  {
+    path: '/myprofile',
+    element: (
+      <LoginProtect>
+        <MyProfile />
+      </LoginProtect>
+    ),
   },
 ];
 

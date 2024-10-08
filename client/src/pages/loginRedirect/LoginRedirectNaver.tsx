@@ -3,9 +3,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import loadingLottie from '../../assets/lottie/loadingLottie.json';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../store/slices/authSlice';
 
 function LoginRedirectNaver() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get('code');
   const state = new URL(window.location.href).searchParams.get('state');
 
@@ -19,9 +22,14 @@ function LoginRedirectNaver() {
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('token', data.token);
+          dispatch(
+            setLogin({
+              token: data.token,
+              user: data.user,
+            })
+          );
           console.log('Naver login successful:', data);
-          navigate('/');
+          navigate('/myprofile');
         } else {
           throw new Error('Login failed');
         }
@@ -30,7 +38,7 @@ function LoginRedirectNaver() {
         console.error('Naver login failed:', error);
         navigate('/login');
       });
-  }, [code, state, navigate]);
+  }, [code, state, navigate, dispatch]);
 
   return (
     <LoginRedirectNaverStyle>
