@@ -38,8 +38,8 @@ export const lightTheme: Props = {
   name: 'light',
   button: {
     small: {
-      fontSize: '8px',
-      padding: '10px 16px',
+      fontSize: '12px',
+      padding: '8px 12px',
     },
     medium: {
       fontSize: '16px',
@@ -87,9 +87,9 @@ export const lightTheme: Props = {
       height: '20px',
     },
     large: {
-      fontSize: '20px',
+      fontSize: '16px',
       padding: '10px 12px',
-      width: '500px',
+      width: '300px',
       height: '50px',
     },
   },
