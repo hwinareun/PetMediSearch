@@ -12,6 +12,7 @@ import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 import { PetMediThemeProvider } from './style/themeContext';
 import MyProfile from './pages/MyProfile';
 import LoginProtect from './components/common/LoginProtect';
+import CreatePost from './pages/CreatePost';
 
 const routeList = [
   {
@@ -29,6 +30,10 @@ const routeList = [
   {
     path: '/posts',
     element: <Posts />,
+  },
+  {
+    path: '/createpost',
+    element: <CreatePost />,
   },
   {
     path: '/oauth/kakao',
