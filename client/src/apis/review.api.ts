@@ -37,12 +37,12 @@ export const addReview = async (
 
 // 리뷰 수정
 export const editReview = async (
-  reviewId: number,
+  review_id: number,
   rating: number,
   reviewContent: string
 ) => {
   try {
-    const response = await httpClient.put(`/reviews/${reviewId}`, {
+    const response = await httpClient.put(`/reviews/${review_id}`, {
       rating,
       review_content: reviewContent,
     });
@@ -54,9 +54,9 @@ export const editReview = async (
 };
 
 // 리뷰 삭제
-export const removeReview = async (reviewId: number) => {
+export const removeReview = async (review_id: number) => {
   try {
-    const response = await httpClient.delete(`/reviews/${reviewId}`);
+    const response = await httpClient.delete(`/reviews/${review_id}`);
     return response.data;
   } catch (error) {
     console.error('리뷰 삭제 API 오류 발생:', error);

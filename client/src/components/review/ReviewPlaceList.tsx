@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { RootState } from '../../store';
 import { PlaceData } from '../../types/place.type';
 import { setSelectPlace } from '../../store/slices/placeSlice';
-import Button from '../common/Button';
 
 function ReviewPlaceList() {
   const dispatch = useDispatch();
@@ -14,8 +13,12 @@ function ReviewPlaceList() {
 
   return (
     <ReviewPlaceListStyle>
-      {searchPlaceResults.map((place) => (
-        <div className="placeWrap" onClick={() => handleClick(place)}>
+      {searchPlaceResults.map((place, index) => (
+        <div
+          key={index}
+          className="placeWrap"
+          onClick={() => handleClick(place)}
+        >
           <div className="marker">marker</div>
           <div className="info">
             <div className="title">{place.bplcnm}</div>
@@ -24,14 +27,6 @@ function ReviewPlaceList() {
               <div className="sitewhladdr">{place.sitewhladdr}</div>
             </div>
             <div className="tel">{place.sitetel}</div>
-          </div>
-          <div className="bttn">
-            <Button size="small" scheme="positive" onClick={() => {}}>
-              수정
-            </Button>
-            <Button size="small" scheme="positive" onClick={() => {}}>
-              삭제
-            </Button>
           </div>
         </div>
       ))}
