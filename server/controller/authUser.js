@@ -9,3 +9,5 @@ const verifyToken = (token) => {
         return null;
     }
 };
+
+module.exports = { verifyToken }
