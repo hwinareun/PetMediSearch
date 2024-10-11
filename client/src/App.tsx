@@ -13,6 +13,8 @@ import { PetMediThemeProvider } from './style/themeContext';
 import MyProfile from './pages/MyProfile';
 import LoginProtect from './components/common/LoginProtect';
 import Review from './pages/Review';
+import CreatePost from './pages/CreatePost';
+import Categories from './pages/Category';
 
 const routeList = [
   {
@@ -28,8 +30,16 @@ const routeList = [
     element: <Login />,
   },
   {
+    path: '/category',
+    element: <Categories />,
+  },
+  {
     path: '/posts',
     element: <Posts />,
+  },
+  {
+    path: '/createpost',
+    element: <CreatePost />,
   },
   {
     path: '/oauth/kakao',

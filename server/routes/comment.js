@@ -5,6 +5,11 @@ const router = express.Router();
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     Comment:
  *       type: object
@@ -39,6 +44,8 @@ const router = express.Router();
  *   get:
  *     tags: [Comments]
  *     summary: 특정 게시글의 댓글 조회
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: post_id
  *         in: path
@@ -55,6 +62,8 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Comment'
+ *       401:
+ *         description: 유효하지 않은 토큰입니다.
  *       500:
  *         description: 서버 에러 발생
  */
@@ -66,6 +75,8 @@ router.get('/:post_id', getCommentsByPostId);
  *   post:
  *     tags: [Comments]
  *     summary: 새로운 댓글 작성
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -74,9 +85,6 @@ router.get('/:post_id', getCommentsByPostId);
  *             type: object
  *             properties:
  *               post_id:
- *                 type: integer
- *                 example: 1
- *               user_id:
  *                 type: integer
  *                 example: 1
  *               content:
@@ -99,6 +107,8 @@ router.get('/:post_id', getCommentsByPostId);
  *                 commentId:
  *                   type: integer
  *                   example: 1
+ *       401:
+ *         description: 유효하지 않은 토큰입니다.
  *       500:
  *         description: 서버 에러 발생
  */
@@ -110,6 +120,8 @@ router.post('/', addComment);
  *   put:
  *     tags: [Comments]
  *     summary: 댓글 수정
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: comment_id
  *         in: path
@@ -130,6 +142,10 @@ router.post('/', addComment);
  *     responses:
  *       200:
  *         description: 댓글이 수정되었습니다.
+ *       401:
+ *         description: 유효하지 않은 토큰입니다.
+ *       403:
+ *         description: 작성자만 댓글을 수정할 수 있습니다.
  *       404:
  *         description: 해당 댓글을 찾을 수 없습니다.
  *       500:
@@ -143,6 +159,8 @@ router.put('/:comment_id', updateCommentById);
  *   delete:
  *     tags: [Comments]
  *     summary: 댓글 삭제
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: comment_id
  *         in: path
@@ -153,6 +171,10 @@ router.put('/:comment_id', updateCommentById);
  *     responses:
  *       200:
  *         description: 댓글이 삭제되었습니다.
+ *       401:
+ *         description: 유효하지 않은 토큰입니다.
+ *       403:
+ *         description: 작성자만 댓글을 삭제할 수 있습니다.
  *       404:
  *         description: 해당 댓글을 찾을 수 없습니다.
  *       500:
