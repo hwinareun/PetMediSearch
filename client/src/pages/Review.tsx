@@ -11,18 +11,22 @@ function Review() {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
+  const user = useSelector((state: RootState) => state.auth.userProfile);
 
   return (
     <ReviewStyle>
       <SearchBox />
-      {selectedPlace && selectedPlace.id ? (
-        <div>
-          <ReviewInput />
-          <ReviewBox />
-        </div>
-      ) : (
-        <ReviewPlaceList />
-      )}
+      {user.username ? user.username : 'none'}
+      <div className="review">
+        {selectedPlace && selectedPlace.id ? (
+          <>
+            <ReviewInput />
+            <ReviewBox />
+          </>
+        ) : (
+          <ReviewPlaceList />
+        )}
+      </div>
     </ReviewStyle>
   );
 }
@@ -33,6 +37,10 @@ const ReviewStyle = styled.div`
   padding: 0px 30px 30px 30px;
   align-items: center;
   gap: 20px;
+
+  .review {
+    height: 400px;
+  }
 `;
 
 export default Review;

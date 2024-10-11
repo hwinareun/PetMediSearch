@@ -2,8 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, UserState } from '../../types/auth.type';
 import { getToken, removeToken, setToken } from '../../utils/localStorage';
 
+interface DecodedToken {
+  userId: string;
+}
+
 const initialState: AuthState = {
   isLogin: getToken() ? true : false,
+  userId: '',
   userProfile: {
     username: '',
     socialType: '',

@@ -13,15 +13,13 @@ function ReviewInput() {
   );
   const [rating, setRating] = useState<number>(0);
   const [reviewContent, setReviewContent] = useState<string>('');
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setSuccessMessage(null);
 
     try {
       await addReview(1, selectedPlace.id, rating, reviewContent); // user_id는 예시로 1로 설정
-      setSuccessMessage('리뷰가 성공적으로 등록되었습니다.');
+      alert('리뷰가 성공적으로 등록되었습니다.');
       setRating(0); // 폼 초기화
       setReviewContent('');
     } catch (err) {
@@ -62,7 +60,6 @@ function ReviewInput() {
         <Button size="small" scheme="positive" onClick={() => {}}>
           등록
         </Button>
-        {successMessage && <div>{successMessage}</div>}
       </form>
     </ReviewInputStyle>
   );
