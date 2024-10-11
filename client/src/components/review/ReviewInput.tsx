@@ -11,6 +11,7 @@ function ReviewInput() {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
+  const user = useSelector((state: RootState) => state.auth.user);
   const [rating, setRating] = useState<number>(0);
   const [reviewContent, setReviewContent] = useState<string>('');
 
@@ -18,7 +19,7 @@ function ReviewInput() {
     event.preventDefault();
 
     try {
-      await addReview(1, selectedPlace.id, rating, reviewContent); // user_id는 예시로 1로 설정
+      await addReview(user.id, selectedPlace.id, rating, reviewContent); // user_id는 예시로 1로 설정
       alert('리뷰가 성공적으로 등록되었습니다.');
       setRating(0); // 폼 초기화
       setReviewContent('');
@@ -31,19 +32,17 @@ function ReviewInput() {
     <ReviewInputStyle>
       <div className="info">
         <div className="title">
-          <div className="title">
-            <div>{selectedPlace?.bplcnm}</div>
-            <Star />
-            <div>
-              <input
-                type="number"
-                id="rating"
-                value={rating}
-                min="0"
-                max="5"
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-            </div>
+          <div>{selectedPlace?.bplcnm}</div>
+          <Star />
+          <div>
+            <input
+              type="number"
+              id="rating"
+              value={rating}
+              min="0"
+              max="5"
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
           </div>
         </div>
         <div className="address">{selectedPlace?.rdnwhladdr}</div>

@@ -11,12 +11,10 @@ function Review() {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
-  const user = useSelector((state: RootState) => state.auth.userProfile);
 
   return (
     <ReviewStyle>
       <SearchBox />
-      {user.username ? user.username : 'none'}
       <div className="review">
         {selectedPlace && selectedPlace.id ? (
           <>

@@ -15,6 +15,7 @@ function ReviewBox() {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
+  // const user = useSelector((state: RootState) => state.auth.user);
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID
   const [updatedContent, setUpdatedContent] = useState(''); // 수정된 리뷰 내용
@@ -126,6 +127,7 @@ function ReviewBox() {
                   <>
                     <div>평점: {review.rating}</div>
                     <div>리뷰: {review.review_content}</div>
+                    <div>작성자: {review.user_id}</div>
                     <div>작성일: {review.created_at}</div>
                     <div className="bttn">
                       <Button

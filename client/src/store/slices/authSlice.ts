@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, UserState } from '../../types/auth.type';
-import { getToken, removeToken, setToken } from '../../utils/localStorage';
-
-interface DecodedToken {
-  userId: string;
-}
+import {
+  getToken,
+  getUser,
+  removeToken,
+  removeUser,
+  setToken,
+  setUser,
+} from '../../utils/localStorage';
 
 const initialState: AuthState = {
   isLogin: getToken() ? true : false,
-  userId: '',
-  userProfile: {
-    username: '',
-    socialType: '',
-  },
+  user: getUser() || { id: 0, username: '', socialType: '' }, // 로컬 스토리지에서 유저 정보 복원
 };
 
 const authSlice = createSlice({
@@ -25,11 +24,14 @@ const authSlice = createSlice({
     ) => {
       state.isLogin = true;
       setToken(payload.token);
-      state.userProfile = payload.user;
+      setUser(payload.user);
+      state.user = payload.user;
     },
     setLogout: (state) => {
       state.isLogin = false;
       removeToken();
+      removeUser();
+      state.user = { id: 0, username: '', socialType: '' };
     },
   },
 });
