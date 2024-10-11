@@ -1,4 +1,5 @@
 const conn = require('../mysql');
+const { verifyToken } = require('./authUser');
 
 // 게시글 ID로 게시글 조회
 const getPostById = (req, res) => {
@@ -25,8 +26,15 @@ const getPostById = (req, res) => {
 // 새로운 게시글 추가
 const addPostById = (req, res) => {
     console.log(req.body);
-    const { category_id, user_id, title, content } = req.body;
+    const { category_id, title, content } = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = verifyToken(token);
 
+    if (!decoded) {
+        return res.status(401).send({ error: '유효하지 않은 토큰입니다.' });
+    }
+
+    const user_id = decoded.id;
 
     const query = 'INSERT INTO posts (category_id, user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())';
 
@@ -44,10 +52,18 @@ const addPostById = (req, res) => {
 const updatePostById = (req, res) => {
     const post_id = req.params.post_id;
     const { title, content } = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = verifyToken(token);
 
-    const query = 'UPDATE posts SET title = ?, content = ?, updated_at = NOW() WHERE post_id = ?';
+    if (!decoded) {
+        return res.status(401).send({ error: '유효하지 않은 토큰입니다.' });
+    }
 
-    conn.query(query, [title, content, post_id], (err, results) => {
+    const user_id = decoded.id;
+
+    const query = 'UPDATE posts SET title = ?, content = ?, updated_at = NOW() WHERE post_id = ? and user_id = ?';
+
+    conn.query(query, [title, content, post_id, user_id], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send({ error: '서버 에러 발생' });
@@ -55,7 +71,7 @@ const updatePostById = (req, res) => {
 
 
         if (results.affectedRows === 0) {
-            return res.status(404).send({ message: '해당 게시글을 찾을 수 없습니다.' });
+            return res.status(404).send({ message: '작성자만 게시글을 수정할 수 있습니다.' });
         }
 
         return res.send({ message: '게시글이 수정되었습니다.' });
@@ -65,17 +81,25 @@ const updatePostById = (req, res) => {
 // 게시글 삭제
 const deletePostById = (req, res) => {
     const post_id = req.params.post_id;
+    const token = req.headers.authorization?.split(' ')[1];
+    const decoded = verifyToken(token);
 
-    const query = 'DELETE FROM posts WHERE post_id = ?';
+    if (!decoded) {
+        return res.status(401).send({ error: '유효하지 않은 토큰입니다.' });
+    }
 
-    conn.query(query, [post_id], (err, results) => {
+    const user_id = decoded.id;
+
+    const query = 'DELETE FROM posts WHERE post_id = ? and user_id = ?';
+
+    conn.query(query, [post_id, user_id], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send({ error: '서버 에러 발생' });
         }
 
         if (results.affectedRows === 0) {
-            return res.status(404).send({ message: '해당 게시글을 찾을 수 없습니다.' });
+            return res.status(404).send({ message: '작성자만 게시글을 삭제할 수 있습니다.' });
         }
 
 
