@@ -5,16 +5,17 @@ import ReviewBox from '../components/review/ReviewBox'; // 해당 시설 후기�
 import ReviewPlaceList from '../components/review/ReviewPlaceList'; // 검색 후 조회 될 시설 리스트
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { PlaceData } from '../types/place.type';
 
 function Review() {
   const selectedPlace = useSelector(
-    (state: RootState) => state.place.selectedPlace
+    (state: RootState) => state.place.selectedPlace as PlaceData
   );
 
   return (
     <ReviewStyle>
       <SearchBox />
-      {selectedPlace.id ? (
+      {selectedPlace && selectedPlace.id ? (
         <div>
           <ReviewInput />
           <ReviewBox />

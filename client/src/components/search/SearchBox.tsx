@@ -3,7 +3,11 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setResults, setSearchInputPlace } from '../../store/slices/placeSlice';
+import {
+  clearSelectedPlace,
+  setResults,
+  setSearchInputPlace,
+} from '../../store/slices/placeSlice';
 import { fetchPlaces } from '../../apis/place.api';
 
 function SearchBox() {
@@ -26,6 +30,7 @@ function SearchBox() {
       }
 
       dispatch(setResults(results));
+      dispatch(clearSelectedPlace());
       console.log(results);
     } catch (error) {
       console.error('Failed to fetch places:', error);

@@ -9,10 +9,11 @@ import {
 } from '../../apis/review.api';
 import { ReviewData } from '../../types/review.type';
 import Button from '../common/Button';
+import { PlaceData } from '../../types/place.type';
 
 function ReviewBox() {
   const selectedPlace = useSelector(
-    (state: RootState) => state.place.selectedPlace
+    (state: RootState) => state.place.selectedPlace as PlaceData
   );
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID

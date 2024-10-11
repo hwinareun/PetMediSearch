@@ -5,10 +5,11 @@ import { RootState } from '../../store';
 import Button from '../common/Button';
 import { addReview } from '../../apis/review.api';
 import { useState } from 'react';
+import { PlaceData } from '../../types/place.type';
 
 function ReviewInput() {
   const selectedPlace = useSelector(
-    (state: RootState) => state.place.selectedPlace
+    (state: RootState) => state.place.selectedPlace as PlaceData
   );
   const [rating, setRating] = useState<number>(0);
   const [reviewContent, setReviewContent] = useState<string>('');

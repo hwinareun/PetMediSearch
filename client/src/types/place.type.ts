@@ -15,5 +15,5 @@ export interface PlaceState {
   searchPlaceResults: PlaceData[]; // 장소 검색 결과
   searchInputPlace: string; // 검색하려는 장소명
   transformedResults: PlaceData[]; // 좌표 변환 결과
-  selectedPlace: PlaceData; // 선택된 장소
+  selectedPlace: PlaceData | null; // 선택된 장소
 }
