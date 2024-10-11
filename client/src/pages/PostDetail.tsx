@@ -53,9 +53,9 @@ function PostDetail() {
       {comments && comments.length != 0 ? (
         comments.map((item) => (
           <div key={item.comment_id}>
-            <h4>{item.username}</h4> {/* 댓글 작성자 이름 */}
-            <p>{item.content}</p> {/* 댓글 내용 */}
-            <span>{new Date(item.created_at).toLocaleString()}</span>{' '}
+            <h4>{item.author}</h4>
+            <p>{item.content}</p>
+            <span>{new Date(item.created_at).toLocaleString()}</span>
           </div>
         ))
       ) : (

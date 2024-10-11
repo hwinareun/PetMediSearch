@@ -19,5 +19,5 @@ export interface Comment {
   user_id: number;
   content: string;
   created_at: string;
-  username: string;
+  author: string;
 }
