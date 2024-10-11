@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Comment } from '../types/type';
+import { Comment } from '../types/post.type';
 import { useParams } from 'react-router-dom';
 import CommentItem from './CommentItem';
 import Paging from './Paging';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Category } from '../types/type';
+import { Category } from '../types/post.type';
 import { useNavigate } from 'react-router-dom';
 
 function Categories() {

@@ -6,7 +6,7 @@ import {
   CheckButtonContainer,
   CheckButton,
 } from './DeleteModal';
-import { Comment } from '../types/type';
+import { Comment } from '../types/post.type';
 import axios from 'axios';
 
 export default function EditModal({
