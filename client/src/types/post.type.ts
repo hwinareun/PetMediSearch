@@ -1,9 +1,9 @@
 export interface PostState {
-  id: string;
-  category: string[];
+  post_id: number;
   title: string;
   content: string;
-  nickName: string;
+  author?: string;
+  username?: string;
   created_at: string;
 }
 
@@ -14,11 +14,10 @@ export interface Category {
 }
 
 export interface Comment {
-  id: string;
-  commentText: string;
-  postId: string;
-  userId: any;
-  nickName: string;
-  createdAt: string;
-  isEdit: boolean;
+  comment_id: number;
+  post_id: number;
+  user_id: number;
+  content: string;
+  created_at: string;
+  username: string;
 }

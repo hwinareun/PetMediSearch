@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Comment, PostState } from '../types/type';
+import { Comment, PostState } from '../types/post.type';
 import axios from 'axios';
 
 export default function DeleteModal({

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { PostState } from '../types/type';
+import { PostState } from '../types/post.type';
 
 export default function Post({ post }: { post: PostState }) {
   const navigate = useNavigate();

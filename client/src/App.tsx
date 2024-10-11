@@ -14,6 +14,7 @@ import MyProfile from './pages/MyProfile';
 import LoginProtect from './components/common/LoginProtect';
 import CreatePost from './pages/CreatePost';
 import Categories from './pages/Category';
+import PostDetail from './pages/PostDetail';
 
 const routeList = [
   {
@@ -35,6 +36,10 @@ const routeList = [
   {
     path: '/posts',
     element: <Posts />,
+  },
+  {
+    path: '/posts/:id',
+    element: <PostDetail />,
   },
   {
     path: '/createpost',
