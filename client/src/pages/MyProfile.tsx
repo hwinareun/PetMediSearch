@@ -1,9 +1,24 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../store';
+import { ReviewData } from '../types/review.type';
+import { useEffect, useState } from 'react';
+import { getReviewsByUserId } from '../apis/review.api';
 
 function MyProfile() {
   const user = useSelector((state: RootState) => state.auth.user);
+
+  // 사용자가 작성한 리뷰 조회
+  const [myReviews, setMyReviews] = useState<ReviewData[]>([]);
+  useEffect(() => {
+    getReviewsByUserId(user.id)
+      .then((reviews) => {
+        setMyReviews(reviews);
+      })
+      .catch((error) => {
+        console.error('리뷰 데이터를 가져오는 중 오류 발생:', error);
+      });
+  }, [user.id]);
 
   return (
     <MyProfileStyle>
@@ -24,7 +39,21 @@ function MyProfile() {
             <p>내 후기 글 조회</p>
             <a href="/review">후기 작성하러 가기</a>
           </div>
-          <div className="table">글글글</div>
+          <div className="table">
+            {myReviews.length === 0 ? (
+              <p>등록된 리뷰가 없습니다.</p>
+            ) : (
+              <ul>
+                {myReviews.map((review, index) => (
+                  <li key={index}>
+                    <div>평점: {review.rating}</div>
+                    <div>리뷰: {review.review_content}</div>
+                    <div>작성일: {review.created_at}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     </MyProfileStyle>
