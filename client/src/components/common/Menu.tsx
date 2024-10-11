@@ -17,7 +17,7 @@ function Menu() {
     navigate('/search');
   };
   const handlePostsClick = () => {
-    navigate('/posts');
+    navigate('/category');
   };
   const handleMyProfileClick = () => {
     navigate('/myprofile');

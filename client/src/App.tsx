@@ -13,6 +13,7 @@ import { PetMediThemeProvider } from './style/themeContext';
 import MyProfile from './pages/MyProfile';
 import LoginProtect from './components/common/LoginProtect';
 import CreatePost from './pages/CreatePost';
+import Categories from './pages/Category';
 
 const routeList = [
   {
@@ -26,6 +27,10 @@ const routeList = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/category',
+    element: <Categories />,
   },
   {
     path: '/posts',
