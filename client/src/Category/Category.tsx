@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Category() {
   const [categorypost, setCategoryPost] = useState({
     category: [],
   });
-  const { id } = useParams();
+  // const { id } = useParams();
   const getPost = async () => {
-    const res = await axios.get(
-      {
-        /*URL */
-      },
-      id
-    );
+    const res = await axios.get('http://localhost:8080/category');
     setCategoryPost(res.data);
   };
   useEffect(() => {
