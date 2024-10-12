@@ -28,6 +28,7 @@ function ReviewBox() {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
+  const user = useSelector((state: RootState) => state.auth.user);
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID
   const [currentPage, setCurrentPage] = useState(1);
@@ -135,22 +136,24 @@ function ReviewBox() {
                             <p className="createdAt">
                               작성 일시: {review.created_at}
                             </p>
-                            <div className="bttn">
-                              <Button
-                                size="small"
-                                scheme="positive"
-                                onClick={() => startEditing(review)}
-                              >
-                                수정
-                              </Button>
-                              <Button
-                                size="small"
-                                scheme="negative"
-                                onClick={() => handleRemoveReview(review)}
-                              >
-                                삭제
-                              </Button>
-                            </div>
+                            {review.user_id === user.id ? (
+                              <div className="bttn">
+                                <Button
+                                  size="small"
+                                  scheme="positive"
+                                  onClick={() => startEditing(review)}
+                                >
+                                  수정
+                                </Button>
+                                <Button
+                                  size="small"
+                                  scheme="negative"
+                                  onClick={() => handleRemoveReview(review)}
+                                >
+                                  삭제
+                                </Button>
+                              </div>
+                            ) : null}
                           </div>
                           <div className="content">{review.review_content}</div>
                         </>
