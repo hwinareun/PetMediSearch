@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import SearchBox from '../components/search/SearchBox';
-import SearchMapCopy from '../components/search/SearchMapCopy';
-// import SearchMap from '../components/search/SearchMap';
+// import SearchMapCopy from '../components/search/SearchMapCopy';
+import SearchMap from '../components/search/SearchMap';
 
 function Search() {
   return (
     <SearchStyle>
       <SearchBox />
-      {/* <SearchMap /> */}
-      <SearchMapCopy />
+      <SearchMap />
+      {/* <SearchMapCopy /> */}
     </SearchStyle>
   );
 }

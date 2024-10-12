@@ -1,13 +1,10 @@
 export interface AuthState {
   isLogin: boolean;
-  userProfile: UserState;
-}
-
-export interface AuthToken {
-  token: string;
+  user: UserState;
 }
 
 export interface UserState {
+  id: number;
   username: string;
   socialType: string;
 }

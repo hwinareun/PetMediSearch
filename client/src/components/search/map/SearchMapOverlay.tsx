@@ -42,6 +42,9 @@ function SearchMapOverlay({ onClick, place }: Props) {
                 </div>
               )}
             </div>
+            <div className="review">
+              <a href="/review">후기 작성하기</a>
+            </div>
           </div>
           <FaX className="closebttn" onClick={() => onClick(place.id)} />
         </div>
@@ -130,6 +133,19 @@ const SearchMapOverlayStyle = styled.div`
           .stateIcon {
             font-size: 14px;
             padding-bottom: 1px;
+          }
+        }
+        .review {
+          font-size: 12px;
+          padding-bottom: 1px;
+
+          a {
+            color: #464646;
+            text-decoration: none;
+          }
+
+          a:hover {
+            color: #5ba95b;
           }
         }
       }

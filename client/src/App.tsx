@@ -12,6 +12,7 @@ import LoginRedirectGoogle from './pages/loginRedirect/LoginRedirectGoogle';
 import { PetMediThemeProvider } from './style/themeContext';
 import MyProfile from './pages/MyProfile';
 import LoginProtect from './components/common/LoginProtect';
+import Review from './pages/Review';
 import CreatePost from './pages/CreatePost';
 import Categories from './pages/Category';
 import PostDetail from './pages/PostDetail';
@@ -62,6 +63,14 @@ const routeList = [
     element: (
       <LoginProtect>
         <MyProfile />
+      </LoginProtect>
+    ),
+  },
+  {
+    path: '/Review',
+    element: (
+      <LoginProtect>
+        <Review />
       </LoginProtect>
     ),
   },

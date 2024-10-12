@@ -73,6 +73,7 @@ const MenuStyle = styled.div`
       padding: 10px;
       display: flex;
       align-items: center;
+      transition: color 0.3s;
     }
 
     p:hover {
