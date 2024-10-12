@@ -51,7 +51,7 @@ const StarStyle = styled.div`
 
   svg {
     cursor: pointer;
-    color: #ced2cf;
+    color: #c3c3c3;
     transition: color 0.3s;
 
     &.active {

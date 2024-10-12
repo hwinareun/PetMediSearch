@@ -221,6 +221,7 @@ const ReviewBoxStyle = styled.div`
     width: 300px;
     height: 60px;
     padding: 10px;
+    margin-top: 10px;
     border-radius: 8px;
     border: 1px solid #ddd;
     resize: none;

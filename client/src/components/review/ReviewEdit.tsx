@@ -26,32 +26,73 @@ function EditReviewForm({ review, onEdit, onCancel }: EditReviewFormProps) {
 
   return (
     <EditReviewFormStyle>
-      <div className="rating">
-        <Star
-          setClickRating={setUpdatedRating}
-          rating={updatedRating}
-          interactive={true}
-        />
+      <div className="editInfo">
+        <div className="rating">
+          <Star
+            setClickRating={setUpdatedRating}
+            rating={updatedRating}
+            interactive={true}
+          />
+        </div>
+        <div className="bttn">
+          <Button size="small" scheme="positive" onClick={handleEdit}>
+            수정
+          </Button>
+          <Button size="small" scheme="negative" onClick={onCancel}>
+            취소
+          </Button>
+        </div>
       </div>
-      <div className="content">
-        리뷰:
-        <textarea
-          value={updatedContent}
-          onChange={(e) => setUpdatedContent(e.target.value)}
-        />
-      </div>
-      <div className="bttn">
-        <Button size="small" scheme="positive" onClick={handleEdit}>
-          수정
-        </Button>
-        <Button size="small" scheme="negative" onClick={onCancel}>
-          취소
-        </Button>
-      </div>
+      <textarea
+        className="content"
+        value={updatedContent}
+        onChange={(e) => setUpdatedContent(e.target.value)}
+      />
     </EditReviewFormStyle>
   );
 }
 
-const EditReviewFormStyle = styled.div``;
+const EditReviewFormStyle = styled.div`
+  .editInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 6px;
+  }
+
+  .rating {
+    padding-bottom: 3px;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .content {
+    width: 300px;
+    height: 60px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    resize: none;
+    font-size: 10px;
+    color: #333;
+    background-color: #f5f5f5;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s ease-in-out;
+
+    &:focus {
+      border-color: #c6cdbe;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  .bttn {
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+  }
+`;
 
 export default EditReviewForm;
