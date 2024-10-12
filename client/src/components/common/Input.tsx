@@ -32,10 +32,11 @@ const InputStyle = styled.input<Props>`
   width: ${({ theme, size }) => theme.input[size].width};
   height: ${({ theme, size }) => theme.input[size].height};
   font-family: 'Garam';
-  border: 2px solid #575757;
+  border: 1px solid #575757;
   outline: none;
   &:focus {
-    border-color: #5ba95b !important;
+    border-color: #c6cdbe;
+    outline: none;
   }
 `;
 

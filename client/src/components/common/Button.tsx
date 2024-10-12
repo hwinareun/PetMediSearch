@@ -34,6 +34,9 @@ const ButtonStyle = styled.button<
       theme.buttonScheme[$scheme].hoverBgColor};
   }
   font-family: 'Garam';
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 `;
 
 export default Button;

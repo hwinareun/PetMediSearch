@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ReviewData } from '../../types/review.type';
 import Button from '../common/Button';
+import styled from 'styled-components';
+import Star from '../common/Star';
 
 interface EditReviewFormProps {
   review: ReviewData;
@@ -23,16 +25,15 @@ function EditReviewForm({ review, onEdit, onCancel }: EditReviewFormProps) {
   };
 
   return (
-    <div>
-      <div>
-        평점:
-        <input
-          type="number"
-          value={updatedRating}
-          onChange={(e) => setUpdatedRating(Number(e.target.value))}
+    <EditReviewFormStyle>
+      <div className="rating">
+        <Star
+          setClickRating={setUpdatedRating}
+          rating={updatedRating}
+          interactive={true}
         />
       </div>
-      <div>
+      <div className="content">
         리뷰:
         <textarea
           value={updatedContent}
@@ -47,8 +48,10 @@ function EditReviewForm({ review, onEdit, onCancel }: EditReviewFormProps) {
           취소
         </Button>
       </div>
-    </div>
+    </EditReviewFormStyle>
   );
 }
+
+const EditReviewFormStyle = styled.div``;
 
 export default EditReviewForm;

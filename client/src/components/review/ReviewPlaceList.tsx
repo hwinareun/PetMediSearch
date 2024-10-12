@@ -5,6 +5,11 @@ import { PlaceData } from '../../types/place.type';
 import { setSelectPlace } from '../../store/slices/placeSlice';
 import PaginationComp from '../common/PaginationComp';
 import { useState } from 'react';
+import Programming from '../../assets/images/Programming.png';
+import {
+  MdDoNotDisturbOnTotalSilence,
+  MdExpandCircleDown,
+} from 'react-icons/md';
 
 function ReviewPlaceList() {
   const dispatch = useDispatch();
@@ -29,29 +34,80 @@ function ReviewPlaceList() {
 
   return (
     <ReviewPlaceListStyle>
-      {currentPlaces.map((place, index) => (
-        <div
-          key={index}
-          className="placeWrap"
-          onClick={() => handleClick(place)}
-        >
-          <div className="marker">marker</div>
-          <div className="info">
-            <div className="title">{place.bplcnm}</div>
-            <div className="address">
-              <div className="rdnwhladdr">{place.rdnwhladdr}</div>
-              <div className="sitewhladdr">{place.sitewhladdr}</div>
-            </div>
-            <div className="tel">{place.sitetel}</div>
-          </div>
+      {searchPlaceResults.length === 0 ? (
+        <div className="noResults">
+          <img src={Programming} />
+          <p>검색된 결과가 없습니다.</p>
         </div>
-      ))}
-      <PaginationComp
-        totalItemsCount={searchPlaceResults.length}
-        itemsCountPerPage={postsPerPage}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      ) : (
+        <>
+          {currentPlaces.map((place, index) => (
+            <div
+              key={index}
+              className="placeWrap"
+              onClick={() => handleClick(place)}
+            >
+              <div className="marker">marker</div>
+              <div className="place">
+                <div className="info">
+                  <div className="title">{place.bplcnm}</div>
+                  <div className="state">
+                    {place.dtlstatenm === '정상' ? (
+                      <div className="opened">
+                        <MdExpandCircleDown className="stateIcon" />
+                        {place.dtlstatenm}
+                      </div>
+                    ) : (
+                      <div className="closed">
+                        <MdDoNotDisturbOnTotalSilence className="stateIcon" />
+                        {place.dtlstatenm}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="address">
+                  <div className="rdnwhladdr">
+                    {place.rdnwhladdr ? (
+                      place.rdnwhladdr
+                    ) : (
+                      <div className="notPrepared">
+                        <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                        <p>준비되지 않은 정보입니다</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="sitewhladdr">
+                    {place.sitewhladdr ? (
+                      place.sitewhladdr
+                    ) : (
+                      <div className="notPrepared">
+                        <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                        <p>준비되지 않은 정보입니다</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="tel">
+                  {place.sitetel ? (
+                    <div className="siteTel">{place.sitetel}</div>
+                  ) : (
+                    <div className="notPrepared">
+                      <MdDoNotDisturbOnTotalSilence className="notIcon" />
+                      <p>준비되지 않은 정보입니다</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          <PaginationComp
+            totalItemsCount={searchPlaceResults.length}
+            itemsCountPerPage={postsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </ReviewPlaceListStyle>
   );
 }
@@ -71,24 +127,70 @@ const ReviewPlaceListStyle = styled.div`
     padding: 10px;
   }
 
-  .info {
+  .place {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    padding: 10px;
+    .info {
+      display: flex;
+      align-items: center;
+      padding: 5px 0px;
+      gap: 5px;
+      .title {
+        font-weight: bold;
+      }
+      .state {
+        font-size: 12px;
+        .opened {
+          display: flex;
+          color: #5ba95b;
+        }
+        .closed {
+          display: flex;
+          color: #e44c4c;
+        }
+        .stateIcon {
+          font-size: 14px;
+          padding-bottom: 1px;
+        }
+      }
+    }
+    .address {
+      font-size: 10px;
+      color: #575757;
+    }
+
+    .tel {
+      font-size: 10px;
+      color: #575757;
+    }
   }
 
-  .title {
-    font-weight: bold;
+  .noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+
+    img {
+      width: 200px;
+    }
+    p {
+      border-top: solid black;
+      border-bottom: solid black;
+      padding: 10px;
+      font-size: 20px;
+    }
   }
 
-  .address {
-    font-size: 10px;
-    color: #575757;
-  }
-
-  .tel {
-    font-size: 10px;
-    color: #575757;
+  .notPrepared {
+    display: flex;
+    align-items: center;
+    font-size: 8px;
+    color: #a0a0a0;
+    .notIcon {
+      font-size: 9px;
+    }
   }
 `;
 

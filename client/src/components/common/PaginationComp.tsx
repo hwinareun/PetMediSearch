@@ -71,7 +71,7 @@ const PaginationWrapper = styled.div`
   }
 
   .pagination li a:hover {
-    background-color: #5ba95b;
+    background-color: #c3c3c3;
     color: white;
   }
 `;

@@ -13,13 +13,15 @@ import { PlaceData } from '../../types/place.type';
 import PaginationComp from '../common/PaginationComp';
 import ReviewEdit from './ReviewEdit';
 import React from 'react';
+import Star from '../common/Star';
+import Programming from '../../assets/images/Programming.png';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const year = date.getFullYear().toString().slice(2); // 연도의 마지막 두 자리
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리로
   const day = date.getDate().toString().padStart(2, '0'); // 일을 2자리로
-  return `${year}.${month}.${day}`;
+  return `${year}-${month}-${day}`;
 };
 
 function ReviewBox() {
@@ -28,10 +30,8 @@ function ReviewBox() {
   );
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID
-  const [updatedContent, setUpdatedContent] = useState(''); // 수정된 리뷰 내용
-  const [updatedRating, setUpdatedRating] = useState<number>(0); // 수정된 평점
-
   const [currentPage, setCurrentPage] = useState(1);
+
   const postsPerPage = 5;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -39,29 +39,26 @@ function ReviewBox() {
 
   const startEditing = (review: ReviewData) => {
     setEditingReviewId(review.review_id);
-    setUpdatedContent(review.review_content); // 현재 리뷰 내용을 입력 필드에 미리 채움
-    setUpdatedRating(review.rating); // 현재 평점을 입력 필드에 미리 채움
   };
 
-  const handleEditReview = async (review: ReviewData) => {
+  const handleEditReview = async (
+    reviewId: number,
+    updatedRating: number,
+    updatedContent: string
+  ) => {
     try {
       const updatedReview = await editReview(
-        review.review_id,
-        updatedRating || review.rating,
-        updatedContent || review.review_content
+        reviewId,
+        updatedRating,
+        updatedContent
       );
-      alert(`리뷰가 수정되었습니다:${updatedReview}`);
-      // 수정된 리뷰를 업데이트하고, 편집 상태 초기화
+
+      alert('리뷰가 수정되었습니다');
       setReviews((prevReviews) =>
         prevReviews.map((prev) =>
-          prev.review_id === review.review_id ? updatedReview : prev
+          prev.review_id === reviewId ? updatedReview : prev
         )
       );
-      setEditingReviewId(null); // 편집 모드 종료
-      getReviewsByFacilityId(selectedPlace.id).then((reviews) => {
-        setReviews(reviews);
-        console.log(reviews);
-      });
     } catch (error) {
       console.error('리뷰 수정 중 오류 발생:', error);
     }
@@ -94,11 +91,11 @@ function ReviewBox() {
     if (selectedPlace) {
       getReviewsByFacilityId(selectedPlace.id)
         .then((reviews) => {
-          setReviews(reviews);
-          console.log(reviews);
+          setReviews(reviews || []);
         })
         .catch((err) => {
           console.error(`리뷰를 불러오던 중 오류 발생: ${err}`);
+          setReviews([]);
         });
     }
   }, [selectedPlace]);
@@ -106,68 +103,72 @@ function ReviewBox() {
   return (
     <ReviewBoxStyle>
       <div>
-        <h2>{selectedPlace.bplcnm}에 대한 리뷰</h2>
         {reviews.length === 0 ? (
-          <div>등록된 리뷰가 없습니다.</div>
+          <div className="noResults">
+            <img src={Programming} />
+            <p>등록된 리뷰가 없습니다.</p>
+          </div>
         ) : (
-          <ul className="reviews">
-            {currentReviews.map((review, index) => (
-              <React.Fragment key={index}>
-                <li
-                  className="review"
-                  onClick={() => handleClickReview(review.review_id)}
-                >
-                  <div>
-                    평점: {review.rating} | 리뷰:{' '}
-                    {review.review_content.slice(0, 10)}... | 작성자:{' '}
-                    {review.user_id} | 작성일: {formatDate(review.created_at)}
-                  </div>
-                </li>
-                {selectedReviewId === review.review_id && (
-                  <li className="reviewDetail">
-                    {editingReviewId === review.review_id ? (
-                      <ReviewEdit
-                        review={review}
-                        onEdit={() => handleEditReview(review)}
-                        onCancel={() => setEditingReviewId(null)}
-                      />
-                    ) : (
-                      <>
-                        <div>
-                          평점: {review.rating} | 리뷰:{review.review_content} |
-                          작성자: {review.user_id} | 작성일:{review.created_at}
-                        </div>
-                        <div className="bttn">
-                          <Button
-                            size="small"
-                            scheme="positive"
-                            onClick={() => startEditing(review)}
-                          >
-                            수정
-                          </Button>
-                          <Button
-                            size="small"
-                            scheme="negative"
-                            onClick={() => handleRemoveReview(review)}
-                          >
-                            삭제
-                          </Button>
-                        </div>
-                      </>
-                    )}
+          <>
+            <ul className="reviews">
+              {currentReviews.map((review, index) => (
+                <React.Fragment key={index}>
+                  <li
+                    className="review"
+                    onClick={() => handleClickReview(review.review_id)}
+                  >
+                    <Star rating={review.rating} interactive={false} />
+                    <p>작성자 번호: {review.user_id}</p>
+                    <p>작성 일자: {formatDate(review.created_at)}</p>
                   </li>
-                )}
-              </React.Fragment>
-            ))}
-          </ul>
+                  {selectedReviewId === review.review_id && (
+                    <li className="reviewDetail">
+                      {editingReviewId === review.review_id ? (
+                        <ReviewEdit
+                          review={review}
+                          onEdit={handleEditReview}
+                          onCancel={() => setEditingReviewId(null)}
+                        />
+                      ) : (
+                        <>
+                          <div className="detailInfo">
+                            <p className="createdAt">
+                              작성 일시: {review.created_at}
+                            </p>
+                            <div className="bttn">
+                              <Button
+                                size="small"
+                                scheme="positive"
+                                onClick={() => startEditing(review)}
+                              >
+                                수정
+                              </Button>
+                              <Button
+                                size="small"
+                                scheme="negative"
+                                onClick={() => handleRemoveReview(review)}
+                              >
+                                삭제
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="content">{review.review_content}</div>
+                        </>
+                      )}
+                    </li>
+                  )}
+                </React.Fragment>
+              ))}
+            </ul>
+            <PaginationComp
+              totalItemsCount={reviews.length}
+              itemsCountPerPage={postsPerPage}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </>
         )}
       </div>
-      <PaginationComp
-        totalItemsCount={reviews.length}
-        itemsCountPerPage={postsPerPage}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
     </ReviewBoxStyle>
   );
 }
@@ -181,22 +182,72 @@ const ReviewBoxStyle = styled.div`
   .review {
     background-color: #f5f5f5;
     border-bottom: 1px solid #575757;
-    padding: 10px;
+    padding: 1px;
     font-size: 12px;
     text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: 0.5s background-color;
+
+    &:hover {
+      background-color: #c3c3c3;
+    }
+
+    p {
+      padding: 0px 5px;
+      border-left: 1px solid #575757;
+    }
   }
 
   .reviewDetail {
     background-color: #d9d9d9;
     border-bottom: 1px solid #575757;
+    font-size: 12px;
+    padding: 8px 13px;
+  }
+
+  .detailInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+  }
+
+  .content {
+    width: 300px;
+    height: 60px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
     font-size: 10px;
+    color: #333;
+    background-color: #f5f5f5;
+    overflow-y: auto;
   }
 
   .bttn {
-    margin: 10px;
     display: flex;
     justify-content: end;
     gap: 5px;
+  }
+
+  .noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+
+    img {
+      width: 200px;
+    }
+    p {
+      border-top: solid black;
+      border-bottom: solid black;
+      padding: 10px;
+      font-size: 20px;
+    }
   }
 `;
 

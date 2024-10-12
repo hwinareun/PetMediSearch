@@ -61,13 +61,13 @@ export const lightTheme: Props = {
       color: 'black',
       backgroundColor: '#E3E3E3',
       hoverTxtColor: 'white',
-      hoverBgColor: '#5ba95b',
+      hoverBgColor: '#c6cdbe',
     },
     negative: {
       color: 'black',
       backgroundColor: '#E3E3E3',
       hoverTxtColor: 'white',
-      hoverBgColor: '#e44c4c',
+      hoverBgColor: '#cdbebe',
     },
   },
   borderRadius: {

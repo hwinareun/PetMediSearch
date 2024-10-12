@@ -12,16 +12,14 @@ function ReviewInput() {
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
   const user = useSelector((state: RootState) => state.auth.user);
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(5);
   const [reviewContent, setReviewContent] = useState<string>('');
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const handleSubmit = async () => {
     try {
-      await addReview(user.id, selectedPlace.id, rating, reviewContent); // user_id는 예시로 1로 설정
+      await addReview(user.id, selectedPlace.id, rating, reviewContent);
       alert('리뷰가 성공적으로 등록되었습니다.');
-      setRating(0); // 폼 초기화
+      setRating(5);
       setReviewContent('');
     } catch (err) {
       console.error(`리뷰를 등록하던 중 오류 발생: ${err}`);
@@ -30,58 +28,81 @@ function ReviewInput() {
 
   return (
     <ReviewInputStyle>
-      <div className="info">
-        <div className="title">
-          <div>{selectedPlace?.bplcnm}</div>
-          <Star />
-          <div>
-            <input
-              type="number"
-              id="rating"
-              value={rating}
-              min="0"
-              max="5"
-              onChange={(e) => setRating(Number(e.target.value))}
+      <div className="head">
+        <div className="info">
+          <div className="title">
+            <div>{selectedPlace?.bplcnm}</div>
+            <Star
+              setClickRating={setRating}
+              rating={rating}
+              interactive={true}
             />
           </div>
+          <div className="address">{selectedPlace?.rdnwhladdr}</div>
         </div>
-        <div className="address">{selectedPlace?.rdnwhladdr}</div>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <textarea
-            id="reviewContent"
-            placeholder="후기를 작성해주세요"
-            value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
-          />
-        </div>
-        <Button size="small" scheme="positive" onClick={() => {}}>
+        <Button size="small" scheme="positive" onClick={handleSubmit}>
           등록
         </Button>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          id="reviewContent"
+          placeholder="후기를 작성해주세요"
+          value={reviewContent}
+          onChange={(e) => setReviewContent(e.target.value)}
+        />
       </form>
     </ReviewInputStyle>
   );
 }
 
 const ReviewInputStyle = styled.div`
-  background-color: #f5f5f5;
-  padding: 10px;
-  border-radius: 16px;
+  background-color: #d9d9d9;
+  padding: 8px;
 
-  .info {
+  .head {
     display: flex;
-    flex-direction: column;
-    padding: 5px;
-  }
-
-  .title {
-    display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    .info {
+      display: flex;
+      flex-direction: column;
+      padding: 0px 5px;
+      .title {
+        display: flex;
+        gap: 10px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+    }
   }
 
   .address {
-    font-size: 10px;
+    font-size: 8px;
+  }
+
+  form {
+    padding: 6px 0px 0px;
+    textarea {
+      width: 300px;
+      height: 60px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      resize: none;
+      font-size: 10px;
+      color: #333;
+      background-color: #f5f5f5;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.2s ease-in-out;
+
+      &:focus {
+        border-color: #c6cdbe;
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
   }
 `;
 
