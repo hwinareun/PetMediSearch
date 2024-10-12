@@ -32,13 +32,10 @@ function Review() {
 const ReviewStyle = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 30px 30px 30px;
+  padding: 0px 30px;
   align-items: center;
+  justify-content: end;
   gap: 20px;
-
-  .review {
-    height: 400px;
-  }
 `;
 
 export default Review;

@@ -10,6 +10,7 @@ import {
 import { ReviewData } from '../../types/review.type';
 import Button from '../common/Button';
 import { PlaceData } from '../../types/place.type';
+import PaginationComp from '../common/PaginationComp';
 
 function ReviewBox() {
   const selectedPlace = useSelector(
@@ -19,6 +20,18 @@ function ReviewBox() {
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID
   const [updatedContent, setUpdatedContent] = useState(''); // 수정된 리뷰 내용
   const [updatedRating, setUpdatedRating] = useState<number>(0); // 수정된 평점
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentReviews = reviews.slice(indexOfFirstPost, indexOfLastPost);
+
+  const startEditing = (review: ReviewData) => {
+    setEditingReviewId(review.review_id);
+    setUpdatedContent(review.review_content); // 현재 리뷰 내용을 입력 필드에 미리 채움
+    setUpdatedRating(review.rating); // 현재 평점을 입력 필드에 미리 채움
+  };
 
   useEffect(() => {
     if (selectedPlace) {
@@ -70,10 +83,8 @@ function ReviewBox() {
     }
   };
 
-  const startEditing = (review: ReviewData) => {
-    setEditingReviewId(review.review_id);
-    setUpdatedContent(review.review_content); // 현재 리뷰 내용을 입력 필드에 미리 채움
-    setUpdatedRating(review.rating); // 현재 평점을 입력 필드에 미리 채움
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -84,7 +95,7 @@ function ReviewBox() {
           <div>등록된 리뷰가 없습니다.</div>
         ) : (
           <ul>
-            {reviews.map((review, index) => (
+            {currentReviews.map((review, index) => (
               <li key={index}>
                 {editingReviewId === review.review_id ? (
                   // 수정 중일 때는 입력 필드 표시
@@ -151,6 +162,12 @@ function ReviewBox() {
           </ul>
         )}
       </div>
+      <PaginationComp
+        totalItemsCount={reviews.length}
+        itemsCountPerPage={postsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </ReviewBoxStyle>
   );
 }

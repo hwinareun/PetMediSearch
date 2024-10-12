@@ -3,17 +3,33 @@ import styled from 'styled-components';
 import { RootState } from '../../store';
 import { PlaceData } from '../../types/place.type';
 import { setSelectPlace } from '../../store/slices/placeSlice';
+import PaginationComp from '../common/PaginationComp';
+import { useState } from 'react';
 
 function ReviewPlaceList() {
   const dispatch = useDispatch();
   const { searchPlaceResults } = useSelector((state: RootState) => state.place);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPlaces = searchPlaceResults.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+
   const handleClick = (place: PlaceData) => {
     dispatch(setSelectPlace(place));
   };
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <ReviewPlaceListStyle>
-      {searchPlaceResults.map((place, index) => (
+      {currentPlaces.map((place, index) => (
         <div
           key={index}
           className="placeWrap"
@@ -30,6 +46,12 @@ function ReviewPlaceList() {
           </div>
         </div>
       ))}
+      <PaginationComp
+        totalItemsCount={searchPlaceResults.length}
+        itemsCountPerPage={postsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </ReviewPlaceListStyle>
   );
 }
