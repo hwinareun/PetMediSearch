@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { RootState } from '../store';
 import MyReview from '../components/myProfile/MyReview';
 import MyPosts from '../components/myProfile/MyPosts';
+import Naver from '../assets/images/login/LoginNaver.png';
+import Google from '../assets/images/login/LoginGoogle.png';
+import Kakao from '../assets/images/login/Kakao.png';
 
 function MyProfile() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -10,7 +13,15 @@ function MyProfile() {
   return (
     <MyProfileStyle>
       <div className="userInfo">
-        <p className="userType">{user.socialType}</p>
+        <p className="userType">
+          {user.socialType === 'naver' ? (
+            <img src={Naver} />
+          ) : user.socialType === 'google' ? (
+            <img src={Google} />
+          ) : (
+            <img src={Kakao} />
+          )}
+        </p>
         <p className="userName">{user.username}</p>
       </div>
       <div className="userSection">
@@ -44,13 +55,14 @@ const MyProfileStyle = styled.div`
 
   .userInfo {
     display: flex;
-    align-items: end;
-    gap: 10px;
+    gap: 5px;
     .userType {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      background-color: #e3e3e3;
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid #e3e3e3;
+      }
     }
 
     .userName {
