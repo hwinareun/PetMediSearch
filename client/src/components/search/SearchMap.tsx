@@ -53,9 +53,10 @@ function SearchMap() {
     (state: RootState) => state.place
   );
 
-  const imgSize = { width: 37.5, height: 43.75 };
-  const spriteSize = { width: 112.5, height: 43.75 };
+  const imgSize = { width: 36.25, height: 43.75 };
+  const spriteSize = { width: 145.375, height: 43.75 };
 
+  const currentOrigin = { x: 72.5, y: 0 };
   const hospitalOrigin = { x: 0, y: 0 };
   const pharmacyOrigin = { x: 37.5, y: 0 };
 
@@ -238,6 +239,14 @@ function SearchMap() {
                   position={{
                     lat: currentPosition.lat,
                     lng: currentPosition.lng,
+                  }}
+                  image={{
+                    src: MarkerSprites,
+                    size: imgSize,
+                    options: {
+                      spriteSize: spriteSize,
+                      spriteOrigin: currentOrigin,
+                    },
                   }}
                 />
               )}

@@ -82,19 +82,19 @@ const SearchMapCategoryStyle = styled.div`
   }
   .marker_comm {
     display: inline-block;
-    width: 25px;
-    height: 30px;
+    width: 29px;
+    height: 35px;
     background-image: url(${MarkerSprites});
-    background-size: 75px 30px;
+    background-size: 116.3px 35px;
   }
   .marker_pharmacy {
-    background-position: -25px 0px;
+    background-position: -29px 0px;
   }
   .marker_hospital {
     background-position: 0px 0px;
   }
   .marker_all {
-    background-position: -50px 0px;
+    background-position: -87px 0px;
   }
 `;
 export default SearchMapCategory;
