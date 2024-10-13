@@ -2,13 +2,29 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Post from '../components/PostList';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PostState } from '../types/post.type';
+import { HiOutlinePencilSquare } from 'react-icons/hi2';
+import PaginationComp from '../components/common/PaginationComp';
 
 function Posts() {
-  const [posts, setPosts] = useState<PostState[]>();
+  const [posts, setPosts] = useState<PostState[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleWriteNaviageClick = () => {
+    navigate('/createpost');
+  };
   const categoryId = new URLSearchParams(location.search).get('categoryId');
 
   useEffect(() => {
@@ -29,17 +45,37 @@ function Posts() {
 
   return (
     <>
-      <PostsStyle>
-        {posts && posts.length > 0 ? (
-          <Post post={posts} />
-        ) : (
-          <p>게시글이 없습니다.</p>
-        )}
-      </PostsStyle>
+      <WriteContainer>
+        <WriteBt onClick={handleWriteNaviageClick}>
+          <HiOutlinePencilSquare size={40} />
+        </WriteBt>
+      </WriteContainer>
+      {posts && posts.length > 0 ? (
+        <Post post={posts} />
+      ) : (
+        <p>게시글이 없습니다.</p>
+      )}
+
+      <PaginationComp
+        totalItemsCount={posts.length}
+        itemsCountPerPage={postsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }
 
-const PostsStyle = styled.div``;
+const WriteContainer = styled.div`
+  margin-left: auto;
+  margin-right: 20px;
+`;
+
+const WriteBt = styled.div`
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  cursor: pointer;
+`;
 
 export default Posts;

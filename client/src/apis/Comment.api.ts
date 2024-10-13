@@ -15,7 +15,7 @@ export const addComment = async (post_id: number, content: string) => {
 export const deleteComment = async (post_id: number, content: string) => {
   try {
     const response = await httpClient.post(`/comment/${post_id}`, {
-      contents: content,
+      content: content,
     });
     return response.data;
   } catch (error) {
@@ -27,7 +27,7 @@ export const deleteComment = async (post_id: number, content: string) => {
 export const editComment = async (comment_id: number, content: string) => {
   try {
     const response = await httpClient.put(`/comment/${comment_id}`, {
-      contents: content,
+      content: content,
     });
     return response.data;
   } catch (error) {

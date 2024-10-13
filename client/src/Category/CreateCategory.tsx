@@ -10,8 +10,8 @@ export default function CreateCategory({ handleCategory }: any) {
     <CategoryContainer>
       <CategoryBt
         type="button"
-        value={'normal'}
-        id="iscategory"
+        value={2}
+        id={2}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
@@ -25,8 +25,8 @@ export default function CreateCategory({ handleCategory }: any) {
 
       <CategoryBt
         type="button"
-        value={'dog'}
-        id="iscategory"
+        value={3}
+        id={3}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
@@ -40,8 +40,8 @@ export default function CreateCategory({ handleCategory }: any) {
 
       <CategoryBt
         type="button"
-        value={'cat'}
-        id="iscategory"
+        value={4}
+        id={4}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
