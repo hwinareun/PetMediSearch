@@ -179,6 +179,7 @@ function ReviewBox() {
 
 export const ReviewBoxStyle = styled.div`
   .reviews {
+    list-style: none;
     padding: 0;
   }
 
