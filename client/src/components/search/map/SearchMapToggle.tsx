@@ -32,6 +32,9 @@ const SearchMapToggleStyle = styled.div`
     border-radius: 16px;
     padding: 5px 10px;
     cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
   }
 
   div:hover {

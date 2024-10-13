@@ -11,24 +11,34 @@ interface Props {
   place: PlaceData;
 }
 
-function SearchMapOverlay({ onClick, place }: Props) {
-  const handleCopyTelClick = (tel: string) => {
-    navigator.clipboard
-      .writeText(tel)
-      .then(() => {
-        alert(`${place.bplcnm}의 전화번호가 복사되었습니다: ${tel}`);
-      })
-      .catch((err) => {
-        console.error('전화번호 복사:', err);
-      });
-  };
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    alert(`글 복사 완료: ${text}`);
+  } catch (err) {
+    console.error(`글 복사 실패: ${err}`);
+  }
+};
 
+const notPrepared = () => (
+  <div className="notPrepared">
+    <MdDoNotDisturbOnTotalSilence className="notIcon" />
+    <p>준비되지 않은 정보입니다</p>
+  </div>
+);
+
+function SearchMapOverlay({ onClick, place }: Props) {
   return (
     <SearchMapOverlayStyle>
       <div className="overlayWrap">
         <div className="info">
           <div className="title">
-            <div>{place.bplcnm}</div>
+            <div
+              className="bplcnm"
+              onClick={() => copyToClipboard(place.bplcnm)}
+            >
+              {place.bplcnm}
+            </div>
             <div className="state">
               {place.dtlstatenm === '정상' ? (
                 <div className="opened">
@@ -42,48 +52,49 @@ function SearchMapOverlay({ onClick, place }: Props) {
                 </div>
               )}
             </div>
-            <div className="review">
-              <a href="/review">후기 작성하기</a>
-            </div>
           </div>
-          <FaX className="closebttn" onClick={() => onClick(place.id)} />
+          <FaX
+            className="closebttn"
+            aria-label="닫기"
+            onClick={() => onClick(place.id)}
+          />
         </div>
         <div className="address">
-          <div className="sitewhladdr">
-            {place.sitewhladdr ? (
-              place.sitewhladdr
-            ) : (
-              <div className="notPrepared">
-                <MdDoNotDisturbOnTotalSilence className="notIcon" />
-                <p>준비되지 않은 정보입니다</p>
-              </div>
-            )}
-          </div>
-          <div className="rdnwhladdr">
-            {place.rdnwhladdr ? (
-              place.rdnwhladdr
-            ) : (
-              <div className="notPrepared">
-                <MdDoNotDisturbOnTotalSilence className="notIcon" />
-                <p>준비되지 않은 정보입니다</p>
-              </div>
-            )}
-          </div>
+          {place.sitewhladdr ? (
+            <div
+              className="sitewhladdr"
+              onClick={() => copyToClipboard(place.sitewhladdr)}
+            >
+              {place.sitewhladdr}
+            </div>
+          ) : (
+            notPrepared()
+          )}
+          {place.rdnwhladdr ? (
+            <div
+              className="rdnwhladdr"
+              onClick={() => copyToClipboard(place.rdnwhladdr)}
+            >
+              {place.rdnwhladdr}
+            </div>
+          ) : (
+            notPrepared()
+          )}
         </div>
-        <div className="tel">
+        <div className="bottom">
           {place.sitetel ? (
             <div
               className="siteTel"
-              onClick={() => handleCopyTelClick(place.sitetel)}
+              onClick={() => copyToClipboard(place.sitetel)}
             >
               {place.sitetel}
             </div>
           ) : (
-            <div className="notPrepared">
-              <MdDoNotDisturbOnTotalSilence className="notIcon" />
-              <p>준비되지 않은 정보입니다</p>
-            </div>
+            notPrepared()
           )}
+          <div className="review">
+            <a href="/review">후기 작성하기</a>
+          </div>
         </div>
       </div>
     </SearchMapOverlayStyle>
@@ -92,7 +103,7 @@ function SearchMapOverlay({ onClick, place }: Props) {
 
 const SearchMapOverlayStyle = styled.div`
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
   left: -140px;
   cursor: default;
 
@@ -120,6 +131,9 @@ const SearchMapOverlayStyle = styled.div`
         border-bottom: solid #d9d9d9;
         align-items: end;
         gap: 5px;
+        .bplcnm {
+          cursor: pointer;
+        }
         .state {
           font-size: 12px;
           .opened {
@@ -133,19 +147,6 @@ const SearchMapOverlayStyle = styled.div`
           .stateIcon {
             font-size: 14px;
             padding-bottom: 1px;
-          }
-        }
-        .review {
-          font-size: 12px;
-          padding-bottom: 1px;
-
-          a {
-            color: #464646;
-            text-decoration: none;
-          }
-
-          a:hover {
-            color: #5ba95b;
           }
         }
       }
@@ -162,21 +163,37 @@ const SearchMapOverlayStyle = styled.div`
     .address {
       padding: 0 10px 5px;
       font-size: 12px;
+      .sitewhladdr {
+        cursor: pointer;
+      }
       .rdnwhladdr {
         font-size: 10px;
         color: #464646;
+        cursor: pointer;
       }
     }
 
-    .tel {
+    .bottom {
+      display: flex;
+      justify-content: space-between;
       background-color: #d9d9d9;
       border-bottom-left-radius: 16px;
       border-bottom-right-radius: 16px;
-      padding: 5px;
-      padding-left: 10px;
+      padding: 5px 15px 5px 15px;
       font-size: 10px;
       .siteTel {
         cursor: pointer;
+      }
+      .review {
+        a {
+          color: #464646;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        a:hover {
+          color: #5ba95b;
+        }
       }
     }
 

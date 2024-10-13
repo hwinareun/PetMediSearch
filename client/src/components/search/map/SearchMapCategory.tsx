@@ -44,7 +44,7 @@ const SearchMapCategoryStyle = styled.div`
   padding: 0 8px;
   border: 1px solid #919191;
   border-radius: 16px;
-  z-index: 10; /* 지도 위에 표시되도록 z-index 설정 */
+  z-index: 10;
 
   ul {
     list-style: none;
@@ -66,9 +66,12 @@ const SearchMapCategoryStyle = styled.div`
       p {
         margin: 0;
       }
+      transition:
+        background-color 0.3s,
+        color 0.3s;
     }
     li:hover {
-      background-color: #e3e3e3; /* 원하는 색상으로 변경 */
+      background-color: #e3e3e3;
       color: #575757;
     }
   }
@@ -78,21 +81,20 @@ const SearchMapCategoryStyle = styled.div`
     color: white;
   }
   .marker_comm {
-    // 마커 공통 스타일
     display: inline-block;
     width: 25px;
-    height: 30px; /* 아이콘 높이 */
-    background-image: url(${MarkerSprites}); /* 스프라이트 이미지 경로 */
-    background-size: 75px 30px; /* 스프라이트 이미지 전체 크기 */
+    height: 30px;
+    background-image: url(${MarkerSprites});
+    background-size: 75px 30px;
   }
   .marker_pharmacy {
-    background-position: -25px 0px; /* 약국 아이콘의 위치 */
+    background-position: -25px 0px;
   }
   .marker_hospital {
-    background-position: 0px 0px; /* 병원 아이콘의 위치 */
+    background-position: 0px 0px;
   }
   .marker_all {
-    background-position: -50px 0px; /* 전체 아이콘의 위치 */
+    background-position: -50px 0px;
   }
 `;
 export default SearchMapCategory;
