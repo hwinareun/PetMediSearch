@@ -27,7 +27,6 @@ function LoginRedirectKakao() {
               user: data.user,
             })
           );
-          console.log('Kakao login successful:', data);
           navigate('/myprofile');
         } else {
           throw new Error('Login failed');
