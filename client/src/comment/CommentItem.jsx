@@ -40,6 +40,10 @@ export default function CommentItem({ comment }) {
     setEditComments({ ...editComments, isEdit: false });
   };
 
+  const getComment = async () => {
+    
+  }
+
   useEffect(() => {
     getComment();
   }, []);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Comment, PostState } from '../types/post.type';
 import axios from 'axios';
@@ -19,12 +19,14 @@ export default function DeleteModal({
   };
 
   const deleteCommentClickButton = async () => {
-    axios.delete('');
+    axios.delete(
+      `localhost:8080/api/posts/${post.post_id}/comment/${comment.comment_id}`
+    );
     setDeleteViewModal(false);
   };
 
   const deletePostClickButton = async () => {
-    axios.delete(`localhost:8080/api/posts/${post.id}`);
+    axios.delete(`localhost:8080/api/posts/${post.post_id}`);
     setDeleteViewModal(false);
     navigate(`/post`);
   };
@@ -37,7 +39,7 @@ export default function DeleteModal({
           {comment ? (
             <CheckButton
               onClick={() => {
-                deleteCommentClickButton(comment.id);
+                deleteCommentClickButton();
               }}
             >
               확인
