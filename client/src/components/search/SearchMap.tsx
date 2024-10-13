@@ -29,6 +29,23 @@ proj4.defs(
   '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs'
 );
 
+// 오프셋 값
+const latOffset = 0.0028; // 위도에 대한 오프셋
+const lngOffset = 0.0009; // 경도에 대한 오프셋
+
+// 좌표 변환 후 오프셋을 적용하는 함수
+const applyOffset = (
+  lat: number,
+  lng: number,
+  latOffset: number,
+  lngOffset: number
+) => {
+  return {
+    lat: lat + latOffset,
+    lng: lng + lngOffset,
+  };
+};
+
 function SearchMap() {
   const dispatch = useDispatch();
   const { searchPlaceResults, transformedResults } = useSelector(
@@ -66,10 +83,10 @@ function SearchMap() {
     }
   };
 
-  // 페이지 로드 시 초기 위치 가져오기
-  useEffect(() => {
-    handleCurrentPositionClick();
-  }, []);
+  // // 페이지 로드 시 초기 위치 가져오기
+  // useEffect(() => {
+  //   handleCurrentPositionClick();
+  // }, []);
 
   const handleOnlyOpenedToggle = (toggleOnlyOpened: boolean) => {
     setOnlyIsOpened(toggleOnlyOpened);
@@ -144,23 +161,27 @@ function SearchMap() {
 
         if (!isNaN(x) && !isNaN(y) && isFinite(x) && isFinite(y)) {
           try {
-            let [lng, lat] = proj4('EPSG:5181', 'EPSG:4326', [x, y]);
+            const [lng, lat] = proj4('EPSG:5181', 'EPSG:4326', [x, y]);
 
-            // 변환된 좌표 값을 소수점 10자리로 반올림
-            lat = parseFloat(lat.toFixed(10));
-            lng = parseFloat(lng.toFixed(10));
+            // 변환된 좌표에 오프셋 적용
+            const adjustedCoords = applyOffset(
+              parseFloat(lat.toFixed(10)),
+              parseFloat(lng.toFixed(10)),
+              latOffset,
+              lngOffset
+            );
 
-            if (isValidLatLng(lat, lng)) {
+            if (isValidLatLng(adjustedCoords.lat, adjustedCoords.lng)) {
               return {
                 ...place,
-                x: lat, // 변환된 위도
-                y: lng, // 변환된 경도
+                x: adjustedCoords.lat, // 보정된 위도
+                y: adjustedCoords.lng, // 보정된 경도
               };
             } else {
               console.warn(
                 `Invalid converted coordinates for place ID ${place.id}:`,
-                lat,
-                lng
+                adjustedCoords.lat,
+                adjustedCoords.lng
               );
               return null;
             }
