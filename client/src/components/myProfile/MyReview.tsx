@@ -69,6 +69,23 @@ const MyReviewStyle = styled.div`
     height: 160px;
     overflow-y: auto;
   }
+
+  .noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+
+    img {
+      width: 100px;
+    }
+    p {
+      border-top: solid black;
+      border-bottom: solid black;
+      padding: 10px;
+      font-size: 10px;
+    }
+  }
 `;
 
 export default MyReview;

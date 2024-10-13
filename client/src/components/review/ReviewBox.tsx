@@ -94,7 +94,9 @@ function ReviewBox() {
           setReviews(reviews || []);
         })
         .catch((err) => {
-          console.error(`리뷰를 불러오던 중 오류 발생: ${err}`);
+          console.error(
+            `리뷰를 불러오던 중 오류 발생, 해당하는 리뷰가 존재하는지 확인하세요: ${err}`
+          );
           setReviews([]);
         });
     }
@@ -177,7 +179,6 @@ function ReviewBox() {
 
 export const ReviewBoxStyle = styled.div`
   .reviews {
-    list-style: none;
     padding: 0;
   }
 

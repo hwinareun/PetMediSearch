@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../store';
 import MyReview from '../components/myProfile/MyReview';
+import MyPosts from '../components/myProfile/MyPosts';
 
 function MyProfile() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -18,7 +19,9 @@ function MyProfile() {
             <p>내가 작성한 게시판 글</p>
             <a href="/category">카테고리별 게시판으로 이동</a>
           </div>
-          <div className="table">글글글</div>
+          <div className="table">
+            <MyPosts />
+          </div>
         </div>
         <div className="review">
           <div className="title">
