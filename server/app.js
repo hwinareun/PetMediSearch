@@ -61,13 +61,14 @@ const postRouter = require('./routes/post');
 const reviewRouter = require('./routes/review');
 const commentRouter = require('./routes/comment');
 const authRouter = require('./routes/auth');
+const mypageRouter = require('./routes/mypage')
 
 app.use('/category', categoryRouter);
 app.use('/posts', postRouter);
 app.use('/reviews', reviewRouter);
 app.use('/comments', commentRouter);
 app.use('/auth', authRouter);
-
+app.use('/mypage', mypageRouter);
 
 // 서버 시작
 app.listen(port, () => {
