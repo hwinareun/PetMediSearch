@@ -16,7 +16,7 @@ import React from 'react';
 import Star from '../common/Star';
 import Programming from '../../assets/images/Programming.png';
 
-const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const year = date.getFullYear().toString().slice(2); // 연도의 마지막 두 자리
   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리로
@@ -30,7 +30,7 @@ function ReviewBox() {
   );
   const user = useSelector((state: RootState) => state.auth.user);
   const [reviews, setReviews] = useState<ReviewData[]>([]);
-  const [editingReviewId, setEditingReviewId] = useState<number | null>(null); // 수정 중인 리뷰 ID
+  const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const postsPerPage = 5;
@@ -69,7 +69,6 @@ function ReviewBox() {
     try {
       await removeReview(review.review_id);
       alert('리뷰가 삭제되었습니다.');
-      // 삭제된 리뷰를 리스트에서 제거
       setReviews((prevReviews) =>
         prevReviews.filter((prev) => prev.review_id !== review.review_id)
       );
@@ -176,7 +175,7 @@ function ReviewBox() {
   );
 }
 
-const ReviewBoxStyle = styled.div`
+export const ReviewBoxStyle = styled.div`
   .reviews {
     list-style: none;
     padding: 0;
