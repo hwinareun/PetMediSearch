@@ -29,7 +29,7 @@ function Modal({
   return (
     <>
       <Container modalWidth={100} modalHeight={100}>
-        {/* isNotLogin이 true이면 회원가입 모달으로 / false면 로그인 모달으로
+        isNotLogin이 true이면 회원가입 모달으로 / false면 로그인 모달으로
         {isNotLogin ? (
           <SignUpForm
             setIsNotLogin={setIsNotLogin}
@@ -40,7 +40,7 @@ function Modal({
             setIsNotLogin={setIsNotLogin}
             setOpenModal={setOpenModal}
           />
-        )} */}
+        )}
       </Container>
       <ContainerBg
         onClick={(e: React.MouseEvent) => {

@@ -4,38 +4,38 @@ export default function MainCategory({
   category,
   setCategory,
 }: {
-  category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  category: any;
+  setCategory: React.Dispatch<React.SetStateAction<any>>;
 }) {
-  const setCat = async (cat: string) => {
+  const setCat = async (cat: any) => {
     setCategory(cat);
   };
 
   return (
     <CategoryContainer>
       <CategoryBt
-        onClick={() => setCat('a')}
+        onClick={() => setCat(1)}
         style={{
-          color: category === 'a' ? '#333' : '#d0d0d0',
+          color: category === 1 ? '#333' : '#d0d0d0',
         }}
       >
-        a
+        All
       </CategoryBt>
       <CategoryBt
-        onClick={() => setCat('b')}
+        onClick={() => setCat(2)}
         style={{
-          color: category === 'b' ? '#333' : '#d0d0d0',
+          color: category === 2 ? '#333' : '#d0d0d0',
         }}
       >
-        b
+        Dog
       </CategoryBt>
       <CategoryBt
-        onClick={() => setCat('c')}
+        onClick={() => setCat(3)}
         style={{
-          color: category === 'c' ? '#333' : '#d0d0d0',
+          color: category === 3 ? '#333' : '#d0d0d0',
         }}
       >
-        c
+        Cat
       </CategoryBt>
     </CategoryContainer>
   );

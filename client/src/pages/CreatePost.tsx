@@ -10,13 +10,13 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState(['all']); //카테고리
+  const [category_id, setCategory] = useState(''); //카테고리
   const quillRef = useRef<ReactQuill>(null);
 
   const handleCategory = (e: any) => {
-    const checkCat = category.includes(e.target.value);
+    const checkCat = category_id.includes(e.target.value);
     if (checkCat) {
-      setCategory(category.filter((prev: any) => prev !== e.target.value));
+      setCategory(category_id.filter((prev: any) => prev !== e.target.value));
     } else {
       setCategory((prev: any) => [...prev, e.target.value]);
     }
@@ -25,7 +25,7 @@ const CreatePost = () => {
   const newPost = {
     title,
     content,
-    category,
+    category_id,
     create_at: Date.now(),
   };
 
@@ -39,7 +39,7 @@ const CreatePost = () => {
     } else {
       if (window.confirm('게시글을 등록하시겠습니까?')) {
         axios
-          .post('http://localhost:8080/api/posts', newPost)
+          .post('http://localhost:8080/posts', newPost)
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           .then((res) => {
             alert('게시글이 등록되었습니다.');
@@ -99,17 +99,12 @@ const CreatePost = () => {
     'link',
     'image',
   ];
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/post').then((response) => {
-      setCategory(response.data);
-    });
-  }, []);
 
   return (
     <StyledAddPageWrapper>
       <form>
         <CreateCategory
-          category={category}
+          category={category_id}
           setCategory={setCategory}
           handleCategory={handleCategory}
         />
