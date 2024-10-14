@@ -20,20 +20,10 @@ function SearchBox() {
         keyword: searchInputPlace,
       });
 
-      // 결과가 배열인지 확인
-      if (!Array.isArray(results)) {
-        console.error(
-          '배열을 기대했으나 다른 데이터 형식이 반환되었습니다:',
-          results
-        );
-        return;
-      }
-
       dispatch(setResults(results));
       dispatch(clearSelectedPlace());
-      console.log(results);
     } catch (error) {
-      console.error('Failed to fetch places:', error);
+      console.error('검색 결과를 불러오던 중 오류 발생:', error);
     }
   };
 

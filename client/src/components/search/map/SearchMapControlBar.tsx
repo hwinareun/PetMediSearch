@@ -59,6 +59,12 @@ const SearchMapControlBarStyle = styled.div`
       text-align: center;
       line-height: 30px;
       cursor: pointer;
+      transition:
+        background-color 0.3s,
+        color 0.3s;
+    }
+    span:hover {
+      color: #e3e3e3;
     }
     span:first-child {
       border-right: 1px solid #bfbfbf;
@@ -83,6 +89,9 @@ const SearchMapControlBarStyle = styled.div`
         height: 15px;
         padding: 10px 0;
         color: #575757;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
       }
     }
     span:hover {

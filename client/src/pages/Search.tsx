@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import SearchBox from '../components/search/SearchBox';
-// import SearchMapCopy from '../components/search/SearchMapCopy';
 import SearchMap from '../components/search/SearchMap';
 
 function Search() {
@@ -8,7 +7,6 @@ function Search() {
     <SearchStyle>
       <SearchBox />
       <SearchMap />
-      {/* <SearchMapCopy /> */}
     </SearchStyle>
   );
 }

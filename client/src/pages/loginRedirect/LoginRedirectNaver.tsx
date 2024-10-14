@@ -28,7 +28,6 @@ function LoginRedirectNaver() {
               user: data.user,
             })
           );
-          console.log('Naver login successful:', data);
           navigate('/myprofile');
         } else {
           throw new Error('Login failed');

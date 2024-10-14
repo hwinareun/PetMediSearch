@@ -1,23 +1,18 @@
+import Lottie from 'lottie-react';
 import styled from 'styled-components';
+import loadingLottie from '../../assets/lottie/loadingLottie.json';
 
 function Loading() {
   return (
     <LoadingStyle>
-      <img src={'../src/assets/images/Loading.png'} alt="Loading" />
+      <Lottie animationData={loadingLottie} className="lottie" />
     </LoadingStyle>
   );
 }
 
 const LoadingStyle = styled.div`
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  img {
-    width: 70px;
-    animation: rotate 2s linear infinite;
+  lottie {
+    width: 100px;
   }
 `;
 

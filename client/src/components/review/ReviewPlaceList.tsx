@@ -10,6 +10,7 @@ import {
   MdDoNotDisturbOnTotalSilence,
   MdExpandCircleDown,
 } from 'react-icons/md';
+import MarkerSprites from '../../assets/images/MarkerSprites.png';
 
 function ReviewPlaceList() {
   const dispatch = useDispatch();
@@ -47,7 +48,9 @@ function ReviewPlaceList() {
               className="placeWrap"
               onClick={() => handleClick(place)}
             >
-              <div className="marker">marker</div>
+              <span
+                className={`marker_comm ${place.type === '병원' ? 'marker_hospital' : 'marker_pharmacy'}`}
+              />
               <div className="place">
                 <div className="info">
                   <div className="title">{place.bplcnm}</div>
@@ -123,14 +126,25 @@ const ReviewPlaceListStyle = styled.div`
     border-bottom: 1px solid #575757;
   }
 
-  .marker {
-    padding: 10px;
+  .marker_comm {
+    display: inline-block;
+    width: 58px;
+    height: 70px;
+    margin: 5px;
+    background-image: url(${MarkerSprites});
+    background-size: 232.6px 70px;
+  }
+  .marker_pharmacy {
+    background-position: -58px 0px;
+  }
+  .marker_hospital {
+    background-position: 0px 0px;
   }
 
   .place {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 0px;
     .info {
       display: flex;
       align-items: center;
