@@ -12,15 +12,9 @@ import CommentList from '../comment/CommentList';
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
-  const [comments, setComments] = useState<Comment[]>();
   const [content, setContent] = useState<string>('');
-  const [editCommentId, seteditCommentId] = useState<number | null>(null);
   const postId = useParams().id;
   const user = useSelector((state: RootState) => state.auth.user);
-
-  const Editing = (comment: Comment) => {
-    seteditCommentId(comment.comment_id);
-  };
 
   const handleSubmitButtonClick = async (
     e: React.FormEvent<HTMLFormElement>
@@ -44,29 +38,6 @@ function PostDetail() {
     setContent(e.target.value);
   };
 
-  const handleEditComment = async (comment_id: number, content: string) => {
-    try {
-      const changeComment = await editComment(comment_id, content);
-      setComments((changeComments) =>
-        changeComments.map((change) =>
-          change.comment_id === comment_id ? changeComment : change
-        )
-      );
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const handleDeleteComment = async (comment: Comment) => {
-    try {
-      await deleteComment(comment.comment_id);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
   useEffect(() => {
     const fetchPostById = async () => {
       try {
@@ -80,21 +51,6 @@ function PostDetail() {
       }
     };
     fetchPostById();
-  }, []);
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/comments/${postId}`
-        );
-        console.log(response);
-        setComments(response.data);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    };
-    fetchComments();
   }, []);
 
   return (
@@ -122,10 +78,13 @@ function PostDetail() {
             wrap="hard"
           />
           <CommentSubmitButtonContainer>
-            <CommentSubmitButton onClick={() => handleSubmitButtonClick}>
+            <Button
+              size="small"
+              scheme="positive"
+              onClick={() => handleSubmitButtonClick}
+            >
               등록
-            </CommentSubmitButton>
-            <CommentSubmitButton>취소</CommentSubmitButton>
+            </Button>
           </CommentSubmitButtonContainer>
         </CommentForm>
       </Container>
