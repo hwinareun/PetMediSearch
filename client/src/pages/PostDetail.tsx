@@ -4,13 +4,17 @@ import { useParams } from 'react-router-dom';
 import { Comment, PostState } from '../types/post.type';
 import styled from 'styled-components';
 import CheckModal from '../modal/CheckModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { addComment } from '../apis/Comment.api';
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
   const [comments, setComments] = useState<Comment[]>();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<string>('');
   const [checkViewModal, setCheckViewModal] = useState(false);
   const postId = useParams().id;
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleSubmitButtonClick = async (
     e: React.FormEvent<HTMLFormElement>
@@ -22,14 +26,8 @@ function PostDetail() {
       return;
     } else {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/comments/post_id=${postId}`,
-          {
-            post_id: postId,
-            content: content,
-          }
-        );
-        return response.data;
+        await addComment(user.id, postId, content);
+        setContent('');
       } catch (error) {
         console.error(error);
         throw error;
@@ -142,6 +140,7 @@ const ContentContainer = styled.div`
   background-color: #d9d9d9;
   height: 70.2vh;
   display: flex;
+  overflow-y: auto;
 
   .content {
     padding: 10px;
@@ -182,6 +181,7 @@ const CommentText = styled.textarea`
   margin-bottom: 5px;
   padding: 16px;
   display: flex;
+  overflow-y: auto;
 
   border: 0.5px solid #d0d0d0;
   border-radius: 10px;

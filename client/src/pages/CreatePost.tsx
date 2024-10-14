@@ -5,6 +5,9 @@ import CreateCategory from '../Category/CreateCategory';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { addPosts } from '../apis/Posts.api';
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -12,6 +15,7 @@ const CreatePost = () => {
   const [content, setContent] = useState('');
   const [category_id, setCategory] = useState(''); //카테고리
   const quillRef = useRef<ReactQuill>(null);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleCategory = (e: any) => {
     const checkCat = category_id.includes(e.target.value);
@@ -23,13 +27,14 @@ const CreatePost = () => {
   };
 
   const newPost = {
+    user,
     title,
     content,
     category_id,
     create_at: Date.now(),
   };
 
-  const formSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const formSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (title.length === 0) {
@@ -38,12 +43,10 @@ const CreatePost = () => {
       alert('내용을 입력해 주세요');
     } else {
       if (window.confirm('게시글을 등록하시겠습니까?')) {
-        axios
-          .post('http://localhost:8080/posts', newPost)
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        await addPosts(user.id, title, content, category_id)
           .then((res) => {
             alert('게시글이 등록되었습니다.');
-            navigate('/posts');
+            navigate('/category');
           })
 
           .catch(function (error) {
