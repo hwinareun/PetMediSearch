@@ -10,7 +10,7 @@ export default function CreateCategory({ handleCategory }: any) {
     <CategoryContainer>
       <CategoryBt
         type="button"
-        value={2}
+        value={'통합'}
         id={2}
         name="iscategory"
         onClick={(e) => {
@@ -25,7 +25,7 @@ export default function CreateCategory({ handleCategory }: any) {
 
       <CategoryBt
         type="button"
-        value={3}
+        value={'강아지'}
         id={3}
         name="iscategory"
         onClick={(e) => {
@@ -40,7 +40,7 @@ export default function CreateCategory({ handleCategory }: any) {
 
       <CategoryBt
         type="button"
-        value={4}
+        value={'고양이'}
         id={4}
         name="iscategory"
         onClick={(e) => {

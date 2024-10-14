@@ -1,4 +1,3 @@
-import { PostState } from '../types/post.type';
 import { httpClient } from './http';
 
 export const addComment = async (
@@ -19,11 +18,9 @@ export const addComment = async (
   }
 };
 
-export const deleteComment = async (post_id: number, content: string) => {
+export const deleteComment = async (comment_id: number) => {
   try {
-    const response = await httpClient.post(`/comments/${post_id}`, {
-      content: content,
-    });
+    const response = await httpClient.delete(`/comments/${comment_id}`);
     return response.data;
   } catch (error) {
     console.error(error);

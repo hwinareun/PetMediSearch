@@ -3,18 +3,24 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Comment, PostState } from '../types/post.type';
 import styled from 'styled-components';
-import CheckModal from '../modal/CheckModal';
 import { useSelector } from 'react-redux';
+import { addComment, deleteComment, editComment } from '../apis/Comment.api';
 import { RootState } from '../store';
-import { addComment } from '../apis/Comment.api';
+import Button from '../components/common/Button';
+import Comments from '../comment/Comments';
+import CommentList from '../comment/CommentList';
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
   const [comments, setComments] = useState<Comment[]>();
   const [content, setContent] = useState<string>('');
-  const [checkViewModal, setCheckViewModal] = useState(false);
+  const [editCommentId, seteditCommentId] = useState<number | null>(null);
   const postId = useParams().id;
   const user = useSelector((state: RootState) => state.auth.user);
+
+  const Editing = (comment: Comment) => {
+    seteditCommentId(comment.comment_id);
+  };
 
   const handleSubmitButtonClick = async (
     e: React.FormEvent<HTMLFormElement>
@@ -22,7 +28,6 @@ function PostDetail() {
     e.preventDefault();
     // 내용
     if (!content.trim() || content === null) {
-      setCheckViewModal(true);
       return;
     } else {
       try {
@@ -37,6 +42,29 @@ function PostDetail() {
 
   const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+  };
+
+  const handleEditComment = async (comment_id: number, content: string) => {
+    try {
+      const changeComment = await editComment(comment_id, content);
+      setComments((changeComments) =>
+        changeComments.map((change) =>
+          change.comment_id === comment_id ? changeComment : change
+        )
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const handleDeleteComment = async (comment: Comment) => {
+    try {
+      await deleteComment(comment.comment_id);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -97,21 +125,13 @@ function PostDetail() {
             <CommentSubmitButton onClick={() => handleSubmitButtonClick}>
               등록
             </CommentSubmitButton>
+            <CommentSubmitButton>취소</CommentSubmitButton>
           </CommentSubmitButtonContainer>
         </CommentForm>
       </Container>
+
       <CommentContainer>
-        {comments && comments.length != 0 ? (
-          comments.map((item) => (
-            <div className="contents" key={item.comment_id}>
-              <h4>{item.author}</h4>
-              <p>{item.content}</p>
-              <span>{new Date(item.created_at).toLocaleString()}</span>
-            </div>
-          ))
-        ) : (
-          <div>댓글이 아직 없습니다.</div>
-        )}{' '}
+        <CommentList />
       </CommentContainer>
     </>
   );

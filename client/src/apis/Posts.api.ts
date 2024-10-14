@@ -19,3 +19,15 @@ export const addPosts = async (
     throw error;
   }
 };
+
+export const deletePosts = async (post_id: number) => {
+  try {
+    const response = await httpClient.delete(`/posts/${post_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editPosts = async (post_id: number) => {};
