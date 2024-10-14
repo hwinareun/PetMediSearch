@@ -4,6 +4,7 @@ import { Comment } from '../types/post.type';
 import PaginationComp from '../components/common/PaginationComp';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Comments from './Comments';
 
 export default function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -38,7 +39,7 @@ export default function CommentList() {
     <Container>
       <CommentsContainer>
         {comments && comments.length != 0 ? (
-          comments.map((item) => (
+          currentComment.map((item) => (
             <div className="contents" key={item.comment_id}>
               <h4>{item.author}</h4>
               <p>{item.content}</p>
