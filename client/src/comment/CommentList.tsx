@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Comment } from '../types/post.type';
 import PaginationComp from '../components/common/PaginationComp';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Comments from './Comments';
 
 export default function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
