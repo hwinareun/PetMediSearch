@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Post from '../components/PostList';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ function Posts() {
   const postsPerPage = 10;
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -41,7 +41,7 @@ function Posts() {
       }
     };
     fetchPostsByCategory();
-  }, []);
+  }, [categoryId]);
 
   return (
     <>
@@ -50,7 +50,7 @@ function Posts() {
           <HiOutlinePencilSquare size={40} />
         </WriteBt>
       </WriteContainer>
-      {posts && posts.length > 0 ? (
+      {currentPosts && currentPosts.length > 0 ? (
         <Post post={posts} />
       ) : (
         <p>게시글이 없습니다.</p>

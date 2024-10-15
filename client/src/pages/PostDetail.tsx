@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Comment, PostState } from '../types/post.type';
+import { PostState } from '../types/post.type';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { addComment, deleteComment, editComment } from '../apis/Comment.api';
+import { addComment } from '../apis/Comment.api';
 import { RootState } from '../store';
 import Button from '../components/common/Button';
-import Comments from '../comment/Comments';
 import CommentList from '../comment/CommentList';
 
 function PostDetail() {
@@ -25,7 +24,7 @@ function PostDetail() {
       return;
     } else {
       try {
-        await addComment(user.id, postId, content);
+        await addComment(user.id, Number(postId), content);
         setContent('');
       } catch (error) {
         console.error(error);
@@ -51,7 +50,7 @@ function PostDetail() {
       }
     };
     fetchPostById();
-  }, []);
+  }, [postId]);
 
   return (
     <>
@@ -175,22 +174,22 @@ const CommentSubmitButtonContainer = styled.div`
   width: 100%;
 `;
 
-const CommentSubmitButton = styled.button`
-  width: 50px;
-  height: 30px;
-  margin-left: auto;
-  margin-right: 3px;
-  margin-top: 0px;
+// const CommentSubmitButton = styled.button`
+//   width: 50px;
+//   height: 30px;
+//   margin-left: auto;
+//   margin-right: 3px;
+//   margin-top: 0px;
 
-  border: 1px solid #d0d0d0;
-  border-radius: 10px;
+//   border: 1px solid #d0d0d0;
+//   border-radius: 10px;
 
-  background-color: #fff;
-  color: #262b7f;
+//   background-color: #fff;
+//   color: #262b7f;
 
-  cursor: pointer;
-  &:hover {
-    background-color: #yellow;
-    color: #000000;
-  }
-`;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: yellow;
+//     color: #000000;
+//   }
+// `;

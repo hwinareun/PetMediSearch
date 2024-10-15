@@ -1,4 +1,3 @@
-import React from 'react';
 import { PostState } from '../types/post.type';
 import { useNavigate } from 'react-router-dom';
 

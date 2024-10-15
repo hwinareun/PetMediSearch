@@ -30,4 +30,4 @@ export const deletePosts = async (post_id: number) => {
   }
 };
 
-export const editPosts = async (post_id: number) => {};
+// export const editPosts = async (post_id: number) => {};
