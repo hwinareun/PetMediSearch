@@ -24,12 +24,11 @@ export const formatDate = (dateString: string): string => {
   return `${year}-${month}-${day}`;
 };
 
-function ReviewBox() {
+function ReviewBox({ reviews, setReviews }) {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
   const user = useSelector((state: RootState) => state.auth.user);
-  const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -48,18 +47,14 @@ function ReviewBox() {
     updatedContent: string
   ) => {
     try {
-      const updatedReview = await editReview(
-        reviewId,
-        updatedRating,
-        updatedContent
-      );
+      await editReview(reviewId, updatedRating, updatedContent);
 
-      alert('리뷰가 수정되었습니다');
-      setReviews((prevReviews) =>
-        prevReviews.map((prev) =>
-          prev.review_id === reviewId ? updatedReview : prev
-        )
-      );
+      const updatedReviews = await getReviewsByFacilityId(selectedPlace.id);
+      setReviews(updatedReviews || []);
+
+      setEditingReviewId(null);
+
+      console.log('최신 리뷰 목록:', updatedReviews);
     } catch (error) {
       console.error('리뷰 수정 중 오류 발생:', error);
     }
@@ -68,7 +63,6 @@ function ReviewBox() {
   const handleRemoveReview = async (review: ReviewData) => {
     try {
       await removeReview(review.review_id);
-      alert('리뷰가 삭제되었습니다.');
       setReviews((prevReviews) =>
         prevReviews.filter((prev) => prev.review_id !== review.review_id)
       );
@@ -100,7 +94,7 @@ function ReviewBox() {
           setReviews([]);
         });
     }
-  }, [selectedPlace]);
+  }, [selectedPlace, setReviews]);
 
   return (
     <ReviewBoxStyle>
@@ -119,7 +113,11 @@ function ReviewBox() {
                     className="review"
                     onClick={() => handleClickReview(review.review_id)}
                   >
-                    <Star rating={review.rating} interactive={false} />
+                    <Star
+                      rating={review.rating}
+                      interactive={false}
+                      key={review.rating}
+                    />
                     <p>작성자 번호: {review.user_id}</p>
                     <p>작성 일자: {formatDate(review.created_at)}</p>
                   </li>
