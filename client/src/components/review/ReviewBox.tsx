@@ -15,21 +15,13 @@ import ReviewEdit from './ReviewEdit';
 import React from 'react';
 import Star from '../common/Star';
 import Programming from '../../assets/images/Programming.png';
+import { formatDate } from '../../utils/format';
 
-export const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const year = date.getFullYear().toString().slice(2); // 연도의 마지막 두 자리
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리로
-  const day = date.getDate().toString().padStart(2, '0'); // 일을 2자리로
-  return `${year}-${month}-${day}`;
-};
-
-function ReviewBox() {
+function ReviewBox({ reviews, setReviews }) {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
   const user = useSelector((state: RootState) => state.auth.user);
-  const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -48,18 +40,14 @@ function ReviewBox() {
     updatedContent: string
   ) => {
     try {
-      const updatedReview = await editReview(
-        reviewId,
-        updatedRating,
-        updatedContent
-      );
+      await editReview(reviewId, updatedRating, updatedContent);
 
-      alert('리뷰가 수정되었습니다');
-      setReviews((prevReviews) =>
-        prevReviews.map((prev) =>
-          prev.review_id === reviewId ? updatedReview : prev
-        )
-      );
+      const updatedReviews = await getReviewsByFacilityId(selectedPlace.id);
+      setReviews(updatedReviews || []);
+
+      setEditingReviewId(null);
+
+      console.log('최신 리뷰 목록:', updatedReviews);
     } catch (error) {
       console.error('리뷰 수정 중 오류 발생:', error);
     }
@@ -68,7 +56,6 @@ function ReviewBox() {
   const handleRemoveReview = async (review: ReviewData) => {
     try {
       await removeReview(review.review_id);
-      alert('리뷰가 삭제되었습니다.');
       setReviews((prevReviews) =>
         prevReviews.filter((prev) => prev.review_id !== review.review_id)
       );
@@ -100,7 +87,7 @@ function ReviewBox() {
           setReviews([]);
         });
     }
-  }, [selectedPlace]);
+  }, [selectedPlace, setReviews]);
 
   return (
     <ReviewBoxStyle>
@@ -119,7 +106,11 @@ function ReviewBox() {
                     className="review"
                     onClick={() => handleClickReview(review.review_id)}
                   >
-                    <Star rating={review.rating} interactive={false} />
+                    <Star
+                      rating={review.rating}
+                      interactive={false}
+                      key={review.rating}
+                    />
                     <p>작성자 번호: {review.user_id}</p>
                     <p>작성 일자: {formatDate(review.created_at)}</p>
                   </li>
@@ -135,7 +126,11 @@ function ReviewBox() {
                         <>
                           <div className="detailInfo">
                             <p className="createdAt">
-                              작성 일시: {review.created_at}
+                              작성 일시:{' '}
+                              {formatDate(
+                                review.created_at,
+                                'YY.MM.DD HH.MM.SS'
+                              )}
                             </p>
                             {review.user_id === user.id ? (
                               <div className="bttn">
@@ -226,7 +221,7 @@ export const ReviewBoxStyle = styled.div`
     border-radius: 8px;
     border: 1px solid #ddd;
     resize: none;
-    font-size: 10px;
+    font-size: 16px;
     color: #333;
     background-color: #f5f5f5;
     overflow-y: auto;

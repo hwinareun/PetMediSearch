@@ -126,7 +126,7 @@ const SearchMapOverlayStyle = styled.div`
       gap: 10px;
       .title {
         display: flex;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         border-bottom: solid #d9d9d9;
         align-items: end;
@@ -162,12 +162,12 @@ const SearchMapOverlayStyle = styled.div`
 
     .address {
       padding: 0 10px 5px;
-      font-size: 12px;
+      font-size: 14px;
       .sitewhladdr {
         cursor: pointer;
       }
       .rdnwhladdr {
-        font-size: 10px;
+        font-size: 11px;
         color: #464646;
         cursor: pointer;
       }
@@ -180,7 +180,7 @@ const SearchMapOverlayStyle = styled.div`
       border-bottom-left-radius: 16px;
       border-bottom-right-radius: 16px;
       padding: 5px 15px 5px 15px;
-      font-size: 10px;
+      font-size: 12px;
       .siteTel {
         cursor: pointer;
       }

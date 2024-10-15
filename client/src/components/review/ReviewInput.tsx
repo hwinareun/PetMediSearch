@@ -3,11 +3,11 @@ import Star from '../common/Star';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import Button from '../common/Button';
-import { addReview } from '../../apis/review.api';
+import { addReview, getReviewsByFacilityId } from '../../apis/review.api';
 import { useState } from 'react';
 import { PlaceData } from '../../types/place.type';
 
-function ReviewInput() {
+function ReviewInput({ setReviews }) {
   const selectedPlace = useSelector(
     (state: RootState) => state.place.selectedPlace as PlaceData
   );
@@ -18,9 +18,11 @@ function ReviewInput() {
   const handleSubmit = async () => {
     try {
       await addReview(user.id, selectedPlace.id, rating, reviewContent);
-      alert('리뷰가 성공적으로 등록되었습니다.');
       setRating(5);
       setReviewContent('');
+
+      const updatedReviews = await getReviewsByFacilityId(selectedPlace.id);
+      setReviews(updatedReviews || []);
     } catch (err) {
       console.error(`리뷰를 등록하던 중 오류 발생: ${err}`);
     }
@@ -77,14 +79,14 @@ const ReviewInputStyle = styled.div`
   }
 
   .address {
-    font-size: 8px;
+    font-size: 10px;
   }
 
   form {
     padding: 6px 0px 0px;
     textarea {
       width: 300px;
-      height: 60px;
+      height: 20px;
       padding: 10px;
       border: 1px solid #ddd;
       resize: none;

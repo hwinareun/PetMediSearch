@@ -51,22 +51,23 @@ function MyProfile() {
 const MyProfileStyle = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 30px 30px 30px;
+  padding: 0px 30px 20px 30px;
 
   .userInfo {
     display: flex;
     gap: 5px;
+    align-items: center;
     .userType {
       img {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         border-radius: 8px;
         border: 1px solid #e3e3e3;
       }
     }
 
     .userName {
-      font-size: 20px;
+      font-size: 30px;
     }
   }
 
@@ -77,13 +78,13 @@ const MyProfileStyle = styled.div`
   }
 
   .title {
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     p {
-      margin: 5px;
+      margin: 3px;
     }
 
     a {

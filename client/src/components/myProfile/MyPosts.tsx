@@ -5,7 +5,7 @@ import Programming from '../../assets/images/Programming.png';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPostsByUserId } from '../../apis/myprofile.api';
-import { formatDate } from '../review/ReviewBox';
+import { formatDate } from '../../utils/format';
 
 function MyPosts() {
   const [myPosts, setMyPosts] = useState<PostState[]>([]);
@@ -79,7 +79,7 @@ const MyPostsStyle = styled.div`
     background-color: #f5f5f5;
     border-bottom: 1px solid #575757;
     padding: 1px;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     cursor: pointer;
     display: flex;
