@@ -5,7 +5,7 @@ import Programming from '../../assets/images/Programming.png';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPostsByUserId } from '../../apis/myprofile.api';
-import { formatDate } from '../review/ReviewBox';
+import { formatDate } from '../../utils/format';
 
 function MyPosts() {
   const [myPosts, setMyPosts] = useState<PostState[]>([]);

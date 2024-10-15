@@ -15,14 +15,7 @@ import ReviewEdit from './ReviewEdit';
 import React from 'react';
 import Star from '../common/Star';
 import Programming from '../../assets/images/Programming.png';
-
-export const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const year = date.getFullYear().toString().slice(2); // 연도의 마지막 두 자리
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월을 2자리로
-  const day = date.getDate().toString().padStart(2, '0'); // 일을 2자리로
-  return `${year}-${month}-${day}`;
-};
+import { formatDate } from '../../utils/format';
 
 function ReviewBox({ reviews, setReviews }) {
   const selectedPlace = useSelector(
@@ -133,7 +126,11 @@ function ReviewBox({ reviews, setReviews }) {
                         <>
                           <div className="detailInfo">
                             <p className="createdAt">
-                              작성 일시: {review.created_at}
+                              작성 일시:{' '}
+                              {formatDate(
+                                review.created_at,
+                                'YY.MM.DD HH.MM.SS'
+                              )}
                             </p>
                             {review.user_id === user.id ? (
                               <div className="bttn">

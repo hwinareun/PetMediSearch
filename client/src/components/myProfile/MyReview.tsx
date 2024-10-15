@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { ReviewData } from '../../types/review.type';
 import { getReviewsByUserId } from '../../apis/myprofile.api';
 import Programming from '../../assets/images/Programming.png';
-import { formatDate, ReviewBoxStyle } from '../review/ReviewBox';
+import { ReviewBoxStyle } from '../review/ReviewBox';
 import React from 'react';
 import Star from '../common/Star';
 import styled from 'styled-components';
+import { formatDate } from '../../utils/format';
 
 function MyReview() {
   const [myReviews, setMyReviews] = useState<ReviewData[]>([]);
