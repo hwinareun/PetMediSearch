@@ -79,7 +79,7 @@ const MyPostsStyle = styled.div`
     background-color: #f5f5f5;
     border-bottom: 1px solid #575757;
     padding: 1px;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     cursor: pointer;
     display: flex;

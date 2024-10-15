@@ -71,6 +71,10 @@ const MyReviewStyle = styled.div`
     overflow-y: auto;
   }
 
+  .review {
+    font-size: 16px;
+  }
+
   .noResults {
     display: flex;
     flex-direction: column;

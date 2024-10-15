@@ -79,14 +79,14 @@ const ReviewInputStyle = styled.div`
   }
 
   .address {
-    font-size: 8px;
+    font-size: 10px;
   }
 
   form {
     padding: 6px 0px 0px;
     textarea {
       width: 300px;
-      height: 60px;
+      height: 20px;
       padding: 10px;
       border: 1px solid #ddd;
       resize: none;

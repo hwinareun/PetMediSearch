@@ -221,7 +221,7 @@ export const ReviewBoxStyle = styled.div`
     border-radius: 8px;
     border: 1px solid #ddd;
     resize: none;
-    font-size: 10px;
+    font-size: 16px;
     color: #333;
     background-color: #f5f5f5;
     overflow-y: auto;
