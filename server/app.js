@@ -10,7 +10,7 @@ const port = 8080;
 console.log('Current directory:', __dirname);
 
 // 미들웨어 설정
-app.use(cors({ origin: "http://localhost:5000", credentials: true }));
+app.use(cors({ origin: "https://pet-medi-search.vercel.app/", credentials: true }));
 app.use(express.json());
 
 // swagger 연동
