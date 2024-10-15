@@ -5,7 +5,7 @@ import EditModal from '../modal/EditModal';
 
 export default function CommentItem({ comment }) {
   const [editText, setEditText] = useState('');
-  const [isOpenProfileModal, setOpenProfileModal] = useState(false);
+  // const [isOpenProfileModal, setOpenProfileModal] = useState(false);
   const [editComments, setEditComments] = useState({
     id: comment.id,
     commentText: comment.commentText,
@@ -16,7 +16,7 @@ export default function CommentItem({ comment }) {
     isEdit: comment.isEdit,
   });
 
-  const uid = //유저 인증
+  const uid = ''; //유저 인증
 
   const [viewDeleteModal, setDeleteViewModal] = useState(false);
   const [viewEditModal, setEditViewModal] = useState(false);
@@ -27,7 +27,7 @@ export default function CommentItem({ comment }) {
     setEditViewModal(true);
   };
 
-  const onClickIsEditSwitch = (comment_id) => {
+  const onClickIsEditSwitch = () => {
     setEditComments({ ...editComments, isEdit: true });
   };
 
@@ -40,9 +40,7 @@ export default function CommentItem({ comment }) {
     setEditComments({ ...editComments, isEdit: false });
   };
 
-  const getComment = async () => {
-    
-  }
+  const getComment = async () => {};
 
   useEffect(() => {
     getComment();
@@ -70,12 +68,12 @@ export default function CommentItem({ comment }) {
         {/* 댓글쓴이+날짜 */}
         <CommentTopContainer>
           <ProfileContainer>
-            {isOpenProfileModal ? (
+            {/* {isOpenProfileModal ? (
               <UserProfileModal
                 setOpenProfileModal={setOpenProfileModal}
                 isOpenProfileModal={isOpenProfileModal}
               />
-            ) : null}
+            ) : null} */}
             <ProfileNickName>{comment.nickName}</ProfileNickName>
             <ButtonContainer>
               {editComments.isEdit ? (
