@@ -1,9 +1,8 @@
-import { useRef, useState, useMemo, useEffect } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import CreateCategory from '../Category/CreateCategory';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -13,7 +12,7 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category_id, setCategory] = useState(''); //카테고리
+  const [category_id, setCategory] = useState(['']); //카테고리
   const quillRef = useRef<ReactQuill>(null);
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -26,13 +25,13 @@ const CreatePost = () => {
     }
   };
 
-  const newPost = {
-    user,
-    title,
-    content,
-    category_id,
-    create_at: Date.now(),
-  };
+  // const newPost = {
+  //   user,
+  //   title,
+  //   content,
+  //   category_id,
+  //   create_at: Date.now(),
+  // };
 
   const formSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -43,8 +42,8 @@ const CreatePost = () => {
       alert('내용을 입력해 주세요');
     } else {
       if (window.confirm('게시글을 등록하시겠습니까?')) {
-        await addPosts(user.id, title, content, category_id)
-          .then((res) => {
+        await addPosts(user.id, title, content, category_id[0])
+          .then(() => {
             alert('게시글이 등록되었습니다.');
             navigate('/category');
           })

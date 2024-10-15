@@ -11,7 +11,7 @@ export default function CreateCategory({ handleCategory }: any) {
       <CategoryBt
         type="button"
         value={'통합'}
-        id={2}
+        id={'2'}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
@@ -26,7 +26,7 @@ export default function CreateCategory({ handleCategory }: any) {
       <CategoryBt
         type="button"
         value={'강아지'}
-        id={3}
+        id={'3'}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
@@ -41,7 +41,7 @@ export default function CreateCategory({ handleCategory }: any) {
       <CategoryBt
         type="button"
         value={'고양이'}
-        id={4}
+        id={'4'}
         name="iscategory"
         onClick={(e) => {
           handleCategory(e);
