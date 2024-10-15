@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Comment } from '../types/post.type';
 import PaginationComp from '../components/common/PaginationComp';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+// import Comments from './Comments';
+import Button from '../components/common/Button';
+import { deleteComment } from '../apis/Comment.api';
 
 export default function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -17,6 +20,15 @@ export default function CommentList() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDeleteComment = async () => {
+    try {
+      await deleteComment(comments[0].comment_id);
+      alert('댓글이 삭제되었습니다.');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -43,11 +55,23 @@ export default function CommentList() {
               <h4>{item.author}</h4>
               <p>{item.content}</p>
               <span>{new Date(item.created_at).toLocaleString()}</span>
+              <Button size="small" scheme="positive" onClick={() => {}}>
+                수정
+              </Button>
+              <Button
+                size="small"
+                scheme="negative"
+                onClick={() => {
+                  handleDeleteComment();
+                }}
+              >
+                삭제
+              </Button>
             </div>
           ))
         ) : (
           <div>댓글이 아직 없습니다.</div>
-        )}{' '}
+        )}
         <PaginationComp
           totalItemsCount={comments.length}
           itemsCountPerPage={postsPerPage}

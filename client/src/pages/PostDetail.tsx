@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { PostState } from '../types/post.type';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -8,12 +8,32 @@ import { addComment } from '../apis/Comment.api';
 import { RootState } from '../store';
 import Button from '../components/common/Button';
 import CommentList from '../comment/CommentList';
+import { deletePosts } from '../apis/Posts.api';
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
   const [content, setContent] = useState<string>('');
   const postId = useParams().id;
   const user = useSelector((state: RootState) => state.auth.user);
+  const navigate = useNavigate();
+
+  const handleDeletePosts = async () => {
+    try {
+      await deletePosts(Number(postId));
+      alert('게시글이 삭제되었습니다.');
+      navigate('/category');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChangePosts = async () => {
+    try {
+      navigate('/editpost');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSubmitButtonClick = async (
     e: React.FormEvent<HTMLFormElement>
@@ -54,6 +74,26 @@ function PostDetail() {
 
   return (
     <>
+      <div className="bttn">
+        <Button
+          size="small"
+          scheme="positive"
+          onClick={() => {
+            handleChangePosts;
+          }}
+        >
+          수정
+        </Button>
+        <Button
+          size="small"
+          scheme="negative"
+          onClick={() => {
+            handleDeletePosts();
+          }}
+        >
+          삭제
+        </Button>
+      </div>
       {post ? (
         <PostsStyle>
           <h3 className="title">제목 : {post.title}</h3>
