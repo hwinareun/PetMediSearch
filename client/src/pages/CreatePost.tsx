@@ -17,21 +17,13 @@ const CreatePost = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const handleCategory = (e: any) => {
-    const checkCat = category_id.includes(e.target.value);
+    const checkCat = category_id.includes(e.target.id);
     if (checkCat) {
-      setCategory(category_id.filter((prev: any) => prev !== e.target.value));
+      setCategory(category_id.filter((prev: any) => prev !== e.target.id));
     } else {
-      setCategory((prev: any) => [...prev, e.target.value]);
+      setCategory((prev: any) => [...prev, e.target.id]);
     }
   };
-
-  // const newPost = {
-  //   user,
-  //   title,
-  //   content,
-  //   category_id,
-  //   create_at: Date.now(),
-  // };
 
   const formSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
