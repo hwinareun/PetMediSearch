@@ -7,7 +7,7 @@ import { PostState } from '../types/post.type';
 import { HiOutlinePencilSquare } from 'react-icons/hi2';
 import PaginationComp from '../components/common/PaginationComp';
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 function Posts() {
   const [posts, setPosts] = useState<PostState[]>([]);
   const location = useLocation();

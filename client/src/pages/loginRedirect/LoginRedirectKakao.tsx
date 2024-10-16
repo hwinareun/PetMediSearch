@@ -6,7 +6,7 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../store/slices/authSlice';
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function LoginRedirectKakao() {
   const navigate = useNavigate();

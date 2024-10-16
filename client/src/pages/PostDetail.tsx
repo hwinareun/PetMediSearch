@@ -10,7 +10,7 @@ import Button from '../components/common/Button';
 import CommentList from '../comment/CommentList';
 import { deletePosts } from '../apis/Posts.api';
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
