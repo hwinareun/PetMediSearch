@@ -6,7 +6,7 @@ export const addComment = async (
   content: string
 ) => {
   try {
-    const response = await httpClient.post(`/comments`, {
+    const response = await httpClient.post(`/requestapi/comments`, {
       user_id: userId,
       post_id: post_id,
       content: content,
@@ -20,7 +20,9 @@ export const addComment = async (
 
 export const deleteComment = async (comment_id: number) => {
   try {
-    const response = await httpClient.delete(`/comments/${comment_id}`);
+    const response = await httpClient.delete(
+      `/requestapi/comments/${comment_id}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -30,9 +32,12 @@ export const deleteComment = async (comment_id: number) => {
 
 export const editComment = async (comment_id: number, content: string) => {
   try {
-    const response = await httpClient.put(`/comments/${comment_id}`, {
-      content: content,
-    });
+    const response = await httpClient.put(
+      `/requestapi/comments/${comment_id}`,
+      {
+        content: content,
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(error);

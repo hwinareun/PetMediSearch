@@ -5,7 +5,7 @@ import { httpClient } from './http';
 export const getReviewsByFacilityId = async (facilityId: number) => {
   try {
     const response = await httpClient.get<ReviewData[]>(
-      `/reviews/facility/${facilityId}`
+      `/requestapi/reviews/facility/${facilityId}`
     );
     return response.data;
   } catch (error) {
@@ -22,7 +22,7 @@ export const addReview = async (
   reviewContent: string
 ) => {
   try {
-    const response = await httpClient.post('/reviews', {
+    const response = await httpClient.post('/requestapi/reviews', {
       user_id: userId,
       facility_id: facilityId,
       rating,
@@ -42,7 +42,7 @@ export const editReview = async (
   reviewContent: string
 ) => {
   try {
-    const response = await httpClient.put(`/reviews/${review_id}`, {
+    const response = await httpClient.put(`/requestapi/reviews/${review_id}`, {
       rating,
       review_content: reviewContent,
     });
@@ -56,7 +56,9 @@ export const editReview = async (
 // 리뷰 삭제
 export const removeReview = async (review_id: number) => {
   try {
-    const response = await httpClient.delete(`/reviews/${review_id}`);
+    const response = await httpClient.delete(
+      `/requestapi/reviews/${review_id}`
+    );
     return response.data;
   } catch (error) {
     console.error('리뷰 삭제 API 오류 발생:', error);

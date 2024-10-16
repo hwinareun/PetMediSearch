@@ -3,7 +3,9 @@ import { httpClient } from './http';
 
 export const getPosts = async (postId: number) => {
   try {
-    const response = await httpClient.get<PostState[]>(`/posts/${postId}`);
+    const response = await httpClient.get<PostState[]>(
+      `/requestapi/posts/${postId}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -18,7 +20,7 @@ export const addPosts = async (
   category_id: string
 ) => {
   try {
-    const response = await httpClient.post(`/posts`, {
+    const response = await httpClient.post(`/requestapi/posts`, {
       user_id: userId,
       title: title,
       content: content,
@@ -33,7 +35,7 @@ export const addPosts = async (
 
 export const deletePosts = async (post_id: number) => {
   try {
-    const response = await httpClient.delete(`/posts/${post_id}`);
+    const response = await httpClient.delete(`/requestapi/posts/${post_id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -47,7 +49,7 @@ export const editPosts = async (
   changeContent: string
 ) => {
   try {
-    const response = await httpClient.put(`/posts/${post_id}`, {
+    const response = await httpClient.put(`/requestapi/posts/${post_id}`, {
       title: changeTitle,
       content: changeContent,
     });

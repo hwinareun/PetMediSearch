@@ -6,7 +6,7 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../store/slices/authSlice';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function LoginRedirectKakao() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function LoginRedirectKakao() {
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    fetch(`${BASE_URL}/auth/kakao?code=${code}`, {
+    fetch(`/requestapi/auth/kakao?code=${code}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

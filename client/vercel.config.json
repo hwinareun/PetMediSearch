@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/requestapi/(.*)",
+      "destination": "http://54.180.247.152:8080/$1"
+    }
+  ]
+}

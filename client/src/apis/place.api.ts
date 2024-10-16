@@ -14,7 +14,7 @@ export const fetchPlaces = async (params: PlaceParams) => {
     }
   });
 
-  const url = `/facilities?${query.toString()}`;
+  const url = `/requestapi/facilities?${query.toString()}`;
 
   try {
     const response = await httpClient.get(url);

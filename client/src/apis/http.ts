@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const httpClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: '/requestapi',
   headers: {
     'content-type': 'application/json',
     Authorization: getToken() ? `Bearer ${getToken()}` : '',

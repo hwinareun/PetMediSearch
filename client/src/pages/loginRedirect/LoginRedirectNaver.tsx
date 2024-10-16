@@ -6,7 +6,7 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../store/slices/authSlice';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LoginRedirectNaver() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function LoginRedirectNaver() {
   const state = new URL(window.location.href).searchParams.get('state');
 
   useEffect(() => {
-    fetch(`${BASE_URL}/auth/naver?code=${code}&state=${state}`, {
+    fetch(`/requestapi/auth/naver?code=${code}&state=${state}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

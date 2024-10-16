@@ -4,7 +4,9 @@ import { httpClient } from './http';
 
 export const getPostsByUserId = async () => {
   try {
-    const response = await httpClient.get<PostState[]>(`/mypage/posts`);
+    const response = await httpClient.get<PostState[]>(
+      `/requestapi/mypage/posts`
+    );
     return response.data;
   } catch (error) {
     console.error('사용자별 게시글 조회 API 오류 발생:', error);
@@ -14,7 +16,9 @@ export const getPostsByUserId = async () => {
 
 export const getReviewsByUserId = async () => {
   try {
-    const response = await httpClient.get<ReviewData[]>(`/mypage/reviews`);
+    const response = await httpClient.get<ReviewData[]>(
+      `/requestapi/mypage/reviews`
+    );
     return response.data;
   } catch (error) {
     console.error('사용자별 리뷰 조회 API 오류 발생:', error);

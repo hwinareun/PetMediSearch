@@ -10,7 +10,7 @@ import Button from '../components/common/Button';
 import CommentList from '../comment/CommentList';
 import { deletePosts } from '../apis/Posts.api';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function PostDetail() {
   const [post, setPost] = useState<PostState>();
@@ -62,7 +62,7 @@ function PostDetail() {
   useEffect(() => {
     const fetchPostById = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}}/posts/${postId}`);
+        const response = await axios.get(`/requestapi/posts/${postId}`);
         console.log(response);
         setPost(response.data);
       } catch (error) {

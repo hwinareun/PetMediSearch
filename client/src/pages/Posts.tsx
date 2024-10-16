@@ -7,7 +7,7 @@ import { PostState } from '../types/post.type';
 import { HiOutlinePencilSquare } from 'react-icons/hi2';
 import PaginationComp from '../components/common/PaginationComp';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+//const BASE_URL = import.meta.env.VITE_BASE_URL;
 function Posts() {
   const [posts, setPosts] = useState<PostState[]>([]);
   const location = useLocation();
@@ -33,7 +33,7 @@ function Posts() {
       if (categoryId) {
         try {
           const response = await axios.get(
-            `${BASE_URL}/category?category=${categoryId}`
+            `/requestapi/category?category=${categoryId}`
           );
           setPosts(response.data.posts);
         } catch (error) {
