@@ -3,13 +3,14 @@ import styled from 'styled-components';
 // import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+const BASE_URL = import.meta.env.BASE_URL;
 export default function Category() {
   const [categorypost, setCategoryPost] = useState({
     category: [],
   });
   // const { id } = useParams();
   const getPost = async () => {
-    const res = await axios.get('http://localhost:8080/category');
+    const res = await axios.get(`${BASE_URL}/category`);
     setCategoryPost(res.data);
   };
   useEffect(() => {

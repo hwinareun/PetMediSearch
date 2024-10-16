@@ -1,5 +1,8 @@
-const swaggerUi = require("swagger-ui-express")
-const swaggereJsdoc = require("swagger-jsdoc")
+const swaggerUi = require("swagger-ui-express");
+const swaggereJsdoc = require("swagger-jsdoc");
+const dotenv = require('dotenv');
+dotenv.config();
+const BASE_URL = process.env.URL;
 
 const options = {
     swaggerDefinition: {
@@ -12,7 +15,7 @@ const options = {
         },
         tags: [
             {
-                name: "Categories", 
+                name: "Categories",
                 description: "카테고리 조회, 카테고리별 게시글 조회 api",
             },
             {
@@ -26,7 +29,7 @@ const options = {
         ],
         servers: [
             {
-                url: "http://localhost:8080",
+                url: BASE_URL,
             },
         ],
     },

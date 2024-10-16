@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.BASE_URL;
 
 export const httpClient = axios.create({
   baseURL: BASE_URL,

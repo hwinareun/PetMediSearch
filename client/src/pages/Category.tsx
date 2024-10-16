@@ -4,13 +4,15 @@ import { Category } from '../types/post.type';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 function Categories() {
   const [category, setCategory] = useState<Category[]>();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:8080/category');
+      const response = await axios.get(`${BASE_URL}/category`);
       setCategory(response.data);
     };
     fetchData();
