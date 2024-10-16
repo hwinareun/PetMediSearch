@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import Button from '../components/common/Button';
 import { deleteComment } from '../apis/Comment.api';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 export default function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,9 +36,7 @@ export default function CommentList() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/comments/${postId}`
-        );
+        const response = await axios.get(`${BASE_URL}/comments/${postId}`);
         console.log(response);
         setComments(response.data);
       } catch (error) {

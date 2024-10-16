@@ -6,13 +6,14 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 import { setLogin } from '../../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
 
+const BASE_URL = import.meta.env.BASE_URL;
 function LoginRedirectGoogle() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    fetch(`http://localhost:8080/auth/google?code=${code}`, {
+    fetch(`${BASE_URL}/auth/google?code=${code}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
