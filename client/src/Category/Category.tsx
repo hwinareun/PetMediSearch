@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default function Category() {
   const [categorypost, setCategoryPost] = useState({
     category: [],

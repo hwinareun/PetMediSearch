@@ -6,7 +6,7 @@ import loadingLottie from '../../assets/lottie/loadingLottie.json';
 import { setLogin } from '../../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 function LoginRedirectGoogle() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
