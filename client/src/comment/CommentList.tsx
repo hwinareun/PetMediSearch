@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Comment } from '../types/post.type';
 import PaginationComp from '../components/common/PaginationComp';
@@ -44,7 +44,7 @@ export default function CommentList() {
       }
     };
     fetchComments();
-  }, []);
+  }, [postId]);
 
   return (
     <Container>
