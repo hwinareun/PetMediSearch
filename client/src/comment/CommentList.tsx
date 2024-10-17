@@ -25,11 +25,13 @@ export default function CommentList() {
   };
 
   const handleDeleteComment = async () => {
-    try {
-      await deleteComment(comments[0].comment_id);
-      alert('댓글이 삭제되었습니다.');
-    } catch (error) {
-      console.error(error);
+    if (window.confirm('댓글을 삭제하시겠습니까?')) {
+      try {
+        await deleteComment(comments[0].comment_id);
+        alert('댓글이 삭제되었습니다.');
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -55,9 +57,6 @@ export default function CommentList() {
               <h4>{item.author}</h4>
               <p>{item.content}</p>
               <span>{new Date(item.created_at).toLocaleString()}</span>
-              <Button size="small" scheme="positive" onClick={() => {}}>
-                수정
-              </Button>
               <Button
                 size="small"
                 scheme="negative"

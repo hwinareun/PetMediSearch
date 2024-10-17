@@ -34,10 +34,11 @@ const CreatePost = () => {
       alert('내용을 입력해 주세요');
     } else {
       if (window.confirm('게시글을 등록하시겠습니까?')) {
-        await addPosts(user.id, title, content, category_id[0])
+        await addPosts(user.id, title, content, category_id[1])
           .then(() => {
             alert('게시글이 등록되었습니다.');
             navigate('/category');
+            console.log(content);
           })
 
           .catch(function (error) {

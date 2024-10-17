@@ -9,6 +9,7 @@ import { RootState } from '../store';
 import Button from '../components/common/Button';
 import CommentList from '../comment/CommentList';
 import { deletePosts } from '../apis/Posts.api';
+import dompurify from 'dompurify';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -18,14 +19,17 @@ function PostDetail() {
   const postId = useParams().id;
   const user = useSelector((state: RootState) => state.auth.user);
   const navigate = useNavigate();
+  const sanitizer = dompurify.sanitize;
 
   const handleDeletePosts = async () => {
-    try {
-      await deletePosts(Number(postId));
-      alert('게시글이 삭제되었습니다.');
-      navigate('/category');
-    } catch (error) {
-      console.error(error);
+    if (window.confirm('게시글을 삭제하시겠습니까?')) {
+      try {
+        await deletePosts(Number(postId));
+        alert('게시글이 삭제되었습니다.');
+        navigate('/category');
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -47,6 +51,7 @@ function PostDetail() {
     } else {
       try {
         await addComment(user.id, Number(postId), content);
+        alert('댓글이 등록되었습니다.');
         setContent('');
       } catch (error) {
         console.error(error);
@@ -62,7 +67,7 @@ function PostDetail() {
   useEffect(() => {
     const fetchPostById = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}}/posts/${postId}`);
+        const response = await axios.get(`${BASE_URL}/posts/${postId}`);
         console.log(response);
         setPost(response.data);
       } catch (error) {
@@ -101,7 +106,12 @@ function PostDetail() {
           <div className="created_at">작성일 : {post.created_at}</div>
 
           <ContentContainer>
-            <div className="content">내용 : {post.content}</div>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{
+                __html: sanitizer(`${post.content}`),
+              }}
+            />
           </ContentContainer>
         </PostsStyle>
       ) : (
