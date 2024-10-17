@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/requestapi/(.*)",
-      "destination": "http://54.180.247.152:8080/$1"
+      "destination": "http://3.36.78.41:8080/$1"
     }
   ]
 }
