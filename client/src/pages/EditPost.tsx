@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { PostState } from '../types/post.type';
 import Button from '../components/common/Button';
 import ReactQuill from 'react-quill';
+import { editPosts } from '../apis/Posts.api';
 
 interface EditPostProps {
   post: PostState;
@@ -10,7 +11,7 @@ interface EditPostProps {
   onCancel: () => void;
 }
 
-function EditPosts({ post, onEdit, onCancel }: EditPostProps) {
+function EditPost({ post, onEdit, onCancel }: EditPostProps) {
   const [updateTitle, setUpdateTitle] = useState<string>();
   const [updateContent, setUpdateContent] = useState<string>();
   const quillRef = useRef<ReactQuill>(null);
@@ -18,6 +19,20 @@ function EditPosts({ post, onEdit, onCancel }: EditPostProps) {
   const handleEdit = () => {
     onEdit(post.post_id, updateTitle, updateContent);
   };
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await editPosts(post.post_id, updateTitle, updateContent);
+        setUpdateTitle(res.data.updateTitle);
+        setUpdateContent(res.data.updateContent);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPost();
+  }, [post.post_id]);
 
   const modules = useMemo(
     () => ({
@@ -111,4 +126,4 @@ const EditButton = styled.div`
   margin-top: 100px;
 `;
 
-export default EditPosts;
+export default EditPost;

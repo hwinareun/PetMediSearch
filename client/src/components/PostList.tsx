@@ -9,7 +9,6 @@ const PostList = ({ post }: Props) => {
   const navigate = useNavigate();
 
   const handleTitleClick = (post_id: number) => {
-    console.log(post_id);
     navigate(`/posts/${post_id}`);
   };
 

@@ -52,11 +52,12 @@ function Posts() {
         </WriteBt>
       </WriteContainer>
       {currentPosts && currentPosts.length > 0 ? (
-        <Post post={posts} />
+        <ul>
+          <Post post={posts} />
+        </ul>
       ) : (
         <p>게시글이 없습니다.</p>
       )}
-
       <PaginationComp
         totalItemsCount={posts.length}
         itemsCountPerPage={postsPerPage}
